@@ -4,13 +4,14 @@ Aquabike Sync — holt Garmin Connect + Oura Daten und schreibt data/dashboard.j
 
 Laeuft taeglich via GitHub Actions (oder lokal per Cronjob).
 Zwift-Rides kommen automatisch mit, weil Zwift nach Garmin Connect pusht.
+Gewicht kommt ueber Withings → Garmin Connect mit.
+RPE kommt aus der Selbstbeurteilung der Uhr, Fallback ist manual.json.
 
 Benoetigte Secrets (Environment):
   GARMIN_EMAIL, GARMIN_PASSWORD, OURA_TOKEN
 
 Optional:
   PLAN_START      Startdatum Woche 1, ISO (default 2026-07-13)
-  BODY_WEIGHT_KG  Fallback-Gewicht falls Garmin keins liefert
 """
 
 import json
@@ -26,8 +27,19 @@ from garminconnect import Garmin
 
 PLAN_START = date.fromisoformat(os.getenv("PLAN_START", "2026-07-13"))
 LOOKBACK_DAYS = 90          # so viel Historie halten wir im JSON
-OUT = Path(__file__).resolve().parent.parent / "data" / "dashboard.json"
-MANUAL = Path(__file__).resolve().parent.parent / "data" / "manual.json"
+DATA = Path(__file__).resolve().parent.parent / "data"
+OUT = DATA / "dashboard.json"
+MANUAL = DATA / "manual.json"
+RPE_CACHE = DATA / "rpe_cache.json"
+
+# Selbstbeurteilung der Uhr: Garmin skaliert intern 0-100.
+# Reihenfolge = Wahrscheinlichkeit. probe_rpe.py findet den echten Namen.
+EFFORT_KEYS = ["directWorkoutRpe", "workoutRpe", "perceivedEffort", "rpe",
+               "directPerceivedEffort"]
+FEEL_KEYS = ["directWorkoutFeel", "workoutFeel", "feel", "perceivedFeel"]
+
+# Nur fuer diese Aktivitaeten lohnt der zusaetzliche Detail-Call
+RPE_SPORTS = {"swim", "bike", "gym"}
 
 # Schwellen aus dem Trainingsplan (Abschnitt 11)
 RHR_FLAG_DELTA = 5          # bpm ueber Baseline
@@ -65,6 +77,82 @@ def is_recovery_week(w: int) -> bool:
     return w % 4 == 0
 
 
+def normalize_rpe(raw):
+    """
+    Garmin speichert die Selbstbeurteilung intern 0-100 (10 = RPE 1, 100 = RPE 10).
+    Manche Endpunkte liefern aber schon 0-10. Beides sauber auf 1-10 bringen.
+    """
+    if raw is None:
+        return None
+    try:
+        v = float(raw)
+    except (TypeError, ValueError):
+        return None
+    if v <= 0:
+        return None
+    if v > 10:                    # 0-100er Skala
+        v = v / 10
+    return round(min(10, max(1, v)), 1)
+
+
+def pick(d: dict, keys: list):
+    """Ersten vorhandenen Schluessel aus einer Kandidatenliste zurueckgeben."""
+    for k in keys:
+        if d.get(k) is not None:
+            return k, d[k]
+    return None, None
+
+
+def fetch_rpe(api, activities, cache: dict):
+    """
+    Holt die Selbstbeurteilung pro Aktivitaet aus dem Garmin-Detail-Objekt.
+    Ergebnisse werden gecacht — alte Aktivitaeten aendern sich nicht mehr,
+    also wird jede ID nur einmal abgefragt.
+    """
+    hits, misses, calls = 0, 0, 0
+    field_used = None
+
+    for a in activities:
+        aid = str(a.get("activity_id") or "")
+        if not aid or a["sport"] not in RPE_SPORTS:
+            continue
+
+        if aid in cache:                       # schon bekannt
+            a["rpe_garmin"] = cache[aid].get("rpe")
+            a["feel_garmin"] = cache[aid].get("feel")
+            if a["rpe_garmin"]:
+                hits += 1
+            continue
+
+        try:
+            detail = api.get_activity(aid)
+            calls += 1
+        except Exception as e:
+            log(f"Detail {aid} fehlgeschlagen: {e}")
+            continue
+
+        ekey, eraw = pick(detail, EFFORT_KEYS)
+        fkey, fraw = pick(detail, FEEL_KEYS)
+        rpe = normalize_rpe(eraw)
+        feel = normalize_rpe(fraw)
+
+        if rpe and not field_used:
+            field_used = ekey
+            log(f"Selbstbeurteilung gefunden unter '{ekey}' (Rohwert {eraw} → RPE {rpe})")
+
+        cache[aid] = {"rpe": rpe, "feel": feel, "date": a["date"]}
+        a["rpe_garmin"] = rpe
+        a["feel_garmin"] = feel
+        hits += 1 if rpe else 0
+        misses += 0 if rpe else 1
+
+    log(f"RPE: {hits} vorhanden, {misses} ohne Bewertung, {calls} neue Detail-Calls")
+    if not field_used and misses and not any(v.get("rpe") for v in cache.values()):
+        log("WARNUNG: keine Selbstbeurteilung gefunden. Auf der Uhr aktiviert? "
+            "Sonst probe_rpe.py laufen lassen.")
+    return cache
+
+
 def sport_bucket(type_key: str) -> str:
     t = (type_key or "").lower()
     if "swim" in t:
@@ -99,6 +187,7 @@ def fetch_garmin(start: date, end: date):
         activities.append(
             {
                 "date": started,
+                "activity_id": a.get("activityId"),
                 "name": a.get("activityName"),
                 "sport": sport_bucket(
                     (a.get("activityType") or {}).get("typeKey", "")
@@ -150,7 +239,7 @@ def fetch_garmin(start: date, end: date):
     except Exception as e:
         log(f"Garmin Gewicht nicht verfuegbar: {e}")
 
-    return activities, rhr, weights
+    return api, activities, rhr, weights
 
 
 # ---------------------------------------------------------------- Oura
@@ -225,6 +314,8 @@ def build_weekly(activities, manual):
                 "bike_hours": 0.0,
                 "swim_meters": 0,
                 "srpe_load": 0,
+                "rpe_covered": 0,
+                "rpe_missing": 0,
             },
         )
         if a["sport"] == "swim":
@@ -236,10 +327,14 @@ def build_weekly(activities, manual):
         elif a["sport"] == "gym":
             wk["gyms"] += 1
 
-        # sRPE = RPE x Dauer (Foster). RPE kommt aus manual.json.
-        rpe = (rpe_map.get(a["date"]) or {}).get("rpe")
+        # sRPE = RPE x Dauer (Foster).
+        # Quelle 1: Selbstbeurteilung der Uhr. Quelle 2: manual.json.
+        rpe = a.get("rpe_garmin") or (rpe_map.get(a["date"]) or {}).get("rpe")
         if rpe:
             wk["srpe_load"] += int(rpe * a["duration_min"])
+            wk["rpe_covered"] += 1
+        else:
+            wk["rpe_missing"] += 1
 
     for wk in weeks.values():
         wk["bike_hours"] = round(wk["bike_hours"], 1)
@@ -304,7 +399,27 @@ def build_flags(rhr, weekly, manual, sleep):
                 }
             )
 
-    # (5) Schlaf
+    # (5) Fehlende Bewertungen — sonst rechnet die Lastampel mit Luecken
+    if weekly:
+        cur = weekly[-1]
+        if cur["rpe_missing"] and cur["rpe_covered"] == 0:
+            flags.append(
+                {
+                    "level": "amber",
+                    "metric": "RPE",
+                    "text": f"{cur['rpe_missing']} Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen.",
+                }
+            )
+        elif cur["rpe_missing"] > cur["rpe_covered"]:
+            flags.append(
+                {
+                    "level": "amber",
+                    "metric": "RPE",
+                    "text": f"{cur['rpe_missing']} von {cur['rpe_missing'] + cur['rpe_covered']} Einheiten ohne Bewertung. Lastzahl untertreibt.",
+                }
+            )
+
+    # (6) Schlaf
     if sleep:
         last7 = [s.get("total_h") for s in sleep[-7:] if s.get("total_h")]
         if last7 and sum(last7) / len(last7) < SLEEP_TARGET_H:
@@ -349,7 +464,19 @@ def main():
     if MANUAL.exists():
         manual = json.loads(MANUAL.read_text())
 
-    activities, rhr, weights = fetch_garmin(start, end)
+    api, activities, rhr, weights = fetch_garmin(start, end)
+
+    # Selbstbeurteilung der Uhr nachladen (gecacht)
+    cache = json.loads(RPE_CACHE.read_text()) if RPE_CACHE.exists() else {}
+    try:
+        cache = fetch_rpe(api, activities, cache)
+        # Cache auf den Lookback-Zeitraum eindampfen
+        cutoff = start.isoformat()
+        cache = {k: v for k, v in cache.items() if v.get("date", "9999") >= cutoff}
+        RPE_CACHE.write_text(json.dumps(cache, indent=2, ensure_ascii=False))
+    except Exception as e:
+        log(f"RPE-Abruf fehlgeschlagen, nutze manual.json: {e}")
+
     try:
         sleep, readiness = fetch_oura(start, end)
     except Exception as e:

@@ -221,7 +221,8 @@ document.getElementById('app').innerHTML = `
   ${cell('Schwimmeinheiten', wk.swims, ' / 3', wk.swim_meters ? `${(wk.swim_meters/1000).toFixed(1)} km im Wasser` : 'Der grösste Hebel im Plan', wk.swims/3*100)}
   ${cell('Radeinheiten', wk.bikes, ' / 3', `${wk.bike_hours} h auf dem Rad`, wk.bikes/3*100)}
   ${cell('Gym', wk.gyms, ' / 2', 'Einheit A + B', wk.gyms/2*100)}
-  ${cell('sRPE-Last', wk.srpe_load || null, '', 'Max. +15% zur Vorwoche')}
+  ${cell('sRPE-Last', wk.srpe_load || null, '',
+      wk.rpe_missing ? `${wk.rpe_missing} Einheit(en) unbewertet` : 'Max. +15% zur Vorwoche')}
 </div>
 
 <h2>Kennzahlen gegen Ziel</h2>
@@ -243,7 +244,7 @@ ${sparkline(D.rhr, 'bpm', true)}
 
 <h2>Letzte Einheiten</h2>
 <table>
-  <thead><tr><th>Datum</th><th>Sport</th><th>Einheit</th><th class="num">Dauer</th><th class="num">Distanz</th><th class="num">Ø HF</th><th class="num">NP / Pace</th></tr></thead>
+  <thead><tr><th>Datum</th><th>Sport</th><th>Einheit</th><th class="num">Dauer</th><th class="num">Distanz</th><th class="num">Ø HF</th><th class="num">NP / Pace</th><th class="num">RPE</th></tr></thead>
   <tbody>
   ${D.activities.slice(0,14).map(a => `<tr>
     <td>${a.date.slice(5)}</td>
@@ -253,6 +254,7 @@ ${sparkline(D.rhr, 'bpm', true)}
     <td class="num">${a.distance_km ? a.distance_km + ' km' : '–'}</td>
     <td class="num">${a.avg_hr || '–'}</td>
     <td class="num">${a.sport === 'swim' ? fmtPace(a.pace_per_100m) : (a.norm_power ? a.norm_power + ' W' : '–')}</td>
+    <td class="num" style="${a.rpe_garmin ? '' : 'color:var(--mute)'}">${a.rpe_garmin || '–'}</td>
   </tr>`).join('')}
   </tbody>
 </table>

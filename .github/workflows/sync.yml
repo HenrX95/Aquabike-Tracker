@@ -22,13 +22,6 @@ jobs:
       - name: Abhängigkeiten installieren
         run: pip install -r requirements.txt
 
-      - name: RPE-Felder untersuchen
-        env:
-          GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
-          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
-        run: python scripts/probe_rpe.py
-        continue-on-error: true
-        
       - name: Garmin + Oura abrufen
         env:
           GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}

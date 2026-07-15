@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T11:03:13+00:00",
+  "generated_at": "2026-07-15T19:32:07+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 1,
@@ -17,24 +17,66 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 52,
+    "rhr_bpm": 51,
     "sleep_h_7d": 5.0,
     "readiness": 63,
     "ftp_w": 250,
     "css_s": 120,
-    "waist_cm": 104
+    "waist_cm": null
   },
   "flags": [
+    {
+      "level": "amber",
+      "metric": "Schwimmfrequenz",
+      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 3). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
+    },
     {
       "level": "amber",
       "metric": "Schlaf",
       "text": "Schnitt 5.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
-  "weekly": [],
+  "weekly": [
+    {
+      "week": 1,
+      "phase": "1 – Grundlage",
+      "recovery_week": false,
+      "swims": 1,
+      "bikes": 0,
+      "gyms": 0,
+      "bike_hours": 0.0,
+      "swim_meters": 1850,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
+    }
+  ],
   "activities": [
     {
+      "date": "2026-07-15",
+      "activity_id": 23609345346,
+      "name": "Swim 1",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 38.7,
+      "distance_km": 1.85,
+      "avg_hr": 135.0,
+      "max_hr": 155.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 126,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
+    {
       "date": "2026-06-28",
+      "activity_id": 23410290788,
       "name": "Walchsee Multisport",
       "sport": "other",
       "type_raw": "multi_sport",
@@ -49,6 +91,7 @@
     },
     {
       "date": "2026-06-27",
+      "activity_id": 23410269904,
       "name": "Walchsee Laufen",
       "sport": "other",
       "type_raw": "running",
@@ -63,6 +106,7 @@
     },
     {
       "date": "2026-06-25",
+      "activity_id": 23378940309,
       "name": "Schwimmbad",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -73,10 +117,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 94
+      "pace_per_100m": 94,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-24",
+      "activity_id": 23378939891,
       "name": "München (Gemfr. Gebiet) Radfahren",
       "sport": "bike",
       "type_raw": "cycling",
@@ -87,10 +134,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 331,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-21",
+      "activity_id": 23328872574,
       "name": "Wörthsee Freiwasserschwimmen",
       "sport": "swim",
       "type_raw": "open_water_swimming",
@@ -101,10 +151,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 132
+      "pace_per_100m": 132,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-19",
+      "activity_id": 23308772063,
       "name": "München (Gemfr. Gebiet) Radfahren",
       "sport": "bike",
       "type_raw": "cycling",
@@ -115,10 +168,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 185,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-18",
+      "activity_id": 23296503101,
       "name": "Training 2 - Kondition 3,2km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -129,10 +185,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 122
+      "pace_per_100m": 122,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-13",
+      "activity_id": 23235942671,
       "name": "Schwimmbad",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -143,10 +202,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 139
+      "pace_per_100m": 139,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-13",
+      "activity_id": 23235905908,
       "name": "Schwimmbad",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -157,10 +219,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 131
+      "pace_per_100m": 131,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-11",
+      "activity_id": 23216390863,
       "name": "Training 1 Technik 2,2km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -171,10 +236,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 149
+      "pace_per_100m": 149,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-06-06",
+      "activity_id": 23146648586,
       "name": "München Laufen",
       "sport": "other",
       "type_raw": "running",
@@ -189,6 +257,7 @@
     },
     {
       "date": "2026-05-27",
+      "activity_id": 23036401066,
       "name": "München Laufen",
       "sport": "other",
       "type_raw": "running",
@@ -203,6 +272,7 @@
     },
     {
       "date": "2026-05-24",
+      "activity_id": 22993732106,
       "name": "Training 4 - Speed 2km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -213,10 +283,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 124
+      "pace_per_100m": 124,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-05-20",
+      "activity_id": 22950613308,
       "name": "Training 3 - Kondition 2,8km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -227,10 +300,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 164
+      "pace_per_100m": 164,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-05-08",
+      "activity_id": 22810286433,
       "name": "Training 2 - Kondition 3,2km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -241,10 +317,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 131
+      "pace_per_100m": 131,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-05-01",
+      "activity_id": 22726833501,
       "name": "Training 1 Technik 2,2km",
       "sport": "swim",
       "type_raw": "lap_swimming",
@@ -255,10 +334,13 @@
       "avg_power": null,
       "norm_power": null,
       "elevation_m": 0,
-      "pace_per_100m": 143
+      "pace_per_100m": 143,
+      "rpe_garmin": null,
+      "feel_garmin": null
     },
     {
       "date": "2026-04-26",
+      "activity_id": 22726831679,
       "name": "Alcúdia Laufen",
       "sport": "other",
       "type_raw": "running",
@@ -392,6 +474,10 @@
     {
       "date": "2026-06-28",
       "bpm": 52
+    },
+    {
+      "date": "2026-07-15",
+      "bpm": 51
     }
   ],
   "weights": [
@@ -636,6 +722,10 @@
     {
       "week": -2,
       "median_pace_s": 94
+    },
+    {
+      "week": 1,
+      "median_pace_s": 126
     }
   ]
 }

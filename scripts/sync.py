@@ -17,6 +17,7 @@ Optional:
 import json
 import os
 import sys
+import time
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
@@ -32,11 +33,20 @@ OUT = DATA / "dashboard.json"
 MANUAL = DATA / "manual.json"
 RPE_CACHE = DATA / "rpe_cache.json"
 
-# Selbstbeurteilung der Uhr: Garmin skaliert intern 0-100.
-# Reihenfolge = Wahrscheinlichkeit. probe_rpe.py findet den echten Namen.
-EFFORT_KEYS = ["directWorkoutRpe", "workoutRpe", "perceivedEffort", "rpe",
-               "directPerceivedEffort"]
-FEEL_KEYS = ["directWorkoutFeel", "workoutFeel", "feel", "perceivedFeel"]
+# Selbstbeurteilung der Uhr. Garmin legt sie im summaryDTO ab und skaliert 0-100
+# (30 = RPE 3). Verifiziert am 15.07.2026 gegen echte Aktivitaeten.
+# Pfade werden der Reihe nach probiert, erster Treffer gewinnt.
+EFFORT_PATHS = [
+    ("summaryDTO", "directWorkoutRpe"),   # der echte Ort
+    (None, "directWorkoutRpe"),           # Fallback: oberste Ebene
+    (None, "workoutRpe"),
+    (None, "perceivedEffort"),
+]
+FEEL_PATHS = [
+    ("summaryDTO", "directWorkoutFeel"),
+    (None, "directWorkoutFeel"),
+    (None, "workoutFeel"),
+]
 
 # Nur fuer diese Aktivitaeten lohnt der zusaetzliche Detail-Call
 RPE_SPORTS = {"swim", "bike", "gym"}
@@ -95,11 +105,16 @@ def normalize_rpe(raw):
     return round(min(10, max(1, v)), 1)
 
 
-def pick(d: dict, keys: list):
-    """Ersten vorhandenen Schluessel aus einer Kandidatenliste zurueckgeben."""
-    for k in keys:
-        if d.get(k) is not None:
-            return k, d[k]
+def pick(detail: dict, paths: list):
+    """
+    Ersten Treffer aus einer Liste von (container, key)-Pfaden holen.
+    container=None bedeutet oberste Ebene.
+    """
+    for container, key in paths:
+        obj = detail.get(container) if container else detail
+        if isinstance(obj, dict) and obj.get(key) is not None:
+            label = f"{container}.{key}" if container else key
+            return label, obj[key]
     return None, None
 
 
@@ -127,12 +142,13 @@ def fetch_rpe(api, activities, cache: dict):
         try:
             detail = api.get_activity(aid)
             calls += 1
+            time.sleep(1.5)          # Garmin drosselt Actions-IPs (429)
         except Exception as e:
             log(f"Detail {aid} fehlgeschlagen: {e}")
             continue
 
-        ekey, eraw = pick(detail, EFFORT_KEYS)
-        fkey, fraw = pick(detail, FEEL_KEYS)
+        ekey, eraw = pick(detail, EFFORT_PATHS)
+        fkey, fraw = pick(detail, FEEL_PATHS)
         rpe = normalize_rpe(eraw)
         feel = normalize_rpe(fraw)
 
@@ -148,8 +164,8 @@ def fetch_rpe(api, activities, cache: dict):
 
     log(f"RPE: {hits} vorhanden, {misses} ohne Bewertung, {calls} neue Detail-Calls")
     if not field_used and misses and not any(v.get("rpe") for v in cache.values()):
-        log("WARNUNG: keine Selbstbeurteilung gefunden. Auf der Uhr aktiviert? "
-            "Sonst probe_rpe.py laufen lassen.")
+        log("WARNUNG: keine Selbstbeurteilung gefunden. Entweder auf der Uhr nicht "
+            "aktiviert, oder Garmin hat den Feldnamen geaendert — dann probe_rpe.py laufen lassen.")
     return cache
 
 

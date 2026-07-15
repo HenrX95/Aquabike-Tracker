@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T19:32:07+00:00",
+  "generated_at": "2026-07-15T19:43:33+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 1,
@@ -32,11 +32,6 @@
     },
     {
       "level": "amber",
-      "metric": "RPE",
-      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
-    },
-    {
-      "level": "amber",
       "metric": "Schlaf",
       "text": "Schnitt 5.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
@@ -51,9 +46,9 @@
       "gyms": 0,
       "bike_hours": 0.0,
       "swim_meters": 1850,
-      "srpe_load": 0,
-      "rpe_covered": 0,
-      "rpe_missing": 1
+      "srpe_load": 116,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "activities": [
@@ -71,8 +66,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 126,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-28",
@@ -118,8 +113,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 94,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 2.0,
+      "feel_garmin": 7.5
     },
     {
       "date": "2026-06-24",
@@ -135,8 +130,8 @@
       "norm_power": null,
       "elevation_m": 331,
       "pace_per_100m": null,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 7.5
     },
     {
       "date": "2026-06-21",
@@ -152,8 +147,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 132,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-19",
@@ -169,8 +164,8 @@
       "norm_power": null,
       "elevation_m": 185,
       "pace_per_100m": null,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-18",
@@ -186,8 +181,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 122,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 2.0,
+      "feel_garmin": 7.5
     },
     {
       "date": "2026-06-13",
@@ -203,8 +198,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 139,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-13",
@@ -220,8 +215,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 131,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 2.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-11",
@@ -237,8 +232,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 149,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-06-06",
@@ -284,8 +279,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 124,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 7.5
     },
     {
       "date": "2026-05-20",
@@ -301,8 +296,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 164,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-05-08",
@@ -318,8 +313,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 131,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 2.0,
+      "feel_garmin": 2.5
     },
     {
       "date": "2026-05-01",
@@ -335,8 +330,8 @@
       "norm_power": null,
       "elevation_m": 0,
       "pace_per_100m": 143,
-      "rpe_garmin": null,
-      "feel_garmin": null
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-04-26",

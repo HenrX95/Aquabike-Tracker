@@ -1,12 +1,11 @@
 {
-  "_hinweis": "Was keine API liefert. Nach jedem Test / jeden Abend kurz ergaenzen.",
+  "_hinweis": "Nur was keine API liefert. RPE kommt von der Uhr (Selbstbeurteilung), Gewicht ueber Withings->Garmin. Hier nur noch Knie + Testwerte.",
   "ftp_w": 250,
-  "ftp_tested": "2026-07-15",
+  "ftp_tested": "2026-07-13",
   "css_s": 120,
-  "css_tested": "2026-07-15",
-  "waist_cm": 104,
+  "css_tested": "2026-07-13",
+  "waist_cm": null,
   "daily": [
-    { "date": "2026-07-14", "rpe": 6, "knee": 1, "weight_kg": 92.0 },
-    { "date": "2026-07-15", "rpe": 7, "knee": 2 }
+    { "date": "2026-07-15", "knee": 0 }
   ]
 }

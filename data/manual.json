@@ -1,0 +1,12 @@
+{
+  "_hinweis": "Was keine API liefert. Nach jedem Test / jeden Abend kurz ergaenzen.",
+  "ftp_w": 250,
+  "ftp_tested": "2026-07-15",
+  "css_s": 120,
+  "css_tested": "2026-07-15",
+  "waist_cm": 104,
+  "daily": [
+    { "date": "2026-07-14", "rpe": 6, "knee": 1, "weight_kg": 92.0 },
+    { "date": "2026-07-15", "rpe": 7, "knee": 2 }
+  ]
+}

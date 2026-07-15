@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aquabike — Fortschritt</title>
+<style>
+  :root {
+    --deep:    #0B1F2E;
+    --water:   #12384F;
+    --lane:    #1D5C7A;
+    --tile:    #C9DEE6;
+    --chalk:   #F2F6F7;
+    --signal:  #F0A202;
+    --alarm:   #D64545;
+    --go:      #4FA96B;
+    --mute:    #6E8B99;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--deep);
+    color: var(--chalk);
+    font-family: ui-monospace, "SF Mono", "Roboto Mono", Menlo, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 32px 20px 64px;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+
+  /* --- Kopf: Woche als Bahnen-Metapher --- */
+  header { margin-bottom: 40px; }
+  .eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--mute); margin-bottom: 10px;
+  }
+  h1 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(38px, 7vw, 64px);
+    font-weight: 800; letter-spacing: -0.03em; line-height: 0.95;
+    margin-bottom: 6px;
+  }
+  h1 span { color: var(--lane); }
+  .sub { color: var(--mute); font-size: 13px; }
+
+  /* Bahnen-Leiste: 26 Wochen */
+  .lanes {
+    display: grid; grid-template-columns: repeat(26, 1fr);
+    gap: 3px; margin: 24px 0 8px; height: 34px;
+  }
+  .lane {
+    background: var(--water); border-radius: 2px; position: relative;
+  }
+  .lane.done { background: var(--lane); }
+  .lane.now  { background: var(--signal); }
+  .lane.rec  { background: repeating-linear-gradient(45deg, var(--water), var(--water) 3px, var(--deep) 3px, var(--deep) 6px); }
+  .lane.rec.done { background: repeating-linear-gradient(45deg, var(--lane), var(--lane) 3px, var(--water) 3px, var(--water) 6px); }
+  .lane-key { display: flex; gap: 16px; font-size: 11px; color: var(--mute); }
+  .lane-key i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+
+  /* --- Ampeln --- */
+  .flags { margin: 32px 0; display: grid; gap: 8px; }
+  .flag {
+    display: grid; grid-template-columns: 4px 92px 1fr; gap: 14px;
+    align-items: center; background: var(--water);
+    padding: 12px 14px; border-radius: 3px;
+  }
+  .flag .bar { width: 4px; height: 100%; min-height: 28px; border-radius: 2px; }
+  .flag.red   .bar { background: var(--alarm); }
+  .flag.amber .bar { background: var(--signal); }
+  .flag.green .bar { background: var(--go); }
+  .flag .metric { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mute); }
+  .flag .text { font-size: 13px; }
+
+  /* --- Kennzahlen --- */
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 3px; }
+  .cell {
+    background: var(--water); padding: 18px 16px 16px;
+    border-radius: 3px; position: relative; overflow: hidden;
+  }
+  .cell .label {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--mute); margin-bottom: 8px;
+  }
+  .cell .val {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 30px; font-weight: 700; letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cell .unit { font-size: 13px; font-weight: 400; color: var(--mute); margin-left: 3px; }
+  .cell .goal { font-size: 11px; color: var(--mute); margin-top: 7px; }
+  .cell .track { height: 3px; background: var(--deep); border-radius: 2px; margin-top: 10px; }
+  .cell .track i { display: block; height: 100%; background: var(--lane); border-radius: 2px; }
+  .cell.empty .val { color: var(--mute); font-size: 20px; font-weight: 400; }
+
+  h2 {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 12px; text-transform: uppercase; letter-spacing: 0.16em;
+    color: var(--mute); margin: 42px 0 12px; font-weight: 600;
+  }
+
+  /* --- Chart --- */
+  .chart { background: var(--water); border-radius: 3px; padding: 18px; }
+  svg { width: 100%; height: auto; display: block; }
+
+  /* --- Tabelle --- */
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th {
+    text-align: left; font-size: 10px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--mute); font-weight: 500;
+    padding: 8px 10px; border-bottom: 1px solid var(--water);
+  }
+  td { padding: 9px 10px; border-bottom: 1px solid rgba(18,56,79,0.5); }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .tag {
+    font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 2px 7px; border-radius: 2px; background: var(--water); color: var(--tile);
+  }
+  .tag.swim { background: #1D5C7A; }
+  .tag.bike { background: #2E5C3F; }
+  .tag.gym  { background: #5C4A1D; }
+
+  footer { margin-top: 48px; font-size: 11px; color: var(--mute); }
+
+  @media (max-width: 640px) {
+    .lanes { grid-template-columns: repeat(13, 1fr); grid-auto-rows: 22px; height: auto; }
+    .flag { grid-template-columns: 4px 1fr; }
+    .flag .metric { display: none; }
+    table { font-size: 11.5px; }
+    td, th { padding: 7px 5px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cell, .flag { animation: rise .4s ease-out backwards; }
+    @keyframes rise { from { opacity: 0; transform: translateY(6px); } }
+  }
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+const D = {"generated_at": "2026-08-16T23:15:00+00:00", "athlete": "Henrik Hundesrügge", "plan": {"current_week": 5, "phase": "1 – Grundlage", "recovery_week": false, "weeks_total": 26}, "targets": {"ftp_dec_w": 285, "ftp_race_w": 300, "css_dec_s": 105, "css_race_s": 100, "weight_dec_kg": 85.5, "waist_target_cm": 94}, "current": {"weight_kg": 89.7, "rhr_bpm": 54, "sleep_h_7d": 7.3, "readiness": 79, "ftp_w": 250, "css_s": 118, "waist_cm": 103}, "flags": [{"level": "amber", "metric": "Schwimmfrequenz", "text": "Nur 2 Schwimmeinheiten diese Woche (Ziel 3). Groesster Hebel im Plan."}, {"level": "amber", "metric": "Schlaf", "text": "Schnitt 7.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."}], "weekly": [{"week": 1, "phase": "1 – Grundlage", "recovery_week": false, "swims": 2, "bikes": 2, "gyms": 1, "bike_hours": 3.7, "swim_meters": 3900, "srpe_load": 2325}, {"week": 2, "phase": "1 – Grundlage", "recovery_week": false, "swims": 2, "bikes": 2, "gyms": 1, "bike_hours": 3.7, "swim_meters": 3900, "srpe_load": 2325}, {"week": 3, "phase": "1 – Grundlage", "recovery_week": false, "swims": 2, "bikes": 2, "gyms": 1, "bike_hours": 3.7, "swim_meters": 3900, "srpe_load": 2325}, {"week": 4, "phase": "1 – Grundlage", "recovery_week": true, "swims": 2, "bikes": 2, "gyms": 1, "bike_hours": 3.7, "swim_meters": 3900, "srpe_load": 2325}, {"week": 5, "phase": "1 – Grundlage", "recovery_week": false, "swims": 2, "bikes": 2, "gyms": 1, "bike_hours": 3.7, "swim_meters": 3900, "srpe_load": 2325}], "activities": [{"date": "2026-08-15", "name": "Lange Ausfahrt", "sport": "bike", "type_raw": "cycling", "duration_min": 150, "distance_km": 62.0, "avg_hr": 141, "max_hr": 162, "avg_power": 180, "norm_power": 192, "elevation_m": 720, "pace_per_100m": null}, {"date": "2026-08-14", "name": "CSS-Intervalle", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 55, "distance_km": 2.1, "avg_hr": 138, "max_hr": 156, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 111}, {"date": "2026-08-12", "name": "Technik", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 45, "distance_km": 1.8, "avg_hr": 126, "max_hr": 145, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 114}, {"date": "2026-08-11", "name": "Zwift Sweet Spot", "sport": "bike", "type_raw": "virtual_ride", "duration_min": 70, "distance_km": 34.0, "avg_hr": 148, "max_hr": 168, "avg_power": 215, "norm_power": 228, "elevation_m": 210, "pace_per_100m": null}, {"date": "2026-08-11", "name": "Gym A", "sport": "gym", "type_raw": "strength_training", "duration_min": 45, "distance_km": 0, "avg_hr": 112, "max_hr": 140, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": null}, {"date": "2026-08-08", "name": "Lange Ausfahrt", "sport": "bike", "type_raw": "cycling", "duration_min": 150, "distance_km": 62.0, "avg_hr": 141, "max_hr": 162, "avg_power": 180, "norm_power": 192, "elevation_m": 720, "pace_per_100m": null}, {"date": "2026-08-07", "name": "CSS-Intervalle", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 55, "distance_km": 2.1, "avg_hr": 138, "max_hr": 156, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 112}, {"date": "2026-08-05", "name": "Technik", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 45, "distance_km": 1.8, "avg_hr": 126, "max_hr": 145, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 115}, {"date": "2026-08-04", "name": "Zwift Sweet Spot", "sport": "bike", "type_raw": "virtual_ride", "duration_min": 70, "distance_km": 34.0, "avg_hr": 148, "max_hr": 168, "avg_power": 215, "norm_power": 228, "elevation_m": 210, "pace_per_100m": null}, {"date": "2026-08-04", "name": "Gym A", "sport": "gym", "type_raw": "strength_training", "duration_min": 45, "distance_km": 0, "avg_hr": 112, "max_hr": 140, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": null}, {"date": "2026-08-01", "name": "Lange Ausfahrt", "sport": "bike", "type_raw": "cycling", "duration_min": 150, "distance_km": 62.0, "avg_hr": 141, "max_hr": 162, "avg_power": 180, "norm_power": 192, "elevation_m": 720, "pace_per_100m": null}, {"date": "2026-07-31", "name": "CSS-Intervalle", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 55, "distance_km": 2.1, "avg_hr": 138, "max_hr": 156, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 113}, {"date": "2026-07-29", "name": "Technik", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 45, "distance_km": 1.8, "avg_hr": 126, "max_hr": 145, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 116}, {"date": "2026-07-28", "name": "Zwift Sweet Spot", "sport": "bike", "type_raw": "virtual_ride", "duration_min": 70, "distance_km": 34.0, "avg_hr": 148, "max_hr": 168, "avg_power": 215, "norm_power": 228, "elevation_m": 210, "pace_per_100m": null}, {"date": "2026-07-28", "name": "Gym A", "sport": "gym", "type_raw": "strength_training", "duration_min": 45, "distance_km": 0, "avg_hr": 112, "max_hr": 140, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": null}, {"date": "2026-07-25", "name": "Lange Ausfahrt", "sport": "bike", "type_raw": "cycling", "duration_min": 150, "distance_km": 62.0, "avg_hr": 141, "max_hr": 162, "avg_power": 180, "norm_power": 192, "elevation_m": 720, "pace_per_100m": null}, {"date": "2026-07-24", "name": "CSS-Intervalle", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 55, "distance_km": 2.1, "avg_hr": 138, "max_hr": 156, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 114}, {"date": "2026-07-22", "name": "Technik", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 45, "distance_km": 1.8, "avg_hr": 126, "max_hr": 145, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 117}, {"date": "2026-07-21", "name": "Zwift Sweet Spot", "sport": "bike", "type_raw": "virtual_ride", "duration_min": 70, "distance_km": 34.0, "avg_hr": 148, "max_hr": 168, "avg_power": 215, "norm_power": 228, "elevation_m": 210, "pace_per_100m": null}, {"date": "2026-07-21", "name": "Gym A", "sport": "gym", "type_raw": "strength_training", "duration_min": 45, "distance_km": 0, "avg_hr": 112, "max_hr": 140, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": null}, {"date": "2026-07-18", "name": "Lange Ausfahrt", "sport": "bike", "type_raw": "cycling", "duration_min": 150, "distance_km": 62.0, "avg_hr": 141, "max_hr": 162, "avg_power": 180, "norm_power": 192, "elevation_m": 720, "pace_per_100m": null}, {"date": "2026-07-17", "name": "CSS-Intervalle", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 55, "distance_km": 2.1, "avg_hr": 138, "max_hr": 156, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 115}, {"date": "2026-07-15", "name": "Technik", "sport": "swim", "type_raw": "lap_swimming", "duration_min": 45, "distance_km": 1.8, "avg_hr": 126, "max_hr": 145, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": 118}, {"date": "2026-07-14", "name": "Zwift Sweet Spot", "sport": "bike", "type_raw": "virtual_ride", "duration_min": 70, "distance_km": 34.0, "avg_hr": 148, "max_hr": 168, "avg_power": 215, "norm_power": 228, "elevation_m": 210, "pace_per_100m": null}, {"date": "2026-07-14", "name": "Gym A", "sport": "gym", "type_raw": "strength_training", "duration_min": 45, "distance_km": 0, "avg_hr": 112, "max_hr": 140, "avg_power": null, "norm_power": null, "elevation_m": 0, "pace_per_100m": null}], "rhr": [{"date": "2026-07-13", "bpm": 54}, {"date": "2026-07-14", "bpm": 52}, {"date": "2026-07-15", "bpm": 54}, {"date": "2026-07-16", "bpm": 52}, {"date": "2026-07-17", "bpm": 53}, {"date": "2026-07-18", "bpm": 56}, {"date": "2026-07-19", "bpm": 57}, {"date": "2026-07-20", "bpm": 56}, {"date": "2026-07-21", "bpm": 56}, {"date": "2026-07-22", "bpm": 53}, {"date": "2026-07-23", "bpm": 56}, {"date": "2026-07-24", "bpm": 56}, {"date": "2026-07-25", "bpm": 52}, {"date": "2026-07-26", "bpm": 52}, {"date": "2026-07-27", "bpm": 56}, {"date": "2026-07-28", "bpm": 56}, {"date": "2026-07-29", "bpm": 53}, {"date": "2026-07-30", "bpm": 56}, {"date": "2026-07-31", "bpm": 57}, {"date": "2026-08-01", "bpm": 52}, {"date": "2026-08-02", "bpm": 54}, {"date": "2026-08-03", "bpm": 52}, {"date": "2026-08-04", "bpm": 56}, {"date": "2026-08-05", "bpm": 57}, {"date": "2026-08-06", "bpm": 55}, {"date": "2026-08-07", "bpm": 55}, {"date": "2026-08-08", "bpm": 57}, {"date": "2026-08-09", "bpm": 57}, {"date": "2026-08-10", "bpm": 55}, {"date": "2026-08-11", "bpm": 55}, {"date": "2026-08-12", "bpm": 55}, {"date": "2026-08-13", "bpm": 57}, {"date": "2026-08-14", "bpm": 52}, {"date": "2026-08-15", "bpm": 54}, {"date": "2026-08-16", "bpm": 54}], "weights": [{"date": "2026-07-13", "kg": 91.9}, {"date": "2026-07-15", "kg": 91.8}, {"date": "2026-07-17", "kg": 91.7}, {"date": "2026-07-19", "kg": 91.5}, {"date": "2026-07-21", "kg": 91.4}, {"date": "2026-07-23", "kg": 91.3}, {"date": "2026-07-25", "kg": 91.2}, {"date": "2026-07-27", "kg": 91.0}, {"date": "2026-07-29", "kg": 90.9}, {"date": "2026-07-31", "kg": 90.8}, {"date": "2026-08-02", "kg": 90.6}, {"date": "2026-08-04", "kg": 90.5}, {"date": "2026-08-06", "kg": 90.4}, {"date": "2026-08-08", "kg": 90.2}, {"date": "2026-08-10", "kg": 90.1}, {"date": "2026-08-12", "kg": 90.0}, {"date": "2026-08-14", "kg": 89.9}, {"date": "2026-08-16", "kg": 89.7}], "sleep": [{"date": "2026-07-18", "total_h": 6.8, "score": 75, "hrv": 58, "rhr": 51}, {"date": "2026-07-19", "total_h": 7.5, "score": 69, "hrv": 56, "rhr": 51}, {"date": "2026-07-20", "total_h": 7.2, "score": 75, "hrv": 39, "rhr": 51}, {"date": "2026-07-21", "total_h": 7.9, "score": 77, "hrv": 51, "rhr": 51}, {"date": "2026-07-22", "total_h": 7.4, "score": 86, "hrv": 47, "rhr": 51}, {"date": "2026-07-23", "total_h": 7.8, "score": 73, "hrv": 41, "rhr": 51}, {"date": "2026-07-24", "total_h": 7.5, "score": 74, "hrv": 49, "rhr": 51}, {"date": "2026-07-25", "total_h": 7.4, "score": 70, "hrv": 56, "rhr": 51}, {"date": "2026-07-26", "total_h": 7.5, "score": 83, "hrv": 59, "rhr": 51}, {"date": "2026-07-27", "total_h": 7.2, "score": 78, "hrv": 52, "rhr": 51}, {"date": "2026-07-28", "total_h": 8.0, "score": 79, "hrv": 47, "rhr": 51}, {"date": "2026-07-29", "total_h": 7.8, "score": 75, "hrv": 40, "rhr": 51}, {"date": "2026-07-30", "total_h": 7.1, "score": 83, "hrv": 48, "rhr": 51}, {"date": "2026-07-31", "total_h": 7.3, "score": 87, "hrv": 40, "rhr": 51}, {"date": "2026-08-01", "total_h": 7.4, "score": 73, "hrv": 62, "rhr": 51}, {"date": "2026-08-02", "total_h": 6.8, "score": 83, "hrv": 51, "rhr": 51}, {"date": "2026-08-03", "total_h": 8.0, "score": 70, "hrv": 62, "rhr": 51}, {"date": "2026-08-04", "total_h": 7.5, "score": 78, "hrv": 48, "rhr": 51}, {"date": "2026-08-05", "total_h": 7.1, "score": 83, "hrv": 56, "rhr": 51}, {"date": "2026-08-06", "total_h": 6.7, "score": 70, "hrv": 46, "rhr": 51}, {"date": "2026-08-07", "total_h": 7.6, "score": 70, "hrv": 39, "rhr": 51}, {"date": "2026-08-08", "total_h": 7.7, "score": 88, "hrv": 56, "rhr": 51}, {"date": "2026-08-09", "total_h": 7.8, "score": 77, "hrv": 60, "rhr": 51}, {"date": "2026-08-10", "total_h": 7.9, "score": 79, "hrv": 38, "rhr": 51}, {"date": "2026-08-11", "total_h": 7.1, "score": 87, "hrv": 41, "rhr": 51}, {"date": "2026-08-12", "total_h": 6.7, "score": 77, "hrv": 42, "rhr": 51}, {"date": "2026-08-13", "total_h": 7.0, "score": 80, "hrv": 53, "rhr": 51}, {"date": "2026-08-14", "total_h": 6.8, "score": 80, "hrv": 55, "rhr": 51}, {"date": "2026-08-15", "total_h": 7.9, "score": 81, "hrv": 55, "rhr": 51}, {"date": "2026-08-16", "total_h": 7.7, "score": 79, "hrv": 59, "rhr": 51}], "swim_pace": [{"week": 1, "median_pace_s": 118}, {"week": 2, "median_pace_s": 117}, {"week": 3, "median_pace_s": 116}, {"week": 4, "median_pace_s": 115}, {"week": 5, "median_pace_s": 114}]};
+
+const fmtPace = s => s ? `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}` : '–';
+const esc = s => String(s ?? '').replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+function cell(label, val, unit, goal, pct) {
+  if (val === null || val === undefined)
+    return `<div class="cell empty"><div class="label">${label}</div>
+            <div class="val">keine Daten</div><div class="goal">${goal || ''}</div></div>`;
+  return `<div class="cell">
+    <div class="label">${label}</div>
+    <div class="val">${val}${unit ? `<span class="unit">${unit}</span>` : ''}</div>
+    ${goal ? `<div class="goal">${goal}</div>` : ''}
+    ${pct !== undefined ? `<div class="track"><i style="width:${Math.min(100,Math.max(0,pct))}%"></i></div>` : ''}
+  </div>`;
+}
+
+function lanes() {
+  const cur = D.plan.current_week;
+  let out = '';
+  for (let w = 1; w <= 26; w++) {
+    const cls = ['lane'];
+    if (w < cur) cls.push('done');
+    if (w === cur) cls.push('now');
+    if (w % 4 === 0) cls.push('rec');
+    out += `<div class="${cls.join(' ')}" title="Woche ${w}"></div>`;
+  }
+  return out;
+}
+
+function sparkline(series, key, invert) {
+  if (!series.length) return '<div class="chart" style="color:var(--mute);font-size:12px">Noch keine Daten.</div>';
+  const vals = series.map(p => p[key]).filter(v => v != null);
+  if (vals.length < 2) return '<div class="chart" style="color:var(--mute);font-size:12px">Zu wenige Datenpunkte.</div>';
+  const min = Math.min(...vals), max = Math.max(...vals), range = (max - min) || 1;
+  const W = 900, H = 160, pad = 24;
+  const pts = series.filter(p => p[key] != null).map((p, i, arr) => {
+    const x = pad + (i / (arr.length - 1 || 1)) * (W - pad * 2);
+    let norm = (p[key] - min) / range;
+    if (invert) norm = 1 - norm;
+    const y = H - pad - norm * (H - pad * 2);
+    return [x, y];
+  });
+  const line = pts.map(([x, y], i) => `${i ? 'L' : 'M'}${x.toFixed(1)},${y.toFixed(1)}`).join(' ');
+  const area = `${line} L${pts.at(-1)[0].toFixed(1)},${H-pad} L${pts[0][0].toFixed(1)},${H-pad} Z`;
+  return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Verlauf">
+    <path d="${area}" fill="rgba(29,92,122,0.35)"/>
+    <path d="${line}" fill="none" stroke="#4FA96B" stroke-width="2.5" stroke-linejoin="round"/>
+    ${pts.map(([x,y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.5" fill="#F2F6F7"/>`).join('')}
+    <text x="${pad}" y="16" fill="#6E8B99" font-size="11">${max.toFixed(1)}</text>
+    <text x="${pad}" y="${H-6}" fill="#6E8B99" font-size="11">${min.toFixed(1)}</text>
+  </svg></div>`;
+}
+
+const wk = D.weekly.at(-1) || {swims:0,bikes:0,gyms:0,bike_hours:0,swim_meters:0,srpe_load:0};
+const t = D.targets, c = D.current;
+
+document.getElementById('app').innerHTML = `
+<header>
+  <div class="eyebrow">Aquabike 70.3 · Base &amp; Build</div>
+  <h1>Woche ${D.plan.current_week}<span> / 26</span></h1>
+  <div class="sub">Phase ${esc(D.plan.phase)}${D.plan.recovery_week ? ' · Erholungswoche' : ''} · Stand ${D.generated_at.slice(0,10)}</div>
+  <div class="lanes">${lanes()}</div>
+  <div class="lane-key">
+    <span><i style="background:var(--lane)"></i>absolviert</span>
+    <span><i style="background:var(--signal)"></i>aktuell</span>
+    <span><i style="background:repeating-linear-gradient(45deg,#12384F,#12384F 3px,#0B1F2E 3px,#0B1F2E 6px)"></i>Erholung</span>
+  </div>
+</header>
+
+<div class="flags">
+  ${D.flags.map(f => `<div class="flag ${f.level}">
+    <div class="bar"></div>
+    <div class="metric">${esc(f.metric)}</div>
+    <div class="text">${esc(f.text)}</div>
+  </div>`).join('')}
+</div>
+
+<h2>Diese Woche</h2>
+<div class="grid">
+  ${cell('Schwimmeinheiten', wk.swims, ' / 3', wk.swim_meters ? `${(wk.swim_meters/1000).toFixed(1)} km im Wasser` : 'Der grösste Hebel im Plan', wk.swims/3*100)}
+  ${cell('Radeinheiten', wk.bikes, ' / 3', `${wk.bike_hours} h auf dem Rad`, wk.bikes/3*100)}
+  ${cell('Gym', wk.gyms, ' / 2', 'Einheit A + B', wk.gyms/2*100)}
+  ${cell('sRPE-Last', wk.srpe_load || null, '', 'Max. +15% zur Vorwoche')}
+</div>
+
+<h2>Kennzahlen gegen Ziel</h2>
+<div class="grid">
+  ${cell('Gewicht', c.weight_kg, ' kg', `Ziel Dez ${t.weight_dec_kg} kg`, c.weight_kg ? (92 - c.weight_kg)/(92 - t.weight_dec_kg)*100 : undefined)}
+  ${cell('FTP', c.ftp_w, ' W', `Ziel Dez ${t.ftp_dec_w} W · Renntag ${t.ftp_race_w} W`, c.ftp_w ? (c.ftp_w - 250)/(t.ftp_dec_w - 250)*100 : undefined)}
+  ${cell('CSS', c.css_s ? fmtPace(c.css_s) : null, ' /100m', `Ziel Dez ${fmtPace(t.css_dec_s)} · Renntag ${fmtPace(t.css_race_s)}`, c.css_s ? (120 - c.css_s)/(120 - t.css_dec_s)*100 : undefined)}
+  ${cell('Ruhepuls', c.rhr_bpm, ' bpm', '+5 über Baseline = Warnung')}
+  ${cell('Schlaf Ø 7 T', c.sleep_h_7d, ' h', 'Ziel 7,5 h')}
+  ${cell('Oura Readiness', c.readiness, '', 'Tagesform')}
+  ${cell('Taille', c.waist_cm, ' cm', `Unter ${t.waist_target_cm} cm sinkt das Risiko`)}
+</div>
+
+<h2>Gewichtsverlauf</h2>
+${sparkline(D.weights, 'kg', true)}
+
+<h2>Ruhepuls</h2>
+${sparkline(D.rhr, 'bpm', true)}
+
+<h2>Letzte Einheiten</h2>
+<table>
+  <thead><tr><th>Datum</th><th>Sport</th><th>Einheit</th><th class="num">Dauer</th><th class="num">Distanz</th><th class="num">Ø HF</th><th class="num">NP / Pace</th></tr></thead>
+  <tbody>
+  ${D.activities.slice(0,14).map(a => `<tr>
+    <td>${a.date.slice(5)}</td>
+    <td><span class="tag ${a.sport}">${a.sport}</span></td>
+    <td>${esc(a.name)}</td>
+    <td class="num">${a.duration_min} min</td>
+    <td class="num">${a.distance_km ? a.distance_km + ' km' : '–'}</td>
+    <td class="num">${a.avg_hr || '–'}</td>
+    <td class="num">${a.sport === 'swim' ? fmtPace(a.pace_per_100m) : (a.norm_power ? a.norm_power + ' W' : '–')}</td>
+  </tr>`).join('')}
+  </tbody>
+</table>
+
+<footer>
+  Erzeugt ${D.generated_at} · Garmin Connect (inkl. Zwift) + Oura · FTP, CSS und Taille kommen aus data/manual.json
+</footer>`;
+</script>
+</body>
+</html>

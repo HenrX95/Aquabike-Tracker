@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-16T00:15:14+00:00",
+  "generated_at": "2026-07-17T06:06:17+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 1,
@@ -17,9 +17,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 51,
+    "rhr_bpm": 49,
     "sleep_h_7d": 5.0,
-    "readiness": 63,
+    "readiness": 60,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -473,6 +473,10 @@
     {
       "date": "2026-07-15",
       "bpm": 51
+    },
+    {
+      "date": "2026-07-16",
+      "bpm": 49
     }
   ],
   "weights": [
@@ -482,20 +486,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-06-10",
-      "total_h": 0.16,
-      "score": 89,
-      "hrv": 95,
-      "rhr": 43
-    },
-    {
-      "date": "2026-06-11",
-      "total_h": 0.01,
-      "score": 84,
-      "hrv": 80,
-      "rhr": 52
-    },
     {
       "date": "2026-06-12",
       "total_h": 7.42,
@@ -691,6 +681,20 @@
       "score": 79,
       "hrv": 54,
       "rhr": 47
+    },
+    {
+      "date": "2026-07-16",
+      "total_h": 8.01,
+      "score": 73,
+      "hrv": 66,
+      "rhr": 46
+    },
+    {
+      "date": "2026-07-17",
+      "total_h": 5.32,
+      "score": 48,
+      "hrv": 95,
+      "rhr": 44
     }
   ],
   "swim_pace": [

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-17T06:06:17+00:00",
+  "generated_at": "2026-07-18T00:13:39+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 1,
@@ -17,9 +17,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 49,
-    "sleep_h_7d": 5.0,
-    "readiness": 60,
+    "rhr_bpm": 47,
+    "sleep_h_7d": 4.3,
+    "readiness": 69,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -33,7 +33,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 4.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -42,16 +42,33 @@
       "phase": "1 – Grundlage",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 0,
+      "bikes": 1,
       "gyms": 0,
-      "bike_hours": 0.0,
+      "bike_hours": 1.6,
       "swim_meters": 1850,
       "srpe_load": 116,
       "rpe_covered": 1,
-      "rpe_missing": 0
+      "rpe_missing": 1
     }
   ],
   "activities": [
+    {
+      "date": "2026-07-16",
+      "activity_id": 23627022045,
+      "name": "München Radfahren",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 98.5,
+      "distance_km": 49.74,
+      "avg_hr": 147.0,
+      "max_hr": 179.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 476,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-07-15",
       "activity_id": 23609345346,
@@ -477,6 +494,14 @@
     {
       "date": "2026-07-16",
       "bpm": 49
+    },
+    {
+      "date": "2026-07-17",
+      "bpm": 51
+    },
+    {
+      "date": "2026-07-18",
+      "bpm": 47
     }
   ],
   "weights": [
@@ -691,9 +716,9 @@
     },
     {
       "date": "2026-07-17",
-      "total_h": 5.32,
-      "score": 48,
-      "hrv": 95,
+      "total_h": 0.25,
+      "score": 59,
+      "hrv": 93,
       "rhr": 44
     }
   ],

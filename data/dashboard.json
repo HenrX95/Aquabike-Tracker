@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T00:13:39+00:00",
+  "generated_at": "2026-07-19T00:14:38+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 1,
@@ -17,9 +17,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 47,
-    "sleep_h_7d": 4.3,
-    "readiness": 69,
+    "rhr_bpm": 43,
+    "sleep_h_7d": 4.2,
+    "readiness": 84,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -33,7 +33,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 4.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 4.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -42,16 +42,33 @@
       "phase": "1 – Grundlage",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 1,
+      "bikes": 2,
       "gyms": 0,
-      "bike_hours": 1.6,
+      "bike_hours": 3.2,
       "swim_meters": 1850,
-      "srpe_load": 116,
-      "rpe_covered": 1,
+      "srpe_load": 1032,
+      "rpe_covered": 2,
       "rpe_missing": 1
     }
   ],
   "activities": [
+    {
+      "date": "2026-07-18",
+      "activity_id": 23645549852,
+      "name": "München Radfahren",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 91.6,
+      "distance_km": 41.06,
+      "avg_hr": 129.0,
+      "max_hr": 153.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 347,
+      "pace_per_100m": null,
+      "rpe_garmin": 10,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-07-16",
       "activity_id": 23627022045,
@@ -368,10 +385,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-04-19",
-      "bpm": 52
-    },
-    {
       "date": "2026-04-24",
       "bpm": 68
     },
@@ -501,7 +514,7 @@
     },
     {
       "date": "2026-07-18",
-      "bpm": 47
+      "bpm": 43
     }
   ],
   "weights": [
@@ -511,13 +524,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-06-12",
-      "total_h": 7.42,
-      "score": 74,
-      "hrv": 105,
-      "rhr": 43
-    },
     {
       "date": "2026-06-13",
       "total_h": 0.18,
@@ -720,6 +726,13 @@
       "score": 59,
       "hrv": 93,
       "rhr": 44
+    },
+    {
+      "date": "2026-07-18",
+      "total_h": 7.44,
+      "score": 77,
+      "hrv": 89,
+      "rhr": 40
     }
   ],
   "swim_pace": [

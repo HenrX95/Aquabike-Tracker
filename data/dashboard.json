@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-20T08:26:35+00:00",
+  "generated_at": "2026-07-21T06:42:23+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 2,
@@ -18,8 +18,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 53,
-    "sleep_h_7d": 5.4,
-    "readiness": 69,
+    "sleep_h_7d": 5.6,
+    "readiness": 80,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -28,12 +28,17 @@
     {
       "level": "amber",
       "metric": "Schwimmfrequenz",
-      "text": "Nur 2 Schwimmeinheiten diese Woche (Ziel 3). Groesster Hebel im Plan."
+      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 3). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
     },
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.6 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -49,9 +54,37 @@
       "srpe_load": 1122,
       "rpe_covered": 3,
       "rpe_missing": 1
+    },
+    {
+      "week": 2,
+      "phase": "1 – Grundlage",
+      "recovery_week": false,
+      "swims": 0,
+      "bikes": 0,
+      "gyms": 0,
+      "bike_hours": 0.0,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "activities": [
+    {
+      "date": "2026-07-20",
+      "activity_id": 23668868477,
+      "name": "München Laufen",
+      "sport": "other",
+      "type_raw": "running",
+      "duration_min": 109.3,
+      "distance_km": 12.27,
+      "avg_hr": 120.0,
+      "max_hr": 160.0,
+      "avg_power": 209.0,
+      "norm_power": 259.0,
+      "elevation_m": 50,
+      "pace_per_100m": null
+    },
     {
       "date": "2026-07-19",
       "activity_id": 23653126550,
@@ -536,6 +569,10 @@
     {
       "date": "2026-07-19",
       "bpm": 53
+    },
+    {
+      "date": "2026-07-20",
+      "bpm": 53
     }
   ],
   "weights": [
@@ -545,13 +582,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-06-15",
-      "total_h": 0.14,
-      "score": 79,
-      "hrv": 72,
-      "rhr": 46
-    },
     {
       "date": "2026-06-16",
       "total_h": 0.14,
@@ -750,10 +780,17 @@
     },
     {
       "date": "2026-07-20",
-      "total_h": 6.66,
+      "total_h": 0.13,
       "score": 56,
       "hrv": 78,
       "rhr": 46
+    },
+    {
+      "date": "2026-07-21",
+      "total_h": 7.85,
+      "score": 85,
+      "hrv": 77,
+      "rhr": 44
     }
   ],
   "swim_pace": [

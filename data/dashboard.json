@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-27T10:52:52+00:00",
+  "generated_at": "2026-07-28T00:15:34+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 3,
@@ -17,14 +17,19 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 54,
-    "sleep_h_7d": 3.7,
-    "readiness": 86,
+    "rhr_bpm": 107,
+    "sleep_h_7d": 4.5,
+    "readiness": 63,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
   },
   "flags": [
+    {
+      "level": "red",
+      "metric": "sRPE-Last",
+      "text": "Wochenlast +313% (Grenze 15%). Naechste Qualitaetseinheit zuruecknehmen."
+    },
     {
       "level": "amber",
       "metric": "Schwimmfrequenz",
@@ -32,13 +37,8 @@
     },
     {
       "level": "amber",
-      "metric": "RPE",
-      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
-    },
-    {
-      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 3.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 4.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -67,9 +67,39 @@
       "srpe_load": 315,
       "rpe_covered": 1,
       "rpe_missing": 2
+    },
+    {
+      "week": 3,
+      "phase": "1 – Grundlage",
+      "recovery_week": false,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "bike_hours": 2.2,
+      "swim_meters": 0,
+      "srpe_load": 1302,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "activities": [
+    {
+      "date": "2026-07-27",
+      "activity_id": 23753635536,
+      "name": "München Radfahren",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 130.2,
+      "distance_km": 49.5,
+      "avg_hr": 123.0,
+      "max_hr": 164.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 329,
+      "pace_per_100m": null,
+      "rpe_garmin": 10,
+      "feel_garmin": 7.5
+    },
     {
       "date": "2026-07-22",
       "activity_id": 23693961236,
@@ -588,6 +618,10 @@
     {
       "date": "2026-07-22",
       "bpm": 54
+    },
+    {
+      "date": "2026-07-27",
+      "bpm": 107
     }
   ],
   "weights": [
@@ -597,13 +631,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-06-21",
-      "total_h": 6.42,
-      "score": 72,
-      "hrv": 98,
-      "rhr": 42
-    },
     {
       "date": "2026-06-22",
       "total_h": 8.65,
@@ -804,6 +831,13 @@
       "total_h": 8.81,
       "score": 84,
       "hrv": 66,
+      "rhr": 44
+    },
+    {
+      "date": "2026-07-27",
+      "total_h": 5.29,
+      "score": 53,
+      "hrv": 64,
       "rhr": 44
     }
   ],

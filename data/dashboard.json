@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-29T00:14:37+00:00",
+  "generated_at": "2026-07-30T06:14:53+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 3,
@@ -18,8 +18,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 107,
-    "sleep_h_7d": 5.5,
-    "readiness": 75,
+    "sleep_h_7d": 6.5,
+    "readiness": 64,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -38,7 +38,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 6.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -632,20 +632,6 @@
   ],
   "sleep": [
     {
-      "date": "2026-06-23",
-      "total_h": 7.72,
-      "score": 63,
-      "hrv": 94,
-      "rhr": 43
-    },
-    {
-      "date": "2026-06-24",
-      "total_h": 0.52,
-      "score": 77,
-      "hrv": 80,
-      "rhr": 54
-    },
-    {
       "date": "2026-06-26",
       "total_h": 0.7,
       "score": 85,
@@ -839,6 +825,20 @@
       "score": 72,
       "hrv": 79,
       "rhr": 42
+    },
+    {
+      "date": "2026-07-29",
+      "total_h": 6.71,
+      "score": 70,
+      "hrv": 85,
+      "rhr": 43
+    },
+    {
+      "date": "2026-07-30",
+      "total_h": 7.33,
+      "score": 81,
+      "hrv": 59,
+      "rhr": 49
     }
   ],
   "swim_pace": [

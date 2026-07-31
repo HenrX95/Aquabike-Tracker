@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T06:14:53+00:00",
+  "generated_at": "2026-07-31T08:12:35+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
     "current_week": 3,
@@ -18,7 +18,7 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 107,
-    "sleep_h_7d": 6.5,
+    "sleep_h_7d": 5.5,
     "readiness": 64,
     "ftp_w": 250,
     "css_s": 120,
@@ -38,7 +38,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 6.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -463,30 +463,9 @@
       "pace_per_100m": 131,
       "rpe_garmin": 2.0,
       "feel_garmin": 2.5
-    },
-    {
-      "date": "2026-05-01",
-      "activity_id": 22726833501,
-      "name": "Training 1 Technik 2,2km",
-      "sport": "swim",
-      "type_raw": "lap_swimming",
-      "duration_min": 58.6,
-      "distance_km": 2.45,
-      "avg_hr": 150.0,
-      "max_hr": 197.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 143,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-05-01",
-      "bpm": 53
-    },
     {
       "date": "2026-05-02",
       "bpm": 49
@@ -835,17 +814,13 @@
     },
     {
       "date": "2026-07-30",
-      "total_h": 7.33,
+      "total_h": 0.18,
       "score": 81,
       "hrv": 59,
       "rhr": 49
     }
   ],
   "swim_pace": [
-    {
-      "week": -10,
-      "median_pace_s": 143
-    },
     {
       "week": -9,
       "median_pace_s": 131

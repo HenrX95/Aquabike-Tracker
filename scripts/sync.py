@@ -26,7 +26,8 @@ from garminconnect import Garmin
 
 # ---------------------------------------------------------------- Konfiguration
 
-PLAN_START = date.fromisoformat(os.getenv("PLAN_START", "2026-07-13"))
+PLAN_START = date.fromisoformat(os.getenv("PLAN_START", "2026-08-03"))
+RACE_DATE = date.fromisoformat(os.getenv("RACE_DATE", "2027-04-24"))  # 70.3 Venice-Jesolo
 LOOKBACK_DAYS = 90          # so viel Historie halten wir im JSON
 DATA = Path(__file__).resolve().parent.parent / "data"
 OUT = DATA / "dashboard.json"
@@ -173,11 +174,37 @@ def sport_bucket(type_key: str) -> str:
     t = (type_key or "").lower()
     if "swim" in t:
         return "swim"
-    if "cycl" in t or "bik" in t or "ride" in t or "virtual_ride" in t:
+    if "cycl" in t or "bik" in t or "ride" in t:
         return "bike"
-    if "strength" in t or "training" in t or "fitness" in t:
+    if "strength" in t or "fitness_equipment" in t or "gym" in t:
         return "gym"
+    if "walk" in t or "hik" in t:
+        return "walk"
+    if "run" in t:
+        return "run"
+    if "yoga" in t or "pilates" in t or "mobility" in t or "stretch" in t:
+        return "mobility"
+    if "cardio" in t or "elliptical" in t or "training" in t:
+        return "cardio"
     return "other"
+
+
+# Anzeige-Namen und Reihenfolge fuer das Dashboard
+SPORT_LABELS = {
+    "swim": "Schwimmen",
+    "bike": "Rad",
+    "gym": "Kraft",
+    "walk": "Gehen / Wandern",
+    "run": "Laufen",
+    "mobility": "Mobility",
+    "cardio": "Cardio",
+    "other": "Sonstiges",
+}
+SPORT_ORDER = ["swim", "bike", "gym", "walk", "run", "mobility", "cardio", "other"]
+
+# Disziplinen mit Wochen-Soll (Ampel). Gehen/Laufen bewusst OHNE Soll —
+# wird erfasst, aber nicht als Versagen dargestellt wenn es fehlt.
+SPORT_TARGETS = {"swim": 3, "bike": 3, "gym": 2}
 
 
 # ---------------------------------------------------------------- Garmin
@@ -469,6 +496,113 @@ def build_css(activities):
     return out
 
 
+def build_by_sport(activities):
+    """
+    Progress je Sportart: Summen ueber den ganzen Plan + aktuelle Woche.
+    Alle Garmin-Sportarten, nicht nur die drei Kerndisziplinen.
+    """
+    cur_w = plan_week(date.today())
+    stats = {}
+    for a in activities:
+        w = plan_week(date.fromisoformat(a["date"]))
+        if w < 1:
+            continue
+        s = a["sport"]
+        st = stats.setdefault(
+            s,
+            {
+                "sport": s,
+                "label": SPORT_LABELS.get(s, s),
+                "sessions_total": 0,
+                "sessions_week": 0,
+                "hours_total": 0.0,
+                "km_total": 0.0,
+                "target_per_week": SPORT_TARGETS.get(s),
+                "longest_km": 0.0,
+                "longest_min": 0,
+            },
+        )
+        st["sessions_total"] += 1
+        st["hours_total"] += a["duration_min"] / 60
+        st["km_total"] += a["distance_km"] or 0
+        st["longest_km"] = max(st["longest_km"], a["distance_km"] or 0)
+        st["longest_min"] = max(st["longest_min"], a["duration_min"])
+        if w == cur_w:
+            st["sessions_week"] += 1
+
+    for st in stats.values():
+        st["hours_total"] = round(st["hours_total"], 1)
+        st["km_total"] = round(st["km_total"], 1)
+        st["longest_km"] = round(st["longest_km"], 1)
+
+    # in Plan-Reihenfolge sortiert zurueckgeben
+    return [stats[s] for s in SPORT_ORDER if s in stats]
+
+
+def build_analysis(activities, weekly, manual):
+    """
+    Analyse der Einheiten gegen die 70.3-Ziele.
+    - Zeit-in-Zone beim Rad (Sweet Spot / Schwelle als FTP-Treiber)
+    - Schwimm-Volumen gegen Renndistanz
+    - Geh/Lauf-Aufbau gegen 21,1 km
+    - Trainingslast-Trend (sRPE)
+    """
+    ftp = manual.get("ftp_w") or 250
+
+    # --- Rad: Zeit-in-Zone ueber Normalized Power ---
+    zone_min = {"recovery": 0, "endurance": 0, "tempo": 0, "sweetspot": 0, "threshold": 0, "vo2": 0}
+    bike_sessions = 0
+    for a in activities:
+        if a["sport"] != "bike":
+            continue
+        np = a.get("norm_power") or a.get("avg_power")
+        if not np:
+            continue
+        bike_sessions += 1
+        pct = np / ftp
+        dur = a["duration_min"]
+        if pct < 0.55:
+            zone_min["recovery"] += dur
+        elif pct < 0.75:
+            zone_min["endurance"] += dur
+        elif pct < 0.88:
+            zone_min["tempo"] += dur
+        elif pct < 0.95:
+            zone_min["sweetspot"] += dur
+        elif pct < 1.05:
+            zone_min["threshold"] += dur
+        else:
+            zone_min["vo2"] += dur
+
+    # --- Schwimmen: laengste kontinuierliche Distanz vs. 1,9 km ---
+    swim_longest = max((a["distance_km"] for a in activities
+                        if a["sport"] == "swim" and a.get("distance_km")), default=0)
+
+    # --- Gehen/Laufen: laengste Einheit vs. 21,1 km Renndistanz ---
+    walk_run = [a for a in activities if a["sport"] in ("walk", "run")]
+    wr_longest = max((a["distance_km"] for a in walk_run if a.get("distance_km")), default=0)
+    wr_total = round(sum(a["distance_km"] or 0 for a in walk_run), 1)
+
+    # --- Trainingslast-Trend: letzte 4 Nicht-Erholungswochen ---
+    load_trend = [
+        {"week": w["week"], "load": w["srpe_load"]}
+        for w in weekly if w["srpe_load"] > 0
+    ][-6:]
+
+    return {
+        "ftp_used": ftp,
+        "bike_zone_min": {k: round(v) for k, v in zone_min.items()},
+        "bike_quality_min": round(zone_min["sweetspot"] + zone_min["threshold"] + zone_min["vo2"]),
+        "bike_sessions_analyzed": bike_sessions,
+        "swim_longest_km": round(swim_longest, 2),
+        "swim_race_km": 1.9,
+        "walkrun_longest_km": round(wr_longest, 1),
+        "walkrun_total_km": wr_total,
+        "walkrun_race_km": 21.1,
+        "load_trend": load_trend,
+    }
+
+
 # ---------------------------------------------------------------- Main
 
 
@@ -509,10 +643,20 @@ def main():
 
     weekly = build_weekly(activities, manual)
     cur_week = plan_week(end)
+    days_to_race = (RACE_DATE - end).days
 
     payload = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "athlete": "Henrik Hundesrügge",
+        "race": {
+            "name": "IRONMAN 70.3 Venice-Jesolo",
+            "date": RACE_DATE.isoformat(),
+            "days_to_go": days_to_race,
+            "weeks_to_go": days_to_race // 7,
+            "swim_km": 1.9,
+            "bike_km": 90,
+            "run_km": 21.1,
+        },
         "plan": {
             "current_week": cur_week,
             "phase": phase_for_week(cur_week),
@@ -546,6 +690,8 @@ def main():
         },
         "flags": build_flags(rhr, weekly, manual, sleep),
         "weekly": weekly,
+        "by_sport": build_by_sport(activities),
+        "analysis": build_analysis(activities, weekly, manual),
         "activities": sorted(activities, key=lambda a: a["date"], reverse=True)[:40],
         "rhr": rhr[-60:],
         "weights": weights[-60:],

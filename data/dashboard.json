@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-02T06:48:40+00:00",
+  "generated_at": "2026-08-03T08:52:43+00:00",
   "athlete": "Henrik Hundesrügge",
   "plan": {
-    "current_week": 3,
+    "current_week": 4,
     "phase": "1 – Grundlage",
-    "recovery_week": false,
+    "recovery_week": true,
     "weeks_total": 26
   },
   "targets": {
@@ -17,9 +17,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 52,
+    "rhr_bpm": 94,
     "sleep_h_7d": 4.0,
-    "readiness": 82,
+    "readiness": 53,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -79,10 +79,25 @@
       "swim_meters": 0,
       "srpe_load": 1302,
       "rpe_covered": 1,
-      "rpe_missing": 0
+      "rpe_missing": 1
     }
   ],
   "activities": [
+    {
+      "date": "2026-08-02",
+      "activity_id": 23820270727,
+      "name": "München Laufen",
+      "sport": "other",
+      "type_raw": "running",
+      "duration_min": 40.5,
+      "distance_km": 6.08,
+      "avg_hr": 148.0,
+      "max_hr": 168.0,
+      "avg_power": 319.0,
+      "norm_power": 344.0,
+      "elevation_m": 33,
+      "pace_per_100m": null
+    },
     {
       "date": "2026-07-27",
       "activity_id": 23753635536,
@@ -597,6 +612,10 @@
     {
       "date": "2026-07-31",
       "bpm": 52
+    },
+    {
+      "date": "2026-08-02",
+      "bpm": 94
     }
   ],
   "weights": [
@@ -809,7 +828,10 @@
     },
     {
       "date": "2026-08-02",
-      "total_h": 0.21
+      "total_h": 0.17,
+      "score": 77,
+      "hrv": 62,
+      "rhr": 49
     }
   ],
   "swim_pace": [

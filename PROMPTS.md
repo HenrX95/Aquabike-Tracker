@@ -1,12 +1,14 @@
-# Coach-Routinen
+# Coach-Routinen – IRONMAN 70.3 Venice-Jesolo (24.04.2027)
 
-Die Alternative zu Cowork: nicht eine Software, die von selbst läuft, sondern feste Rituale
-mit fertigen Prompts. Du kopierst einen Block, ich mache den Rest. Aufwand für dich:
-30 Sekunden täglich, 10 Minuten sonntags.
+Nicht eine Software, die von selbst läuft, sondern feste Rituale mit fertigen Prompts.
+Du kopierst einen Block, ich mache den Rest. Aufwand für dich: 30 Sekunden täglich,
+10 Minuten sonntags.
 
 **Voraussetzung:** Diese Prompts in einem Chat im Projekt *Aquabike* verwenden — dort liegen
 Trainingsplan und Tracker, ich habe sie also automatisch im Zugriff. `dashboard.json` entweder
 per Raw-URL (öffentliches Repo) oder als Anhang.
+
+Raw-URL: https://raw.githubusercontent.com/HenrX95/Aquabike-Tracker/main/data/dashboard.json
 
 ---
 
@@ -14,25 +16,31 @@ per Raw-URL (öffentliches Repo) oder als Anhang.
 
 > Daily Check. Hier ist dashboard.json: [URL oder Datei anhängen]
 >
-> 1. Nenn mir die heutige Einheit laut Plan (Standard-Trainingswoche, Abschnitt 4) mit den
+> 1. Nenn mir die heutige Einheit laut Plan (Standard-Trainingswoche, Abschnitt 8) mit den
 >    konkreten Intervallen für die aktuelle Phase.
-> 2. Prüfe die Ampeln. Wenn eine rot ist, sag mir, was ich an der heutigen Einheit ändere.
+> 2. Prüfe die Ampeln (sRPE, RHF, HRV, Knie, Schlaf). Wenn eine rot oder amber ist, sag mir,
+>    was ich an der heutigen Einheit ändere.
 > 3. Ein Satz zur Ernährung: welcher Tagestyp ist heute, wie viele kcal.
 >
 > Maximal 8 Zeilen. Keine Motivationssprüche.
 
 ---
 
-## Wöchentlich (Sonntagabend, ~10 Minuten)
+## Wöchentlich (Sonntagabend, ~10 Minuten) — der eigentliche Hebel
+
+Das Dashboard zeigt dir täglich die Zahlen. Dieser Review ist die wöchentliche Entscheidung:
+was änderst du. Ohne dieses Ritual ist das ganze System ein Thermometer ohne Arzt.
 
 > Wochenreview Woche [N]. dashboard.json anbei.
 >
 > Analysiere:
-> - **Compliance**: Soll vs. Ist bei Schwimmen (3), Rad (3), Gym (2). Wo ist die Lücke?
+> - **Compliance**: Soll vs. Ist bei Schwimmen (2), Rad (3), Gym (2). Wo ist die Lücke?
 > - **Last**: sRPE-Trend über die letzten 4 Wochen. Steigerung im Rahmen von 10–15 %?
-> - **Regeneration**: RHF-Trend, Schlaf, Oura-Readiness. Zeichen von Überlastung?
-> - **Knie**: Ampelstatus. Gym-Progression freigeben oder halten?
+> - **Regeneration**: RHF- und HRV-Trend, Schlaf, Oura-Readiness. Zeichen von Überlastung?
+> - **Knie**: Ampelstatus. Gym- und Geh-Progression freigeben oder halten?
+> - **Gehen**: längste Einheit diese Phase — bin ich auf der Progression (siehe Abschnitt 7)?
 > - **Gewicht**: Wochentrend gegen die ~0,4–0,5 kg/Woche. Zu schnell → Kalorien hoch.
+> - **Prognose**: Was sagt der forecast-Block auf den Renntag? Auf Kurs oder unter Plan?
 >
 > Dann: konkrete Einheiten für die kommende Woche, Tag für Tag, mit Intervallen und
 > Zielwerten. Wenn du etwas gegenüber dem Plan änderst, begründe es.
@@ -41,18 +49,31 @@ per Raw-URL (öffentliches Repo) oder als Anhang.
 
 ---
 
-## Nach jedem Test (Woche 1, 6, 14, 20, 26)
+## Nach jedem Test (Woche 1, 14, 20, 28, 35)
 
 > Testauswertung Woche [N]. Ergebnisse:
 > - FTP: [X] W (vorher [Y] W)
 > - CSS: [MM:SS]/100m (vorher [MM:SS])
+> - Aero-30-min: [X] W / [X] km/h (falls getestet)
+> - Längster Gehtest: [X] km, Knie danach [X]/10
 > - Gewicht: [X] kg · Taille: [X] cm
 >
-> Vergleiche gegen die Meilenstein-Tabelle (Abschnitt 11). Liege ich auf Kurs für
-> 285 W / CSS 1:45 im Dezember? Wenn nicht: was ändern wir, und woran erkenne ich in
-> 4 Wochen, ob es gewirkt hat?
+> Vergleiche gegen die Meilenstein-Tabelle (Abschnitt 12). Liege ich auf Kurs für
+> FTP 280–290 W, CSS ~1:50 und 35 km/h am Renntag? Wenn nicht: was ändern wir, und
+> woran erkenne ich in 4 Wochen, ob es gewirkt hat?
 >
 > Wenn ich vorne liege: nach oben umplanen, wie im Plan vorgesehen.
+
+---
+
+## Aero-Position (ab Phase 3, wenn der Aufsatz montiert ist)
+
+> Aero-Check. Ich fahre seit [N] Wochen mit Aufsatz. Aktuell halte ich die Position
+> [X] Minuten am Stück bevor Rücken/Nacken/Hüftbeuger zu sehr ziehen. Wattverlust
+> gegenüber aufrecht: [ca. X W].
+>
+> Ist das auf Kurs für 2,5 h Renndistanz? Was an Position, Rumpf-Gym oder Aufbau ändere ich?
+> Und: meldet sich das Knie durch die Hüftbeuger-Belastung?
 
 ---
 
@@ -63,11 +84,12 @@ per Raw-URL (öffentliches Repo) oder als Anhang.
 > ohne den Plan zu verlieren? Was streiche ich, was hole ich nicht nach?
 
 **Knie meldet sich**
-> Knieschmerz [X]/10 seit [Datum], bei [Übung/Einheit]. Was regressiere ich konkret?
+> Knieschmerz [X]/10 seit [Datum], bei [Übung/Einheit/Gehtest]. Was regressiere ich konkret?
 > Ab wann muss ich zum Arzt statt zu dir?
 
 **Woche bricht zusammen**
-> Diese Woche schaffe ich nur [N] Stunden. Priorisiere nach der Regel aus Abschnitt 4.
+> Diese Woche schaffe ich nur [N] Stunden. Priorisiere nach der Regel aus Abschnitt 8
+> (2 Schwimmen, lange Ausfahrt, 1 Qualitäts-Rad, 1 Gehtest).
 
 ---
 
@@ -75,9 +97,18 @@ per Raw-URL (öffentliches Repo) oder als Anhang.
 
 > Monatsreview Ernährung. Gewichtsverlauf und Taille aus dashboard.json.
 >
-> Trend gegen die Prognose (~0,4–0,5 kg/Woche, ~85–86 kg im Dezember)? Taille ~1 cm/Monat?
+> Trend gegen die Prognose (~0,4–0,5 kg/Woche, ~82–85 kg bis zur Rennsaison)? Taille ~1 cm/Monat?
 > Falls zu schnell oder zu langsam: welche Mahlzeit ändere ich wie — keine Snacks einführen,
 > sondern Portionen anpassen wie im Plan beschrieben.
+
+---
+
+## Renn-Verpflegung testen (ab Phase 3)
+
+> Fueling-Check. Auf der letzten langen Ausfahrt habe ich [X] g Kohlenhydrate/Stunde
+> genommen ([was genau]). Magen: [ok / Probleme]. Ziel sind 60–90 g/h für den Renntag.
+>
+> Passt die Menge und das Timing? Was teste ich auf der nächsten Ausfahrt?
 
 ---
 

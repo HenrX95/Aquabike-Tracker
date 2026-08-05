@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Aquabike — Fortschritt</title>
+<title>IRONMAN 70.3 — Fortschritt</title>
 <style>
   :root {
     --deep:    #0B1F2E;
@@ -228,14 +228,15 @@ function sparkline(series, key, invert) {
 }
 
 const wk = D.weekly.at(-1) || {swims:0,bikes:0,gyms:0,bike_hours:0,swim_meters:0,srpe_load:0};
-const t = D.targets, c = D.current;
+const t = D.targets || {}, c = D.current || {};
+const st = (D.plan && D.plan.sport_targets) || {swim:2, bike:3, gym:2};
 
 const race = D.race || {};
 
 document.getElementById('app').innerHTML = `
 <header>
   <div class="eyebrow">${esc(race.name || 'Triathlon 70.3')} · ${race.date || ''}</div>
-  <h1>Woche ${D.plan.current_week}<span> / 26</span></h1>
+  <h1>Woche ${D.plan.current_week}<span> / ${D.plan.weeks_total || 38}</span></h1>
   <div class="sub">Phase ${esc(D.plan.phase)}${D.plan.recovery_week ? ' · Erholungswoche' : ''} · Stand ${D.generated_at.slice(0,10)}</div>
   ${race.days_to_go !== undefined ? `<div class="countdown">
     <span class="cd-num">${race.days_to_go}</span> Tage bis zum Rennen
@@ -259,8 +260,8 @@ document.getElementById('app').innerHTML = `
 
 <h2>Diese Woche</h2>
 <div class="grid">
-  ${cell('Schwimmeinheiten', wk.swims, ' / 3', wk.swim_meters ? `${(wk.swim_meters/1000).toFixed(1)} km im Wasser` : 'Der grösste Hebel im Plan', wk.swims/3*100)}
-  ${cell('Radeinheiten', wk.bikes, ' / 3', `${wk.bike_hours} h auf dem Rad`, wk.bikes/3*100)}
+  ${cell('Schwimmeinheiten', wk.swims, ` / ${st.swim}`, wk.swim_meters ? `${(wk.swim_meters/1000).toFixed(1)} km im Wasser` : 'Konstanz schlägt Umfang', wk.swims/st.swim*100)}
+  ${cell('Radeinheiten', wk.bikes, ` / ${st.bike}`, `${wk.bike_hours} h auf dem Rad · Soll ${D.plan.bike_hours_target} h`, wk.bikes/st.bike*100)}
   ${cell('Gym', wk.gyms, ' / 2', 'Einheit A + B', wk.gyms/2*100)}
   ${cell('sRPE-Last', wk.srpe_load || null, '',
       wk.rpe_missing ? `${wk.rpe_missing} Einheit(en) unbewertet` : 'Max. +15% zur Vorwoche')}
@@ -268,9 +269,9 @@ document.getElementById('app').innerHTML = `
 
 <h2>Kennzahlen gegen Ziel</h2>
 <div class="grid">
-  ${cell('Gewicht', c.weight_kg, ' kg', `Ziel Dez ${t.weight_dec_kg} kg`, c.weight_kg ? (92 - c.weight_kg)/(92 - t.weight_dec_kg)*100 : undefined)}
-  ${cell('FTP', c.ftp_w, ' W', `Ziel Dez ${t.ftp_dec_w} W · Renntag ${t.ftp_race_w} W`, c.ftp_w ? (c.ftp_w - 250)/(t.ftp_dec_w - 250)*100 : undefined)}
-  ${cell('CSS', c.css_s ? fmtPace(c.css_s) : null, ' /100m', `Ziel Dez ${fmtPace(t.css_dec_s)} · Renntag ${fmtPace(t.css_race_s)}`, c.css_s ? (120 - c.css_s)/(120 - t.css_dec_s)*100 : undefined)}
+  ${cell('FTP', c.ftp_w, ' W', `Wegmarke jetzt ${D.plan.ftp_waypoint_w} W · Renntag ${t.ftp_race_w} W`, c.ftp_w ? (c.ftp_w - t.ftp_start_w)/(t.ftp_race_w - t.ftp_start_w)*100 : undefined)}
+  ${cell('Gewicht', c.weight_kg, ' kg', `Soll jetzt ${D.plan.weight_target_kg} kg · Ziel ${t.weight_target_kg} kg bis W28${D.plan.deficit_active ? '' : ' · Defizit beendet'}`, c.weight_kg ? (t.weight_start_kg - c.weight_kg)/(t.weight_start_kg - t.weight_target_kg)*100 : undefined)}
+  ${cell('CSS', c.css_s ? fmtPace(c.css_s) : null, ' /100m', `Renntag ${fmtPace(t.css_race_s)} /100m`, c.css_s ? (t.css_start_s - c.css_s)/(t.css_start_s - t.css_race_s)*100 : undefined)}
   ${cell('Ruhepuls', c.rhr_bpm, ' bpm', '+5 über Baseline = Warnung')}
   ${cell('Schlaf Ø 7 T', c.sleep_h_7d, ' h', 'Ziel 7,5 h')}
   ${cell('Oura Readiness', c.readiness, '', 'Tagesform')}
@@ -303,14 +304,22 @@ document.getElementById('app').innerHTML = `
     const an = D.analysis || {};
     const zones = an.bike_zone_min || {};
     return `
+    ${cell('Längster Block ≥' + (an.race_power_w ? an.race_power_w[0] : 235) + ' W', an.race_power_longest_min || null, ' min',
+        `Soll jetzt ${an.race_power_target_min||0} min · Renntag ${an.race_power_final_target_min||150} min`,
+        an.race_power_longest_min && an.race_power_target_min ? an.race_power_longest_min/an.race_power_target_min*100 : undefined)}
     ${cell('Rad Quality-Minuten', an.bike_quality_min || null, ' min',
-        `Sweet Spot + Schwelle + VO2 · ${an.bike_sessions_analyzed||0} Ausfahrten (FTP ${an.ftp_used})`)}
+        `Soll ${an.bike_quality_target_min||90} min/Woche · ${an.bike_sessions_analyzed||0} Ausfahrten (FTP ${an.ftp_used})`,
+        an.bike_quality_min && an.bike_quality_target_min ? an.bike_quality_min/an.bike_quality_target_min*100 : undefined)}
+    ${cell('Aeroposition', an.aero_minutes_week || null, ' min',
+        'Min/Woche in Position · trägst du in manual.json ein')}
     ${cell('Schwimmen längste', an.swim_longest_km || null, ' km',
         `Renndistanz ${an.swim_race_km} km`, an.swim_longest_km ? an.swim_longest_km/an.swim_race_km*100 : undefined)}
     ${cell('Gehen/Laufen längste', an.walkrun_longest_km || null, ' km',
         `Renndistanz ${an.walkrun_race_km} km · ${an.walkrun_total_km||0} km gesamt`, an.walkrun_longest_km ? an.walkrun_longest_km/an.walkrun_race_km*100 : undefined)}
   `;})()}
 </div>
+
+<div class="zone-note">Die Rennleistung ist das Ziel, das Pacing kommt aus der Messung: ${esc(t.pacing_rule || "")}</div>
 
 <h2>Prognose auf den Renntag</h2>
 ${(() => {
@@ -322,7 +331,7 @@ ${(() => {
   if (f.weight) html += cell('Gewicht projiziert', f.weight.projected, ' kg',
       `Ziel ${f.weight.target} kg · aktuell ${f.weight.current} · ${f.weight.on_track?'auf Kurs':'unter Plan'}`);
   if (f.ftp) html += cell('FTP aktuell', f.ftp.current, ' W',
-      `Ziel ${f.ftp.target} W · Lücke ${f.ftp.gap>0?f.ftp.gap+' W':'erreicht'} · ${f.ftp.on_track?'auf Kurs':'unter Plan'}`);
+      `Ziel ${f.ftp.target} W · Soll heute ${f.ftp.due_now} W · Lücke ${f.ftp.gap>0?f.ftp.gap+' W':'erreicht'} · ${f.ftp.on_track?'auf Kurs':'unter Plan'}`);
   if (f.css) html += cell('CSS aktuell', fmtCss(f.css.current), '',
       `Ziel ${fmtCss(f.css.target)} /100m · ${f.css.gap>0?'noch '+f.css.gap+'s':'erreicht'}`);
   html += '</div><div class="zone-note">Lineare Hochrechnung des aktuellen Trends — kein Versprechen, sondern ein Frühindikator. Weicht die Projektion Monate vorher vom Ziel ab, ist jetzt Zeit gegenzusteuern, nicht erst in der Testwoche.</div>';

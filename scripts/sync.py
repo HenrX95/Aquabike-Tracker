@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Aquabike Sync — holt Garmin Connect + Oura Daten und schreibt data/dashboard.json
+IRONMAN 70.3 Sync — holt Garmin Connect + Oura Daten und schreibt data/dashboard.json
 
 Laeuft taeglich via GitHub Actions (oder lokal per Cronjob).
 Zwift-Rides kommen automatisch mit, weil Zwift nach Garmin Connect pusht.
@@ -11,7 +11,8 @@ Benoetigte Secrets (Environment):
   GARMIN_EMAIL, GARMIN_PASSWORD, OURA_TOKEN
 
 Optional:
-  PLAN_START      Startdatum Woche 1, ISO (default 2026-07-13)
+  PLAN_START      Startdatum Woche 1, ISO (default aus targets.json)
+  RACE_DATE       Renntag, ISO (default aus targets.json)
 """
 
 import json
@@ -24,10 +25,14 @@ from pathlib import Path
 import requests
 from garminconnect import Garmin
 
-# ---------------------------------------------------------------- Konfiguration
+import campaign as C
 
-PLAN_START = date.fromisoformat(os.getenv("PLAN_START", "2026-08-03"))
-RACE_DATE = date.fromisoformat(os.getenv("RACE_DATE", "2027-04-24"))  # 70.3 Venice-Jesolo
+# ---------------------------------------------------------------- Konfiguration
+# Alle Ziel- und Strukturwerte kommen aus targets.json via campaign.py.
+
+PLAN_START = C.PLAN_START
+RACE_DATE = C.RACE_DATE
+RACE_POWER_LOW, RACE_POWER_HIGH = C.RACE_POWER
 LOOKBACK_DAYS = 90          # so viel Historie halten wir im JSON
 DATA = Path(__file__).resolve().parent.parent / "data"
 OUT = DATA / "dashboard.json"
@@ -52,12 +57,12 @@ FEEL_PATHS = [
 # Nur fuer diese Aktivitaeten lohnt der zusaetzliche Detail-Call
 RPE_SPORTS = {"swim", "bike", "gym"}
 
-# Schwellen aus dem Trainingsplan (Abschnitt 11)
-RHR_FLAG_DELTA = 5          # bpm ueber Baseline
-RHR_FLAG_DAYS = 3           # an so vielen Tagen in Folge
-SRPE_FLAG_PCT = 15          # max. Wochensteigerung in %
-KNEE_FLAG = 3               # Knieschmerz > 3/10 = rot
-SLEEP_TARGET_H = 7.5
+# Schwellen aus dem Trainingsplan (Abschnitt 11) – gepflegt in targets.json
+RHR_FLAG_DELTA = C.RHR_FLAG_DELTA
+RHR_FLAG_DAYS = C.RHR_FLAG_DAYS
+SRPE_FLAG_PCT = C.SRPE_FLAG_PCT
+KNEE_FLAG = C.KNEE_FLAG
+SLEEP_TARGET_H = C.SLEEP_TARGET_H
 
 # ---------------------------------------------------------------- Hilfsfunktionen
 
@@ -66,26 +71,9 @@ def log(msg):
     print(f"[sync] {msg}", file=sys.stderr)
 
 
-def plan_week(d: date) -> int:
-    """Trainingswoche 1..26 fuer ein Datum."""
-    return (d - PLAN_START).days // 7 + 1
-
-
-def phase_for_week(w: int) -> str:
-    if w <= 6:
-        return "1 – Grundlage"
-    if w <= 14:
-        return "2 – Build I"
-    if w <= 20:
-        return "3 – Build II"
-    if w <= 26:
-        return "4 – Konsolidierung"
-    return "Rennblock 2027"
-
-
-def is_recovery_week(w: int) -> bool:
-    """Jede 4. Woche ist Erholungswoche."""
-    return w % 4 == 0
+plan_week = C.plan_week
+phase_for_week = C.phase_for_week
+is_recovery_week = C.is_recovery_week
 
 
 def normalize_rpe(raw):
@@ -204,7 +192,8 @@ SPORT_ORDER = ["swim", "bike", "gym", "walk", "run", "mobility", "cardio", "othe
 
 # Disziplinen mit Wochen-Soll (Ampel). Gehen/Laufen bewusst OHNE Soll —
 # wird erfasst, aber nicht als Versagen dargestellt wenn es fehlt.
-SPORT_TARGETS = {"swim": 3, "bike": 3, "gym": 2}
+# Das Soll haengt an der Phase (Rad steigt ab Phase 3 auf 4) → campaign.sport_targets().
+SPORT_TARGETS = C.sport_targets(C.plan_week(date.today()))
 
 
 # ---------------------------------------------------------------- Garmin
@@ -486,12 +475,12 @@ def build_flags(rhr, weekly, manual, sleep):
     # (4) Schwimmfrequenz — der eigentliche Hebel
     if weekly:
         cur = weekly[-1]
-        if cur["swims"] < 3 and not cur["recovery_week"]:
+        if cur["swims"] < C.SWIMS_PER_WEEK and not cur["recovery_week"]:
             flags.append(
                 {
                     "level": "amber",
                     "metric": "Schwimmfrequenz",
-                    "text": f"Nur {cur['swims']} Schwimmeinheiten diese Woche (Ziel 3). Groesster Hebel im Plan.",
+                    "text": f"Nur {cur['swims']} Schwimmeinheiten diese Woche (Ziel {C.SWIMS_PER_WEEK}). Groesster Hebel im Plan.",
                 }
             )
 
@@ -641,6 +630,20 @@ def build_analysis(activities, weekly, manual):
         else:
             zone_min["vo2"] += dur
 
+    # --- Rennleistung: die Leitkennzahl der Kampagne ---
+    # Naeherung: ohne Power-Stream kennen wir nur NP je Einheit. Eine Ausfahrt mit
+    # NP >= Rennleistung gilt als Block dieser Dauer. Untertreibt lange Ausfahrten
+    # mit eingebettetem Renntempo-Block – deshalb kann manual.json ueberschreiben.
+    rp_sessions = [
+        a for a in activities
+        if a["sport"] == "bike" and (a.get("norm_power") or 0) >= RACE_POWER_LOW
+    ]
+    rp_longest = max((a["duration_min"] for a in rp_sessions), default=0)
+    rp_total = sum(a["duration_min"] for a in rp_sessions)
+    rp_manual = manual.get("race_power_hold_min")
+    if rp_manual and rp_manual > rp_longest:
+        rp_longest = rp_manual
+
     # --- Schwimmen: laengste kontinuierliche Distanz vs. 1,9 km ---
     swim_longest = max((a["distance_km"] for a in activities
                         if a["sport"] == "swim" and a.get("distance_km")), default=0)
@@ -656,11 +659,23 @@ def build_analysis(activities, weekly, manual):
         for w in weekly if w["srpe_load"] > 0
     ][-6:]
 
+    cur_week = plan_week(date.today())
+    tiz_target = C.BIKE.get("weekly_minutes_in_zone_88_105_pct", {}).get(C.phase_key(cur_week), 90)
+
     return {
         "ftp_used": ftp,
         "bike_zone_min": {k: round(v) for k, v in zone_min.items()},
         "bike_quality_min": round(zone_min["sweetspot"] + zone_min["threshold"] + zone_min["vo2"]),
+        "bike_quality_target_min": tiz_target,
         "bike_sessions_analyzed": bike_sessions,
+        "race_power_w": [RACE_POWER_LOW, RACE_POWER_HIGH],
+        "race_power_longest_min": round(rp_longest),
+        "race_power_total_min": round(rp_total),
+        "race_power_target_min": C.race_power_hold_target(cur_week),
+        "race_power_final_target_min": 150,
+        "aero_minutes_week": manual.get("aero_minutes_week"),
+        "decoupling_pct": manual.get("decoupling_pct"),
+        "decoupling_target_pct": C.BIKE.get("decoupling_target_pct", 5.0),
         "swim_longest_km": round(swim_longest, 2),
         "swim_race_km": 1.9,
         "walkrun_longest_km": round(wr_longest, 1),
@@ -694,18 +709,23 @@ def build_forecast(weights, manual, days_to_race, targets):
             out["weight"] = {
                 "current": round(current, 1),
                 "projected": round(projected, 1),
-                "target": targets["weight_dec_kg"],
-                "on_track": projected <= targets["weight_dec_kg"] + 1,
+                "target": targets["weight_race_kg"],
+                "on_track": projected <= targets["weight_race_kg"] + 1,
             }
 
     # FTP: braucht mindestens zwei Testwerte, sonst nur Ist gegen Ziel
     ftp = manual.get("ftp_w")
     if ftp:
+        # Sollwert heute: lineare Interpolation zwischen Start-FTP und Renntagsziel
+        total_days = max(1, (C.RACE_DATE - C.PLAN_START).days)
+        progress = max(0.0, min(1.0, 1 - days_to_race / total_days))
+        due = C.FTP_START + (targets["ftp_race_w"] - C.FTP_START) * progress
         out["ftp"] = {
             "current": ftp,
             "target": targets["ftp_race_w"],
+            "due_now": round(due),
             "gap": targets["ftp_race_w"] - ftp,
-            "on_track": ftp >= 250 + (targets["ftp_race_w"] - 250) * (1 - days_to_race/264),
+            "on_track": ftp >= due - 3,
         }
 
     css = manual.get("css_s")
@@ -777,16 +797,14 @@ def main():
             "current_week": cur_week,
             "phase": phase_for_week(cur_week),
             "recovery_week": is_recovery_week(cur_week),
-            "weeks_total": 26,
+            "weeks_total": C.TOTAL_WEEKS,
+            "sport_targets": C.sport_targets(cur_week),
+            "bike_hours_target": C.bike_hours_target(cur_week),
+            "ftp_waypoint_w": C.ftp_waypoint(cur_week),
+            "weight_target_kg": C.weight_target(cur_week),
+            "deficit_active": cur_week < C.DEFICIT_ENDS_WEEK,
         },
-        "targets": {
-            "ftp_dec_w": 285,
-            "ftp_race_w": 300,
-            "css_dec_s": 105,      # 1:45/100m
-            "css_race_s": 100,     # 1:40/100m
-            "weight_dec_kg": 85.5,
-            "waist_target_cm": 94,
-        },
+        "targets": C.summary(),
         "current": {
             "weight_kg": weights[-1]["kg"] if weights else None,
             "rhr_bpm": rhr[-1]["bpm"] if rhr else None,
@@ -809,7 +827,9 @@ def main():
         "by_sport": build_by_sport(activities),
         "analysis": build_analysis(activities, weekly, manual),
         "forecast": build_forecast(weights, manual, days_to_race, {
-            "ftp_race_w": 285, "css_race_s": 110, "weight_dec_kg": 83.5,
+            "ftp_race_w": C.FTP_TARGET,
+            "css_race_s": C.CSS_TARGET,
+            "weight_race_kg": C.WEIGHT_TARGET,
         }),
         "activities": sorted(activities, key=lambda a: a["date"], reverse=True)[:40],
         "rhr": rhr[-60:],

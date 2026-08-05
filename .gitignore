@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.garmintokens/
+data/workouts_json/
+data/garmin_workout_state.json

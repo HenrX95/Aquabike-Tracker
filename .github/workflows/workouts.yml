@@ -1,0 +1,38 @@
+name: Garmin-Workouts hochladen
+
+# Manuell ausloesen: Actions-Tab -> "Garmin-Workouts hochladen" -> Run workflow.
+# Wochen angeben, z. B. "1-8". Nach jedem FTP-Test manual.json aktualisieren
+# und die kommenden Wochen erneut hochladen – dann stimmen die Wattziele.
+
+on:
+  workflow_dispatch:
+    inputs:
+      weeks:
+        description: "Kampagnenwochen, z. B. 1-8 oder 9,10"
+        required: true
+        default: "1-8"
+      dry_run:
+        description: "Nur anzeigen, nichts hochladen"
+        type: boolean
+        default: true
+
+jobs:
+  workouts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Workouts erzeugen
+        env:
+          GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
+          GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+          GARMINTOKENS: ${{ github.workspace }}/.garmintokens
+        run: |
+          if [ "${{ inputs.dry_run }}" = "true" ]; then
+            python scripts/garmin_workouts.py --weeks "${{ inputs.weeks }}" --dry-run
+          else
+            python scripts/garmin_workouts.py --weeks "${{ inputs.weeks }}"
+          fi

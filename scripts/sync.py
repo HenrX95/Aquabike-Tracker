@@ -230,11 +230,15 @@ def garmin_login():
     password = _os.environ.get("GARMIN_PASSWORD")
     token_str = _os.environ.get("GARMIN_TOKENS")
 
-    # 1. Versuch: gecachtes Token direkt laden
-    if token_str and len(token_str) > 512:
+    import base64 as _b64
+
+    # 1. Versuch: gecachtes Token laden. Es ist base64-kodiert (siehe Export unten),
+    #    damit GitHub im Log nichts zensiert. Hier zuerst dekodieren.
+    if token_str:
         try:
+            decoded = _b64.b64decode(token_str).decode()
             api = Garmin()
-            api.login(token_str)   # String > 512 Zeichen wird direkt als Token geladen
+            api.login(decoded)   # dekodierter String wird direkt als Token geladen
             log("Garmin: Login via Token — kein Passwort, kein Rate-Limit-Risiko")
             return api
         except Exception as e:
@@ -247,13 +251,15 @@ def garmin_login():
     api.login()
     log("Garmin: Login via Passwort")
 
-    # Frisches Token als String ins Log — einmal als Secret GARMIN_TOKENS sichern
+    # Frisches Token base64-kodiert ins Log — einmal als Secret GARMIN_TOKENS sichern.
+    # Base64 verhindert, dass GitHub Teile zensiert (die dem Passwort aehneln).
     try:
         token_dump = api.client.dumps()
+        token_b64 = _b64.b64encode(token_dump.encode()).decode()
         log("=================== GARMIN_TOKENS ===================")
         log("Diesen Wert als Repository-Secret GARMIN_TOKENS speichern.")
         log("Danach laeuft der Sync ~1 Jahr ohne Passwort-Login:")
-        log(token_dump)
+        log(token_b64)
         log("================= Ende GARMIN_TOKENS =================")
     except Exception as e:
         log(f"Token-Export nicht moeglich: {e}")

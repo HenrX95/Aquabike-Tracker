@@ -312,6 +312,25 @@ document.getElementById('app').innerHTML = `
   `;})()}
 </div>
 
+<h2>Prognose auf den Renntag</h2>
+${(() => {
+  const f = D.forecast || {};
+  if (!f.weight && !f.ftp && !f.css) return '<div class="zone-note">Noch zu wenig Daten für eine Hochrechnung. Sobald Gewichtstrend und Testwerte (ftp_w, css_s in manual.json) vorliegen, erscheint hier die lineare Projektion auf den 24.04.2027.</div>';
+  const fmtCss = s => `${Math.floor(s/60)}:${String(Math.round(s%60)).padStart(2,'0')}`;
+  const chip = ok => ok ? '<span style="color:#2E5C3F;font-weight:700">auf Kurs</span>' : '<span style="color:#C9700A;font-weight:700">unter Plan</span>';
+  let html = '<div class="grid">';
+  if (f.weight) html += cell('Gewicht projiziert', f.weight.projected, ' kg',
+      `Ziel ${f.weight.target} kg · aktuell ${f.weight.current} · ${f.weight.on_track?'auf Kurs':'unter Plan'}`);
+  if (f.ftp) html += cell('FTP aktuell', f.ftp.current, ' W',
+      `Ziel ${f.ftp.target} W · Lücke ${f.ftp.gap>0?f.ftp.gap+' W':'erreicht'} · ${f.ftp.on_track?'auf Kurs':'unter Plan'}`);
+  if (f.css) html += cell('CSS aktuell', fmtCss(f.css.current), '',
+      `Ziel ${fmtCss(f.css.target)} /100m · ${f.css.gap>0?'noch '+f.css.gap+'s':'erreicht'}`);
+  html += '</div><div class="zone-note">Lineare Hochrechnung des aktuellen Trends — kein Versprechen, sondern ein Frühindikator. Weicht die Projektion Monate vorher vom Ziel ab, ist jetzt Zeit gegenzusteuern, nicht erst in der Testwoche.</div>';
+  return html;
+})()}
+
+
+
 <h2>Rad – Zeit in den Leistungszonen</h2>
 ${(() => {
   const z = (D.analysis || {}).bike_zone_min || {};

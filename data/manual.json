@@ -1,10 +1,21 @@
 {
-  "_hinweis": "Nur was keine API liefert. RPE kommt von der Uhr (Selbstbeurteilung), Gewicht ueber Withings->Garmin. Hier nur noch Knie + Testwerte.",
+  "_hinweis": "Nur was keine API liefert. RPE kommt von der Uhr (Selbstbeurteilung), Gewicht ueber Withings->Garmin. Hier: Testwerte, Knie, Aero- und Rennleistungs-Zahlen.",
+
   "ftp_w": 250,
   "ftp_tested": "2026-07-13",
   "css_s": 120,
   "css_tested": "2026-07-13",
   "waist_cm": null,
+
+  "_rennleistung": "Nach der langen Ausfahrt eintragen: laengster durchgehender Block >=235 W in Minuten. Ueberschreibt die Naeherung aus den NP-Werten, weil Garmin ohne Power-Stream keine Bloecke innerhalb einer Einheit erkennt.",
+  "race_power_hold_min": null,
+
+  "_aero": "Minuten pro Woche in Aeroposition. Kommt aus keiner API – nach der Samstagsausfahrt schaetzen.",
+  "aero_minutes_week": null,
+
+  "_decoupling": "Pw:HR-Drift der letzten langen Ausfahrt in Prozent (Garmin Connect oder intervals.icu). Ziel unter 5.",
+  "decoupling_pct": null,
+
   "daily": [
     { "date": "2026-07-15", "knee": 0 }
   ]

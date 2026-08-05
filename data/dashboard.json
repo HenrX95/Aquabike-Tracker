@@ -14,15 +14,55 @@
     "current_week": 1,
     "phase": "1 – Grundlage",
     "recovery_week": false,
-    "weeks_total": 26
+    "weeks_total": 38,
+    "sport_targets": {
+      "swim": 2,
+      "bike": 3,
+      "gym": 2
+    },
+    "bike_hours_target": 4.5,
+    "ftp_waypoint_w": 250,
+    "weight_target_kg": 92.0,
+    "deficit_active": true
   },
   "targets": {
-    "ftp_dec_w": 285,
+    "version": 5,
+    "ftp_start_w": 250,
     "ftp_race_w": 300,
-    "css_dec_s": 105,
-    "css_race_s": 100,
-    "weight_dec_kg": 85.5,
-    "waist_target_cm": 94
+    "race_power_w": [
+      235,
+      250
+    ],
+    "race_power_plan_w": 245,
+    "css_start_s": 120,
+    "css_race_s": 110,
+    "weight_start_kg": 92.0,
+    "weight_target_kg": 84.0,
+    "weight_race_day_kg": [
+      83,
+      85
+    ],
+    "deficit_ends_week": 29,
+    "waist_target_cm": 94,
+    "swims_per_week": 2,
+    "walk_longest_km": 18,
+    "walk_clearance_km": 12,
+    "decoupling_target_pct": 5.0,
+    "tiz_target_min": {
+      "grundlage": 60,
+      "build_i": 90,
+      "build_ii": 110,
+      "rennspezifisch": 120,
+      "taper": 45
+    },
+    "aero_cda_target": 0.3,
+    "aero_speed_at_245w": {
+      "cda_0_26": 38.1,
+      "cda_0_30": 36.5,
+      "cda_0_34": 35.1,
+      "cda_0_40": 33.4
+    },
+    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Das Ziel steht im Plan, das Pacing kommt aus der Messung."
   },
   "current": {
     "weight_kg": 90.0,
@@ -59,7 +99,19 @@
     "walkrun_longest_km": 12.3,
     "walkrun_total_km": 36.7,
     "walkrun_race_km": 21.1,
-    "load_trend": []
+    "load_trend": [],
+    "race_power_w": [
+      235,
+      250
+    ],
+    "race_power_longest_min": 0,
+    "race_power_total_min": 0,
+    "race_power_target_min": 45,
+    "race_power_final_target_min": 150,
+    "bike_quality_target_min": 60,
+    "aero_minutes_week": null,
+    "decoupling_pct": null,
+    "decoupling_target_pct": 5.0
   },
   "forecast": {
     "ftp": {

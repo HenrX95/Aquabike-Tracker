@@ -1,0 +1,107 @@
+{
+  "_comment": "Zentrale Zielwerte der IRONMAN-70.3-Kampagne. Gelesen von garmin_workouts.py und build_dashboard.py. Aenderungen NUR hier vornehmen.",
+  "version": 5,
+  "changed": "2026-08-05: Radziel von '35 km/h Schnitt' auf 'konstant 235-250 W' umgestellt. FTP-Ziel von 280-290 W auf 300 W angehoben. Wochenstruktur auf 38 Wochen ab 03.08.2026 korrigiert. Gewichtsstrategie: Defizit endet W29.",
+  "athlete": {"age": 31, "weight_start_kg": 92, "height_note": "Alter 31 – volle Adaptationsfaehigkeit, stuetzt das +20%-FTP-Ziel."},
+
+  "campaign": {
+    "race": "IRONMAN 70.3 Venice-Jesolo",
+    "race_date": "2027-04-24",
+    "week_1_monday": "2026-08-03",
+    "total_weeks": 38,
+    "recovery_weeks": [4, 8, 12, 16, 20, 24, 28, 32],
+    "phases": [
+      {"name": "Grundlage",      "weeks": [1, 8],   "bike_hours": 4.5},
+      {"name": "Build I",        "weeks": [9, 18],  "bike_hours": 5.0},
+      {"name": "Build II",       "weeks": [19, 28], "bike_hours": 6.0},
+      {"name": "Rennspezifisch", "weeks": [29, 35], "bike_hours": 6.0},
+      {"name": "Taper",          "weeks": [36, 38], "bike_hours": 3.0}
+    ]
+  },
+
+  "bike": {
+    "primary_goal": "90 km konstant bei 235-250 W normalisierter Leistung",
+    "race_power_w": [235, 250],
+    "plan_target_w": 245,
+    "target_if": [0.78, 0.84],
+    "max_race_if": 0.88,
+    "ftp_start_w": 250,
+    "ftp_target_w": 300,
+    "ftp_waypoints": {"w1": 250, "w8": 258, "w14": 268, "w20": 278, "w28": 288, "w35": 300},
+    "race_power_hold_minutes": {
+      "_comment": "Laengster durchgehender Block auf >=235 W. Leitkennzahl der Kampagne.",
+      "w14": 45, "w20": 60, "w24": 75, "w28": 90, "w31": 120, "w33": 150
+    },
+    "weekly_minutes_in_zone_88_105_pct": {
+      "grundlage": 60, "build_i": 90, "build_ii": 110, "rennspezifisch": 120, "taper": 45
+    },
+    "decoupling_target_pct": 5.0,
+    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Das Ziel steht im Plan, das Pacing kommt aus der Messung."
+  },
+
+  "aero": {
+    "_comment": "Nicht Teil des Ziels, aber der Umrechnungsfaktor von Watt in Zeit.",
+    "cda_target": 0.30,
+    "speed_at_245w": {"cda_0_26": 38.1, "cda_0_30": 36.5, "cda_0_34": 35.1, "cda_0_40": 33.4},
+    "bike_split_at_245w_min": {"cda_0_26": 142, "cda_0_30": 148, "cda_0_34": 154, "cda_0_40": 162},
+    "milestones": {
+      "w14": "Aufsatzlenker montiert und eingestellt",
+      "w19": "erste 2x20 min Rennleistung komplett in Aeroposition",
+      "w24": "60 min am Stueck in Aero ohne Leistungsverlust",
+      "w28": "Aero-30-min-Test: reale Renn-Wattzahl in Position",
+      "w33": "Generalprobe 90 km durchgehend in Aeroposition"
+    }
+  },
+
+  "swim": {
+    "css_start_sec_per_100m": 120,
+    "css_target_sec_per_100m": 110,
+    "race_distance_m": 1900,
+    "race_pace_sec_per_100m": 115,
+    "sessions_per_week": 2
+  },
+
+  "walk": {
+    "_comment": "Primaeres Verletzungsrisiko der Kampagne.",
+    "longest_session_km_target": 18,
+    "clearance_required_above_km": 12,
+    "knee_pain_amber_score": 3,
+    "brick_from_week": 29
+  },
+
+  "body": {
+    "weight_start_kg": 92,
+    "weight_target_w28_kg": 84,
+    "weight_race_day_kg": [83, 85],
+    "deficit_kcal_per_day": 300,
+    "deficit_ends_week": 29,
+    "expected_loss_kg_per_week": 0.3,
+    "_note": "Bewusst langsamer als der Vorplan (war 0,4-0,5 kg/Woche). 92 -> 84 kg ueber 28 Wochen reicht fuer 'unter 85 kg' und schont die Adaptation. Ab W29 Erhaltung: der FTP-Block braucht Energie, nicht Defizit."
+  },
+
+  "recovery": {
+    "hrv_amber_pct_of_baseline": 85,
+    "hrv_amber_consecutive_days": 3,
+    "rhr_amber_bpm_above_baseline": 5,
+    "srpe_max_weekly_increase_pct": 15,
+    "sleep_hours_min": 7.5
+  },
+
+  "dashboard_kpis": [
+    {"id": "ftp",             "label": "FTP (W)",                        "target": 300,   "source": "manual.json", "primary": true},
+    {"id": "race_power_hold", "label": "Laengster Block >=235 W (min)",  "target": 150,   "source": "garmin",      "primary": true},
+    {"id": "tiz_88_105",      "label": "Min/Woche bei 88-105% FTP",      "target": 110,   "source": "garmin"},
+    {"id": "decoupling",      "label": "Pw:HR-Drift lange Ausfahrt (%)", "target": 5.0,   "source": "garmin", "lower_is_better": true},
+    {"id": "aero_minutes",    "label": "Min/Woche in Aeroposition",      "target": 90,    "source": "manual.json"},
+    {"id": "css",             "label": "Schwimm-CSS (s/100 m)",          "target": 110,   "source": "manual.json", "lower_is_better": true},
+    {"id": "swims_per_week",  "label": "Schwimmeinheiten/Woche",         "target": 2.0,   "source": "garmin"},
+    {"id": "walk_longest",    "label": "Laengste Geheinheit (km)",       "target": 18,    "source": "garmin"},
+    {"id": "hrv_flag",        "label": "HRV-Fruehwarnung",               "target": "gruen", "source": "oura"},
+    {"id": "weight",          "label": "Gewicht (kg)",                   "target": 84,    "source": "garmin", "lower_is_better": true}
+  ],
+
+  "retired_kpis": [
+    {"id": "avg_speed_kmh", "was_target": 35,  "reason": "Ergebnisgroesse, nicht steuerbar. Ersetzt durch race_power_hold. Weiterhin Anzeige, nicht Ziel."},
+    {"id": "w_per_kg",      "was_target": 3.4, "reason": "Auf flachem Kurs zweitrangig. Absolute FTP zaehlt. (300 W bei 84 kg = 3,57 W/kg.)"}
+  ]
+}

@@ -1,10 +1,12 @@
 # Coach-Routinen – IRONMAN 70.3 Venice-Jesolo (24.04.2027)
 
+**Radziel: 90 km konstant 235–250 W · FTP-Ziel 300 W · 38 Wochen ab 03.08.2026**
+
 Nicht eine Software, die von selbst läuft, sondern feste Rituale mit fertigen Prompts.
 Du kopierst einen Block, ich mache den Rest. Aufwand für dich: 30 Sekunden täglich,
 10 Minuten sonntags.
 
-**Voraussetzung:** Diese Prompts in einem Chat im Projekt *Aquabike* verwenden — dort liegen
+**Voraussetzung:** Diese Prompts in einem Chat im Projekt *IRONMAN 70.3* verwenden — dort liegen
 Trainingsplan und Tracker, ich habe sie also automatisch im Zugriff. `dashboard.json` entweder
 per Raw-URL (öffentliches Repo) oder als Anhang.
 
@@ -34,12 +36,14 @@ was änderst du. Ohne dieses Ritual ist das ganze System ein Thermometer ohne Ar
 > Wochenreview Woche [N]. dashboard.json anbei.
 >
 > Analysiere:
-> - **Compliance**: Soll vs. Ist bei Schwimmen (2), Rad (3), Gym (2). Wo ist die Lücke?
+> - **Compliance**: Soll vs. Ist laut `plan.sport_targets` im Dashboard (Rad steigt ab Woche 19 auf 4). Wo ist die Lücke?
 > - **Last**: sRPE-Trend über die letzten 4 Wochen. Steigerung im Rahmen von 10–15 %?
 > - **Regeneration**: RHF- und HRV-Trend, Schlaf, Oura-Readiness. Zeichen von Überlastung?
 > - **Knie**: Ampelstatus. Gym- und Geh-Progression freigeben oder halten?
 > - **Gehen**: längste Einheit diese Phase — bin ich auf der Progression (siehe Abschnitt 7)?
-> - **Gewicht**: Wochentrend gegen die ~0,4–0,5 kg/Woche. Zu schnell → Kalorien hoch.
+> - **Rennleistung**: längster Block ≥235 W gegen die Wegmarke (W14 45' · W20 60' · W24 75' · W28 90' · W31 120' · W33 150'). Das ist die Leitkennzahl.
+> - **Aero**: Minuten in Position diese Woche. Auf Kurs für 2,5 h am Renntag?
+> - **Gewicht**: Wochentrend gegen ~0,3 kg/Woche bis Woche 28, danach Erhaltung. Zu schnell → Kalorien hoch.
 > - **Prognose**: Was sagt der forecast-Block auf den Renntag? Auf Kurs oder unter Plan?
 >
 > Dann: konkrete Einheiten für die kommende Woche, Tag für Tag, mit Intervallen und
@@ -49,17 +53,18 @@ was änderst du. Ohne dieses Ritual ist das ganze System ein Thermometer ohne Ar
 
 ---
 
-## Nach jedem Test (Woche 1, 14, 20, 28, 35)
+## Nach jedem Test (Woche 1, 14, 20, 28, 33, 35)
 
 > Testauswertung Woche [N]. Ergebnisse:
 > - FTP: [X] W (vorher [Y] W)
 > - CSS: [MM:SS]/100m (vorher [MM:SS])
 > - Aero-30-min: [X] W / [X] km/h (falls getestet)
+> - Längster Block ≥235 W: [X] min · Decoupling [X] %
 > - Längster Gehtest: [X] km, Knie danach [X]/10
 > - Gewicht: [X] kg · Taille: [X] cm
 >
 > Vergleiche gegen die Meilenstein-Tabelle (Abschnitt 12). Liege ich auf Kurs für
-> FTP 280–290 W, CSS ~1:50 und 35 km/h am Renntag? Wenn nicht: was ändern wir, und
+> FTP 300 W, 235–250 W über 90 km und CSS ~1:50? Wenn nicht: was ändern wir, und
 > woran erkenne ich in 4 Wochen, ob es gewirkt hat?
 >
 > Wenn ich vorne liege: nach oben umplanen, wie im Plan vorgesehen.
@@ -72,7 +77,8 @@ was änderst du. Ohne dieses Ritual ist das ganze System ein Thermometer ohne Ar
 > [X] Minuten am Stück bevor Rücken/Nacken/Hüftbeuger zu sehr ziehen. Wattverlust
 > gegenüber aufrecht: [ca. X W].
 >
-> Ist das auf Kurs für 2,5 h Renndistanz? Was an Position, Rumpf-Gym oder Aufbau ändere ich?
+> Ist das auf Kurs für 2,5 h Renndistanz? Halte ich die 235–250 W in Position oder verliere ich Watt?
+> Was an Position, Rumpf-Gym oder Aufbau ändere ich?
 > Und: meldet sich das Knie durch die Hüftbeuger-Belastung?
 
 ---
@@ -97,7 +103,7 @@ was änderst du. Ohne dieses Ritual ist das ganze System ein Thermometer ohne Ar
 
 > Monatsreview Ernährung. Gewichtsverlauf und Taille aus dashboard.json.
 >
-> Trend gegen die Prognose (~0,4–0,5 kg/Woche, ~82–85 kg bis zur Rennsaison)? Taille ~1 cm/Monat?
+> Trend gegen die Prognose (~0,3 kg/Woche, 84 kg bis Woche 28, danach Erhaltung)? Taille ~1 cm/Monat?
 > Falls zu schnell oder zu langsam: welche Mahlzeit ändere ich wie — keine Snacks einführen,
 > sondern Portionen anpassen wie im Plan beschrieben.
 

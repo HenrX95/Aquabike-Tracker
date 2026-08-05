@@ -1,95 +1,98 @@
-# Aquabike Tracker — Henrik
+# IRONMAN 70.3 Tracker — Henrik
 
-Automatischer Sync von Garmin Connect + Oura in eine JSON-Datei und ein statisches Dashboard.
+Automatischer Sync von Garmin Connect + Oura in eine JSON-Datei, ein statisches Dashboard,
+und ein Generator, der den Trainingsplan als strukturierte Workouts auf die Forerunner 955 legt.
 Zwift-Rides kommen über Garmin mit rein (Zwift pusht automatisch dorthin).
 
-## Was hier automatisch läuft — und was nicht
+**Ziel:** IRONMAN 70.3 Venice-Jesolo, 24.04.2027 · 38 Wochen ab 03.08.2026
+**Radziel:** 90 km konstant bei 235–250 W (FTP-Ziel 300 W)
 
-**Läuft ohne dich:** GitHub Actions holt jede Nacht um 23:15 (München) Garmin- und Oura-Daten,
+## Die eine Regel
+
+Alle Zielwerte stehen in **`targets.json`** — und nur dort. `scripts/campaign.py` liest die Datei
+und versorgt Sync, Dashboard und Workout-Generator. Wenn sich ein Ziel ändert, ändert es sich
+an genau einer Stelle. Keine Zahl gehört hartkodiert in ein Skript.
+
+## Was automatisch läuft — und was nicht
+
+**Ohne dich:** GitHub Actions holt jede Nacht um 23:15 (München) Garmin- und Oura-Daten,
 rechnet Wochenlast und Ampeln, schreibt `data/dashboard.json` und baut `docs/index.html` neu.
 
-**Läuft nicht ohne dich:** Claude. Ich habe kein Gedächtnis zwischen Chats und keinen Timer.
-Ich kann `dashboard.json` in jedem Chat lesen, aber nur wenn du einen Chat öffnest.
-Der tägliche Impuls bist du — der Rest ist automatisiert.
-
-## Setup (einmalig, ~30 Minuten)
-
-### 1. Privates Repo anlegen
-Auf GitHub: neues **privates** Repo, z. B. `aquabike-tracker`. Diese Dateien reinschieben.
-
-### 2. Secrets hinterlegen
-Repo → Settings → Secrets and variables → Actions → *New repository secret*:
-
-| Name | Wert |
-|---|---|
-| `GARMIN_EMAIL` | deine Garmin-Connect-Mailadresse |
-| `GARMIN_PASSWORD` | dein Garmin-Passwort |
-| `OURA_TOKEN` | Personal Access Token von cloud.ouraring.com/personal-access-tokens |
-
-Diese Werte trägst du selbst ein. Sie liegen verschlüsselt bei GitHub und tauchen in keinem Log auf.
-
-### 3. Workflow aktivieren
-Actions-Tab → Workflow aktivieren → einmal *Run workflow* für einen Testlauf.
-
-### 4. Dashboard erreichbar machen
-Settings → Pages → Source: `main` / Ordner `/docs`.
-Ergebnis: `https://<dein-user>.github.io/aquabike-tracker` — als Lesezeichen aufs Handy.
-
-Bei einem privaten Repo braucht GitHub Pages einen bezahlten Plan. Kostenlose Alternative:
-`docs/index.html` liegt lokal auf dem Rechner (per `git pull`), Doppelklick genügt — die Datei
-ist standalone, keine Server nötig.
-
-### 5. Raw-URL für mich notieren
-```
-https://raw.githubusercontent.com/<user>/aquabike-tracker/main/data/dashboard.json
-```
-Bei privatem Repo brauche ich einen Token in der URL — dann lieber die JSON in den Chat
-ziehen oder das Repo öffentlich machen (es stehen keine Zugangsdaten drin, nur Trainingsdaten).
-
-## Täglicher Ablauf
-
-**Abends, 30 Sekunden:** `data/manual.json` ergänzen — was keine API liefert:
-
-```json
-{ "date": "2026-07-15", "rpe": 7, "knee": 2, "weight_kg": 91.8 }
-```
-
-- `rpe` — Anstrengung 1–10 nach jeder Einheit (Basis für die sRPE-Last)
-- `knee` — schlimmster Knieschmerz des Tages, 0–10
-- `weight_kg` — nur falls du keine Garmin-Waage hast
-
-Nach FTP- und CSS-Tests oben im File `ftp_w` / `css_s` aktualisieren.
-
-**Morgens:** Dashboard öffnen. Ampeln stehen ganz oben.
-
-**Sonntags:** Chat mit mir öffnen, Prompt aus `PROMPTS.md`.
+**Nicht ohne dich:** Claude. Kein Gedächtnis zwischen Chats, kein Timer. Ich kann
+`dashboard.json` in jedem Chat lesen — aber nur, wenn du einen Chat öffnest.
+Das Dashboard ersetzt die tägliche Information. Ich ersetze die wöchentliche Entscheidung.
 
 ## Dateien
 
 ```
+targets.json                ALLE Zielwerte — die einzige Quelle
+scripts/campaign.py         liest targets.json, leitet Phase/Soll/Wegmarken ab
 scripts/sync.py             Garmin + Oura → dashboard.json, Ampel-Logik
 scripts/build_dashboard.py  dashboard.json → docs/index.html
 scripts/template.html       Dashboard-Layout
-data/manual.json            deine Eingaben (RPE, Knie, FTP, CSS, Taille)
+scripts/garmin_workouts.py  Trainingsplan → strukturierte Garmin-Workouts + Kalender
+data/manual.json            deine Eingaben (Tests, Knie, Aero-Minuten, Decoupling)
 data/dashboard.json         wird generiert — das lese ich
 docs/index.html             wird generiert — das schaust du an
 ```
 
-## Ampeln (aus Abschnitt 11 des Plans)
+## Täglicher Ablauf
+
+**Auf der Uhr:** Selbstbeurteilung nach jeder Einheit (liefert RPE für die Lastampel).
+
+**In `data/manual.json`**, wenn es etwas zu tragen gibt:
+
+- `ftp_w` / `css_s` — nach jedem Test
+- `race_power_hold_min` — längster durchgehender Block ≥ 235 W nach der langen Ausfahrt
+- `aero_minutes_week` — Minuten in Aeroposition (kommt aus keiner API)
+- `decoupling_pct` — Pw:HR-Drift der letzten langen Ausfahrt
+- `daily[].knee` — schlimmster Knieschmerz des Tages, 0–10
+
+**Morgens:** Dashboard öffnen. Ampeln stehen ganz oben.
+**Sonntags:** Chat öffnen, Prompt aus `PROMPTS.md`.
+
+## Workouts auf die Uhr
+
+```bash
+pip install -r requirements.txt
+export GARMIN_EMAIL="…" GARMIN_PASSWORD="…"
+
+python3 scripts/garmin_workouts.py --dry-run --weeks 1-8   # anzeigen
+python3 scripts/garmin_workouts.py --weeks 1-8             # hochladen + einplanen
+python3 scripts/garmin_workouts.py --clean                 # alle "70.3 …" löschen
+```
+
+Alternativ über Actions-Tab → *Garmin-Workouts hochladen* → Run workflow.
+
+Immer nur die aktuelle Phase hochladen. Nach jedem FTP-Test `manual.json` aktualisieren und
+die kommenden Wochen neu erzeugen — sonst zeigt die Uhr Wattziele einer veralteten FTP.
+
+## Setup (einmalig)
+
+1. **Secrets** — Repo → Settings → Secrets and variables → Actions:
+   `GARMIN_EMAIL`, `GARMIN_PASSWORD`, `GARMIN_TOKENS` (base64-Tarball des Token-Caches), `OURA_TOKEN`
+2. **Workflow aktivieren** — Actions-Tab → einmal *Run workflow*
+3. **Pages** — Settings → Pages → Source `main` / Ordner `/docs`
+4. **Raw-URL** für Chats notieren:
+   `https://raw.githubusercontent.com/HenrX95/Aquabike-Tracker/main/data/dashboard.json`
+
+## Ampeln
 
 | Signal | Regel | Konsequenz |
 |---|---|---|
 | sRPE-Last | > +15 % zur Vorwoche | Qualitätseinheit zurücknehmen |
 | Ruhepuls | 3 Tage +5 bpm über Baseline | Nächste Einheit → Zone 2 |
-| Knie | > 3/10 oder morgens noch da | Gym-Last zurück bis 2 grüne Wochen |
-| Schwimmen | < 3 Einheiten/Woche | Der Hebel, der über 1:40 entscheidet |
+| HRV | 3 Tage unter 85 % der Baseline | Qualität reduzieren, Schlaf schützen |
+| Knie | > 3/10 oder morgens noch da | Gym- und Gehlast zurück bis 2 grüne Wochen |
+| Schwimmen | < 2 Einheiten/Woche | Konstanz ist der Hebel, nicht Umfang |
 | Schlaf | Ø < 7,5 h | Im Defizit doppelt relevant |
 
 ## Bekannte Schwächen
 
 - **`garminconnect` ist inoffiziell.** Garmin kann die API ändern; dann bricht der Sync.
-  Fallback wäre Strava (offizielle API, aber ohne RHF und Schlaf).
-- **Garmin MFA:** falls aktiviert, schlägt der Login fehl. Für dieses Konto ggf. deaktivieren
-  oder Token-Caching ergänzen.
-- **Schwimmtempo ≠ CSS.** Das Dashboard zeigt Ø-Tempo je Einheit. Echte CSS kommt nur
-  aus dem 400/200-Test — deshalb manuell.
+- **Rennleistungs-Block ist eine Näherung.** Ohne Power-Stream sieht der Sync nur die NP je
+  Einheit, nicht Blöcke innerhalb einer Ausfahrt. Deshalb überschreibt `race_power_hold_min`
+  aus `manual.json` den berechneten Wert.
+- **Aero-Minuten und Decoupling** liefert keine API — beides manuell.
+- **Der Repo-Name sagt noch „Aquabike".** Umbenennen geht in Settings; GitHub legt eine
+  Weiterleitung an, dann müssen nur die Raw-URLs in `PROMPTS.md` nachgezogen werden.

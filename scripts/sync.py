@@ -210,13 +210,70 @@ SPORT_TARGETS = {"swim": 3, "bike": 3, "gym": 2}
 # ---------------------------------------------------------------- Garmin
 
 
-def fetch_garmin(start: date, end: date):
-    email = os.environ["GARMIN_EMAIL"]
-    password = os.environ["GARMIN_PASSWORD"]
+def garmin_login():
+    """
+    Login mit Token-Wiederverwendung. Garmin drosselt wiederholte Passwort-Logins
+    von GitHub-Actions-IPs (429). Ein gecachtes Session-Token umgeht das komplett.
 
-    log("Garmin: Login")
+    Ablauf:
+    - GARMIN_TOKENS (Base64 des Tokenstore) als Secret gesetzt → Token wird genutzt,
+      KEIN Passwort-Login, kein 429-Risiko. Token ist ~1 Jahr gueltig.
+    - Kein Token oder abgelaufen → Passwort-Login als Rueckfall, danach wird das
+      neue Token als Base64 ins Log geschrieben (einmalig als Secret speichern).
+
+    Hinweis: Die zugrundeliegende garth-Bibliothek wird nicht mehr weiterentwickelt.
+    Bestehende Tokens laufen noch ~1 Jahr. Deshalb ist Token-Caching jetzt sogar
+    wichtiger — es reduziert die Passwort-Logins auf ein Minimum.
+    """
+    import base64, io, tarfile, tempfile, os as _os
+
+    email = _os.environ.get("GARMIN_EMAIL")
+    password = _os.environ.get("GARMIN_PASSWORD")
+    token_b64 = _os.environ.get("GARMIN_TOKENS")
+    tokendir = Path(tempfile.gettempdir()) / ".garminconnect"
+
+    # 1. Versuch: gecachtes Token entpacken und nutzen
+    if token_b64:
+        try:
+            raw = base64.b64decode(token_b64)
+            tokendir.mkdir(parents=True, exist_ok=True)
+            with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tar:
+                tar.extractall(tokendir)
+            api = Garmin()
+            api.login(str(tokendir))
+            log("Garmin: Login via Token — kein Passwort, kein Rate-Limit-Risiko")
+            return api
+        except Exception as e:
+            log(f"Garmin: Token-Login fehlgeschlagen ({e}), Rueckfall auf Passwort")
+
+    # 2. Rueckfall: Passwort-Login
+    if not (email and password):
+        raise RuntimeError("Kein gueltiges GARMIN_TOKENS und kein GARMIN_PASSWORD/-EMAIL")
     api = Garmin(email, password)
     api.login()
+    log("Garmin: Login via Passwort")
+
+    # Frisches Token exportieren und als Base64 ins Log — einmal als Secret sichern
+    try:
+        api.garth.dump(str(tokendir))
+        buf = io.BytesIO()
+        with tarfile.open(fileobj=buf, mode="w:gz") as tar:
+            tar.add(str(tokendir), arcname=".")
+        b64 = base64.b64encode(buf.getvalue()).decode()
+        log("=================== GARMIN_TOKENS ===================")
+        log("Diesen Wert als Repository-Secret GARMIN_TOKENS speichern.")
+        log("Danach laeuft der Sync ~1 Jahr ohne Passwort-Login:")
+        log(b64)
+        log("================= Ende GARMIN_TOKENS =================")
+    except Exception as e:
+        log(f"Token-Export nicht moeglich: {e}")
+
+    return api
+
+
+def fetch_garmin(start: date, end: date):
+    log("Garmin: Login")
+    api = garmin_login()
 
     log(f"Garmin: Aktivitaeten {start} → {end}")
     raw = api.get_activities_by_date(start.isoformat(), end.isoformat())
@@ -474,6 +531,20 @@ def build_flags(rhr, weekly, manual, sleep):
                 }
             )
 
+    # (7) HRV-Einbruch (Oura) — feiner als RHF, gerade im Defizit
+    hrv_vals = [s.get("hrv") for s in sleep if s.get("hrv")]
+    if len(hrv_vals) >= 10:
+        baseline = sum(hrv_vals[-28:-3]) / len(hrv_vals[-28:-3]) if len(hrv_vals) >= 14 else sum(hrv_vals[:-3]) / max(1, len(hrv_vals[:-3]))
+        recent = hrv_vals[-3:]
+        if baseline > 0 and all(v < baseline * 0.85 for v in recent):
+            flags.append(
+                {
+                    "level": "amber",
+                    "metric": "HRV",
+                    "text": f"HRV 3 Tage unter 85% der Baseline ({baseline:.0f} ms). Fruehes Ueberlastungssignal — Qualitaet reduzieren, Schlaf schuetzen.",
+                }
+            )
+
     if not flags:
         flags.append(
             {"level": "green", "metric": "Alles", "text": "Keine Warnungen. Plan laeuft."}
@@ -603,6 +674,55 @@ def build_analysis(activities, weekly, manual):
     }
 
 
+def build_forecast(weights, manual, days_to_race, targets):
+    """
+    Schlichte lineare Hochrechnung auf den Renntag. Kein Anspruch auf Praezision —
+    zeigt nur, ob der aktuelle Trend Richtung Ziel laeuft oder nicht.
+    Basiert auf dem Gewichtstrend (genug Datenpunkte) und den Testwerten aus manual.json.
+    """
+    out = {}
+
+    # Gewicht: linearer Trend der letzten 30 Eintraege
+    pts = [(i, w["kg"]) for i, w in enumerate(weights[-30:]) if w.get("kg")]
+    if len(pts) >= 4:
+        n = len(pts)
+        sx = sum(p[0] for p in pts); sy = sum(p[1] for p in pts)
+        sxx = sum(p[0]**2 for p in pts); sxy = sum(p[0]*p[1] for p in pts)
+        denom = (n*sxx - sx*sx)
+        if denom:
+            slope = (n*sxy - sx*sy) / denom          # kg pro Eintrag
+            # Annahme ~3 Wiegungen/Woche
+            per_day = slope / (7/3)
+            current = pts[-1][1]
+            projected = current + per_day * days_to_race
+            out["weight"] = {
+                "current": round(current, 1),
+                "projected": round(projected, 1),
+                "target": targets["weight_dec_kg"],
+                "on_track": projected <= targets["weight_dec_kg"] + 1,
+            }
+
+    # FTP: braucht mindestens zwei Testwerte, sonst nur Ist gegen Ziel
+    ftp = manual.get("ftp_w")
+    if ftp:
+        out["ftp"] = {
+            "current": ftp,
+            "target": targets["ftp_race_w"],
+            "gap": targets["ftp_race_w"] - ftp,
+            "on_track": ftp >= 250 + (targets["ftp_race_w"] - 250) * (1 - days_to_race/264),
+        }
+
+    css = manual.get("css_s")
+    if css:
+        out["css"] = {
+            "current": css,
+            "target": targets["css_race_s"],
+            "gap": css - targets["css_race_s"],
+        }
+
+    return out
+
+
 # ---------------------------------------------------------------- Main
 
 
@@ -692,6 +812,9 @@ def main():
         "weekly": weekly,
         "by_sport": build_by_sport(activities),
         "analysis": build_analysis(activities, weekly, manual),
+        "forecast": build_forecast(weights, manual, days_to_race, {
+            "ftp_race_w": 285, "css_race_s": 110, "weight_dec_kg": 83.5,
+        }),
         "activities": sorted(activities, key=lambda a: a["date"], reverse=True)[:40],
         "rhr": rhr[-60:],
         "weights": weights[-60:],

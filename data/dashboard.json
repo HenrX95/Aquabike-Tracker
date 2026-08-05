@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-05T06:42:26+00:00",
+  "generated_at": "2026-08-05T10:09:27+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
@@ -27,8 +27,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 94,
-    "sleep_h_7d": 1.4,
-    "readiness": 71,
+    "sleep_h_7d": 2.5,
+    "readiness": 81,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -37,7 +37,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 1.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 2.5 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [],
@@ -60,6 +60,19 @@
     "walkrun_total_km": 36.7,
     "walkrun_race_km": 21.1,
     "load_trend": []
+  },
+  "forecast": {
+    "ftp": {
+      "current": 250,
+      "target": 285,
+      "gap": 35,
+      "on_track": false
+    },
+    "css": {
+      "current": 120,
+      "target": 110,
+      "gap": 10
+    }
   },
   "activities": [
     {
@@ -807,9 +820,10 @@
     },
     {
       "date": "2026-08-05",
-      "total_h": 0.53,
-      "hrv": 62,
-      "rhr": 60
+      "total_h": 8.15,
+      "score": 82,
+      "hrv": 71,
+      "rhr": 44
     }
   ],
   "swim_pace": [

@@ -213,34 +213,28 @@ SPORT_TARGETS = {"swim": 3, "bike": 3, "gym": 2}
 def garmin_login():
     """
     Login mit Token-Wiederverwendung. Garmin drosselt wiederholte Passwort-Logins
-    von GitHub-Actions-IPs (429). Ein gecachtes Session-Token umgeht das komplett.
+    von GitHub-Actions-IPs (429). Ein gecachtes Token umgeht das komplett.
 
     Ablauf:
-    - GARMIN_TOKENS (Base64 des Tokenstore) als Secret gesetzt → Token wird genutzt,
+    - GARMIN_TOKENS (Token-String) als Secret gesetzt → Token wird direkt genutzt,
       KEIN Passwort-Login, kein 429-Risiko. Token ist ~1 Jahr gueltig.
     - Kein Token oder abgelaufen → Passwort-Login als Rueckfall, danach wird das
-      neue Token als Base64 ins Log geschrieben (einmalig als Secret speichern).
+      frische Token als String ins Log geschrieben (einmalig als Secret speichern).
 
-    Hinweis: Die zugrundeliegende garth-Bibliothek wird nicht mehr weiterentwickelt.
-    Bestehende Tokens laufen noch ~1 Jahr. Deshalb ist Token-Caching jetzt sogar
-    wichtiger — es reduziert die Passwort-Logins auf ein Minimum.
+    Die Bibliothek garminconnect speichert Tokens als String (client.dumps) und
+    laedt sie ebenso (client.loads) — kein Verzeichnis, kein Base64 noetig.
     """
-    import base64, io, tarfile, tempfile, os as _os
+    import os as _os
 
     email = _os.environ.get("GARMIN_EMAIL")
     password = _os.environ.get("GARMIN_PASSWORD")
-    token_b64 = _os.environ.get("GARMIN_TOKENS")
-    tokendir = Path(tempfile.gettempdir()) / ".garminconnect"
+    token_str = _os.environ.get("GARMIN_TOKENS")
 
-    # 1. Versuch: gecachtes Token entpacken und nutzen
-    if token_b64:
+    # 1. Versuch: gecachtes Token direkt laden
+    if token_str and len(token_str) > 512:
         try:
-            raw = base64.b64decode(token_b64)
-            tokendir.mkdir(parents=True, exist_ok=True)
-            with tarfile.open(fileobj=io.BytesIO(raw), mode="r:gz") as tar:
-                tar.extractall(tokendir)
             api = Garmin()
-            api.login(str(tokendir))
+            api.login(token_str)   # String > 512 Zeichen wird direkt als Token geladen
             log("Garmin: Login via Token — kein Passwort, kein Rate-Limit-Risiko")
             return api
         except Exception as e:
@@ -253,17 +247,13 @@ def garmin_login():
     api.login()
     log("Garmin: Login via Passwort")
 
-    # Frisches Token exportieren und als Base64 ins Log — einmal als Secret sichern
+    # Frisches Token als String ins Log — einmal als Secret GARMIN_TOKENS sichern
     try:
-        api.garth.dump(str(tokendir))
-        buf = io.BytesIO()
-        with tarfile.open(fileobj=buf, mode="w:gz") as tar:
-            tar.add(str(tokendir), arcname=".")
-        b64 = base64.b64encode(buf.getvalue()).decode()
+        token_dump = api.client.dumps()
         log("=================== GARMIN_TOKENS ===================")
         log("Diesen Wert als Repository-Secret GARMIN_TOKENS speichern.")
         log("Danach laeuft der Sync ~1 Jahr ohne Passwort-Login:")
-        log(b64)
+        log(token_dump)
         log("================= Ende GARMIN_TOKENS =================")
     except Exception as e:
         log(f"Token-Export nicht moeglich: {e}")

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-07T23:08:39+00:00",
+  "generated_at": "2026-08-08T22:04:01+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 260,
+    "days_to_go": 259,
     "weeks_to_go": 37,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 49,
-    "sleep_h_7d": 3.3,
-    "readiness": 83,
+    "rhr_bpm": 79,
+    "sleep_h_7d": 2.0,
+    "readiness": 70,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -76,13 +76,8 @@
   "flags": [
     {
       "level": "amber",
-      "metric": "Schwimmfrequenz",
-      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 3.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 2.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -90,13 +85,13 @@
       "week": 1,
       "phase": "1 – Grundlage",
       "recovery_week": false,
-      "swims": 1,
-      "bikes": 1,
+      "swims": 2,
+      "bikes": 3,
       "gyms": 0,
-      "bike_hours": 1.4,
-      "swim_meters": 450,
-      "srpe_load": 445,
-      "rpe_covered": 2,
+      "bike_hours": 5.2,
+      "swim_meters": 1100,
+      "srpe_load": 1562,
+      "rpe_covered": 5,
       "rpe_missing": 0
     }
   ],
@@ -104,24 +99,24 @@
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 1,
-      "sessions_week": 1,
-      "hours_total": 0.1,
-      "km_total": 0.5,
+      "sessions_total": 2,
+      "sessions_week": 2,
+      "hours_total": 0.4,
+      "km_total": 1.1,
       "target_per_week": 2,
-      "longest_km": 0.5,
-      "longest_min": 6.9
+      "longest_km": 0.7,
+      "longest_min": 17.0
     },
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 1,
-      "sessions_week": 1,
-      "hours_total": 1.4,
-      "km_total": 40.6,
+      "sessions_total": 3,
+      "sessions_week": 3,
+      "hours_total": 5.2,
+      "km_total": 145.4,
       "target_per_week": 3,
-      "longest_km": 40.6,
-      "longest_min": 86.5
+      "longest_km": 84.4,
+      "longest_min": 174.8
     }
   ],
   "analysis": {
@@ -156,7 +151,7 @@
     "load_trend": [
       {
         "week": 1,
-        "load": 445
+        "load": 1562
       }
     ]
   },
@@ -175,6 +170,57 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-08-08",
+      "activity_id": 23901288235,
+      "name": "70.3 W01 Schwimmen CSS",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 17.0,
+      "distance_km": 0.65,
+      "avg_hr": 140.0,
+      "max_hr": 157.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 157,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
+    },
+    {
+      "date": "2026-08-08",
+      "activity_id": 23899935932,
+      "name": "Gauting Radfahren",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 52.5,
+      "distance_km": 20.35,
+      "avg_hr": 143.0,
+      "max_hr": 168.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 128,
+      "pace_per_100m": null,
+      "rpe_garmin": 10,
+      "feel_garmin": 5.0
+    },
+    {
+      "date": "2026-08-08",
+      "activity_id": 23898426387,
+      "name": "München - 70.3 W01 Lange Ausfahrt",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 174.8,
+      "distance_km": 84.44,
+      "avg_hr": 143.0,
+      "max_hr": 168.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 702,
+      "pace_per_100m": null,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-08-05",
       "activity_id": 23866283507,
@@ -733,6 +779,10 @@
     {
       "date": "2026-08-07",
       "bpm": 49
+    },
+    {
+      "date": "2026-08-08",
+      "bpm": 79
     }
   ],
   "weights": [
@@ -742,13 +792,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-09",
-      "total_h": 6.34,
-      "score": 61,
-      "hrv": 73,
-      "rhr": 45
-    },
     {
       "date": "2026-07-10",
       "total_h": 7.49,
@@ -945,9 +988,16 @@
     },
     {
       "date": "2026-08-07",
-      "total_h": 7.92,
+      "total_h": 0.23,
       "score": 84,
       "hrv": 90,
+      "rhr": 41
+    },
+    {
+      "date": "2026-08-08",
+      "total_h": 5.99,
+      "score": 56,
+      "hrv": 97,
       "rhr": 41
     }
   ],
@@ -974,7 +1024,7 @@
     },
     {
       "week": 1,
-      "median_pace_s": 92
+      "median_pace_s": 157
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-08T22:04:01+00:00",
+  "generated_at": "2026-08-09T22:15:34+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 259,
-    "weeks_to_go": 37,
+    "days_to_go": 258,
+    "weeks_to_go": 36,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 79,
-    "sleep_h_7d": 2.0,
-    "readiness": 70,
+    "rhr_bpm": 83,
+    "sleep_h_7d": 3.2,
+    "readiness": 65,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -77,7 +77,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 2.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 3.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -87,11 +87,11 @@
       "recovery_week": false,
       "swims": 2,
       "bikes": 3,
-      "gyms": 0,
+      "gyms": 1,
       "bike_hours": 5.2,
       "swim_meters": 1100,
-      "srpe_load": 1562,
-      "rpe_covered": 5,
+      "srpe_load": 1700,
+      "rpe_covered": 6,
       "rpe_missing": 0
     }
   ],
@@ -117,6 +117,17 @@
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
+    },
+    {
+      "sport": "gym",
+      "label": "Kraft",
+      "sessions_total": 1,
+      "sessions_week": 1,
+      "hours_total": 0.8,
+      "km_total": 0.0,
+      "target_per_week": 2,
+      "longest_km": 0.0,
+      "longest_min": 46.3
     }
   ],
   "analysis": {
@@ -151,7 +162,7 @@
     "load_trend": [
       {
         "week": 1,
-        "load": 1562
+        "load": 1700
       }
     ]
   },
@@ -170,6 +181,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-08-09",
+      "activity_id": 23909163063,
+      "name": "70.3 W01 Kraft B Ganzkörper",
+      "sport": "gym",
+      "type_raw": "strength_training",
+      "duration_min": 46.3,
+      "distance_km": 0.0,
+      "avg_hr": 93.0,
+      "max_hr": 141.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": null,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 7.5
+    },
     {
       "date": "2026-08-08",
       "activity_id": 23901288235,
@@ -783,6 +811,10 @@
     {
       "date": "2026-08-08",
       "bpm": 79
+    },
+    {
+      "date": "2026-08-09",
+      "bpm": 83
     }
   ],
   "weights": [
@@ -792,13 +824,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-10",
-      "total_h": 7.49,
-      "score": 86,
-      "hrv": 88,
-      "rhr": 43
-    },
     {
       "date": "2026-07-11",
       "total_h": 7.63,
@@ -999,6 +1024,13 @@
       "score": 56,
       "hrv": 97,
       "rhr": 41
+    },
+    {
+      "date": "2026-08-09",
+      "total_h": 9.02,
+      "score": 78,
+      "hrv": 64,
+      "rhr": 48
     }
   ],
   "swim_pace": [

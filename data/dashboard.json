@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-08-16T21:33:20+00:00",
+  "generated_at": "2026-08-17T21:38:32+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 251,
+    "days_to_go": 250,
     "weeks_to_go": 35,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 2,
+    "current_week": 3,
     "phase": "1 – Grundlage",
     "recovery_week": false,
     "weeks_total": 38,
@@ -22,7 +22,7 @@
     },
     "bike_hours_target": 4.5,
     "ftp_waypoint_w": 258,
-    "weight_target_kg": 91.7,
+    "weight_target_kg": 91.4,
     "deficit_active": true
   },
   "targets": {
@@ -67,8 +67,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 85,
-    "sleep_h_7d": 5.1,
-    "readiness": 62,
+    "sleep_h_7d": 4.3,
+    "readiness": 94,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -87,7 +87,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.1 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 4.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -123,7 +123,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 3,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 1.0,
       "km_total": 2.6,
       "target_per_week": 2,
@@ -134,7 +134,7 @@
       "sport": "bike",
       "label": "Rad",
       "sessions_total": 5,
-      "sessions_week": 2,
+      "sessions_week": 0,
       "hours_total": 6.6,
       "km_total": 183.2,
       "target_per_week": 3,
@@ -156,7 +156,7 @@
       "sport": "run",
       "label": "Laufen",
       "sessions_total": 1,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 1.1,
       "km_total": 9.3,
       "target_per_week": null,
@@ -167,7 +167,7 @@
       "sport": "mobility",
       "label": "Mobility",
       "sessions_total": 1,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 0.5,
       "km_total": 0.0,
       "target_per_week": null,
@@ -219,7 +219,7 @@
     "ftp": {
       "current": 250,
       "target": 300,
-      "due_now": 252,
+      "due_now": 253,
       "gap": 50,
       "on_track": true
     },
@@ -971,13 +971,6 @@
   ],
   "sleep": [
     {
-      "date": "2026-07-18",
-      "total_h": 7.44,
-      "score": 77,
-      "hrv": 89,
-      "rhr": 40
-    },
-    {
       "date": "2026-07-19",
       "total_h": 8.39,
       "score": 84,
@@ -1173,10 +1166,17 @@
     },
     {
       "date": "2026-08-16",
-      "total_h": 6.92,
+      "total_h": 0.01,
       "score": 65,
       "hrv": 54,
       "rhr": 47
+    },
+    {
+      "date": "2026-08-17",
+      "total_h": 8.26,
+      "score": 85,
+      "hrv": 83,
+      "rhr": 43
     }
   ],
   "swim_pace": [

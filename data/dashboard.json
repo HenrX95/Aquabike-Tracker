@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-18T21:36:32+00:00",
+  "generated_at": "2026-08-19T21:38:37+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 249,
+    "days_to_go": 248,
     "weeks_to_go": 35,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 85,
-    "sleep_h_7d": 3.0,
-    "readiness": 84,
+    "rhr_bpm": 61,
+    "sleep_h_7d": 3.4,
+    "readiness": 86,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -81,13 +81,8 @@
     },
     {
       "level": "amber",
-      "metric": "RPE",
-      "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
-    },
-    {
-      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 3.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 3.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -116,16 +111,29 @@
       "srpe_load": 312,
       "rpe_covered": 2,
       "rpe_missing": 3
+    },
+    {
+      "week": 3,
+      "phase": "1 – Grundlage",
+      "recovery_week": false,
+      "swims": 1,
+      "bikes": 0,
+      "gyms": 0,
+      "bike_hours": 0.0,
+      "swim_meters": 1400,
+      "srpe_load": 75,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 3,
-      "sessions_week": 0,
-      "hours_total": 1.0,
-      "km_total": 2.6,
+      "sessions_total": 4,
+      "sessions_week": 1,
+      "hours_total": 1.5,
+      "km_total": 4.0,
       "target_per_week": 2,
       "longest_km": 1.5,
       "longest_min": 38.1
@@ -212,6 +220,10 @@
       {
         "week": 2,
         "load": 312
+      },
+      {
+        "week": 3,
+        "load": 75
       }
     ]
   },
@@ -221,7 +233,7 @@
       "target": 300,
       "due_now": 253,
       "gap": 50,
-      "on_track": true
+      "on_track": false
     },
     "css": {
       "current": 120,
@@ -230,6 +242,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-08-19",
+      "activity_id": 24034879033,
+      "name": "70.3 W03 Schwimmen Technik",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 25.2,
+      "distance_km": 1.4,
+      "avg_hr": 132.0,
+      "max_hr": 153.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 108,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-08-14",
       "activity_id": 23976063626,
@@ -774,30 +803,9 @@
       "pace_per_100m": 124,
       "rpe_garmin": 4.0,
       "feel_garmin": 7.5
-    },
-    {
-      "date": "2026-05-20",
-      "activity_id": 22950613308,
-      "name": "Training 3 - Kondition 2,8km",
-      "sport": "swim",
-      "type_raw": "lap_swimming",
-      "duration_min": 43.8,
-      "distance_km": 1.6,
-      "avg_hr": 137.0,
-      "max_hr": 174.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 164,
-      "rpe_garmin": 3.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-05-20",
-      "bpm": 64
-    },
     {
       "date": "2026-05-24",
       "bpm": 66
@@ -961,6 +969,10 @@
     {
       "date": "2026-08-14",
       "bpm": 85
+    },
+    {
+      "date": "2026-08-19",
+      "bpm": 61
     }
   ],
   "weights": [
@@ -970,13 +982,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-20",
-      "total_h": 0.13,
-      "score": 56,
-      "hrv": 78,
-      "rhr": 46
-    },
     {
       "date": "2026-07-21",
       "total_h": 0.02,
@@ -1177,12 +1182,19 @@
       "score": 80,
       "hrv": 111,
       "rhr": 42
+    },
+    {
+      "date": "2026-08-19",
+      "total_h": 9.32,
+      "score": 83,
+      "hrv": 64,
+      "rhr": 46
     }
   ],
   "swim_pace": [
     {
       "week": -10,
-      "median_pace_s": 164
+      "median_pace_s": 124
     },
     {
       "week": -7,
@@ -1207,6 +1219,10 @@
     {
       "week": 2,
       "median_pace_s": 152
+    },
+    {
+      "week": 3,
+      "median_pace_s": 108
     }
   ]
 }

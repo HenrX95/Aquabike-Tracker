@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-08-21T21:36:45+00:00",
+  "generated_at": "2026-08-22T21:34:37+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 246,
+    "days_to_go": 245,
     "weeks_to_go": 35,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 43,
+    "rhr_bpm": 42,
     "sleep_h_7d": 4.3,
-    "readiness": 91,
+    "readiness": 89,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -123,7 +123,7 @@
       "swim_meters": 1400,
       "srpe_load": 75,
       "rpe_covered": 1,
-      "rpe_missing": 0
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -163,10 +163,10 @@
     {
       "sport": "run",
       "label": "Laufen",
-      "sessions_total": 1,
-      "sessions_week": 0,
-      "hours_total": 1.1,
-      "km_total": 9.3,
+      "sessions_total": 2,
+      "sessions_week": 1,
+      "hours_total": 1.6,
+      "km_total": 14.3,
       "target_per_week": null,
       "longest_km": 9.3,
       "longest_min": 65.5
@@ -210,7 +210,7 @@
     "swim_longest_km": 1.9,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 12.3,
-    "walkrun_total_km": 46.1,
+    "walkrun_total_km": 51.1,
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
@@ -231,7 +231,7 @@
     "ftp": {
       "current": 250,
       "target": 300,
-      "due_now": 253,
+      "due_now": 254,
       "gap": 50,
       "on_track": false
     },
@@ -242,6 +242,21 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-08-22",
+      "activity_id": 24073798687,
+      "name": "Leipzig Laufen",
+      "sport": "run",
+      "type_raw": "running",
+      "duration_min": 29.7,
+      "distance_km": 4.97,
+      "avg_hr": 154.0,
+      "max_hr": 197.0,
+      "avg_power": 363.0,
+      "norm_power": 392.0,
+      "elevation_m": 8,
+      "pace_per_100m": null
+    },
     {
       "date": "2026-08-19",
       "activity_id": 24034879033,
@@ -981,6 +996,10 @@
     {
       "date": "2026-08-21",
       "bpm": 43
+    },
+    {
+      "date": "2026-08-22",
+      "bpm": 42
     }
   ],
   "weights": [
@@ -990,13 +1009,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-23",
-      "total_h": 0.13,
-      "score": 88,
-      "hrv": 75,
-      "rhr": 43
-    },
     {
       "date": "2026-07-24",
       "total_h": 7.29,
@@ -1196,6 +1208,13 @@
       "total_h": 7.86,
       "score": 83,
       "hrv": 75,
+      "rhr": 41
+    },
+    {
+      "date": "2026-08-22",
+      "total_h": 7.64,
+      "score": 84,
+      "hrv": 77,
       "rhr": 41
     }
   ],

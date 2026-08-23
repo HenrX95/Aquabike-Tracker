@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-22T21:34:37+00:00",
+  "generated_at": "2026-08-23T21:34:14+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 245,
-    "weeks_to_go": 35,
+    "days_to_go": 244,
+    "weeks_to_go": 34,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 42,
-    "sleep_h_7d": 4.3,
-    "readiness": 89,
+    "rhr_bpm": 43,
+    "sleep_h_7d": 5.2,
+    "readiness": 79,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -82,7 +82,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 4.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -207,7 +207,7 @@
     "aero_minutes_week": null,
     "decoupling_pct": null,
     "decoupling_target_pct": 5.0,
-    "swim_longest_km": 1.9,
+    "swim_longest_km": 1.85,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 12.3,
     "walkrun_total_km": 51.1,
@@ -801,30 +801,9 @@
       "norm_power": 340.0,
       "elevation_m": 18,
       "pace_per_100m": null
-    },
-    {
-      "date": "2026-05-24",
-      "activity_id": 22993732106,
-      "name": "Training 4 - Speed 2km",
-      "sport": "swim",
-      "type_raw": "lap_swimming",
-      "duration_min": 39.2,
-      "distance_km": 1.9,
-      "avg_hr": 145.0,
-      "max_hr": 169.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 124,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 7.5
     }
   ],
   "rhr": [
-    {
-      "date": "2026-05-24",
-      "bpm": 66
-    },
     {
       "date": "2026-05-27",
       "bpm": 91
@@ -1000,6 +979,10 @@
     {
       "date": "2026-08-22",
       "bpm": 42
+    },
+    {
+      "date": "2026-08-23",
+      "bpm": 43
     }
   ],
   "weights": [
@@ -1009,13 +992,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-24",
-      "total_h": 7.29,
-      "score": 74,
-      "hrv": 81,
-      "rhr": 40
-    },
     {
       "date": "2026-07-25",
       "total_h": 2.92,
@@ -1216,13 +1192,16 @@
       "score": 84,
       "hrv": 77,
       "rhr": 41
+    },
+    {
+      "date": "2026-08-23",
+      "total_h": 6.32,
+      "score": 66,
+      "hrv": 87,
+      "rhr": 40
     }
   ],
   "swim_pace": [
-    {
-      "week": -10,
-      "median_pace_s": 124
-    },
     {
       "week": -7,
       "median_pace_s": 139

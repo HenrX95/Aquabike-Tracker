@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-08-23T21:34:14+00:00",
+  "generated_at": "2026-08-24T21:42:39+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 244,
+    "days_to_go": 243,
     "weeks_to_go": 34,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 3,
+    "current_week": 4,
     "phase": "1 – Grundlage",
-    "recovery_week": false,
+    "recovery_week": true,
     "weeks_total": 38,
     "sport_targets": {
       "swim": 2,
-      "bike": 3,
+      "bike": 2,
       "gym": 2
     },
     "bike_hours_target": 4.5,
     "ftp_waypoint_w": 258,
-    "weight_target_kg": 91.4,
+    "weight_target_kg": 91.1,
     "deficit_active": true
   },
   "targets": {
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 43,
-    "sleep_h_7d": 5.2,
-    "readiness": 79,
+    "rhr_bpm": 48,
+    "sleep_h_7d": 5.8,
+    "readiness": 71,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -76,13 +76,8 @@
   "flags": [
     {
       "level": "amber",
-      "metric": "Schwimmfrequenz",
-      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.8 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -124,6 +119,19 @@
       "srpe_load": 75,
       "rpe_covered": 1,
       "rpe_missing": 1
+    },
+    {
+      "week": 4,
+      "phase": "1 – Grundlage",
+      "recovery_week": true,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "bike_hours": 1.0,
+      "swim_meters": 0,
+      "srpe_load": 120,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "by_sport": [
@@ -131,7 +139,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 4,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 1.5,
       "km_total": 4.0,
       "target_per_week": 2,
@@ -141,11 +149,11 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 5,
-      "sessions_week": 0,
-      "hours_total": 6.6,
-      "km_total": 183.2,
-      "target_per_week": 3,
+      "sessions_total": 6,
+      "sessions_week": 1,
+      "hours_total": 7.6,
+      "km_total": 215.6,
+      "target_per_week": 2,
       "longest_km": 84.4,
       "longest_min": 174.8
     },
@@ -164,7 +172,7 @@
       "sport": "run",
       "label": "Laufen",
       "sessions_total": 2,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 1.6,
       "km_total": 14.3,
       "target_per_week": null,
@@ -224,6 +232,10 @@
       {
         "week": 3,
         "load": 75
+      },
+      {
+        "week": 4,
+        "load": 120
       }
     ]
   },
@@ -242,6 +254,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-08-24",
+      "activity_id": 24097885515,
+      "name": "München (Gemfr. Gebiet) Radfahren",
+      "sport": "bike",
+      "type_raw": "cycling",
+      "duration_min": 60.1,
+      "distance_km": 32.44,
+      "avg_hr": 150.0,
+      "max_hr": 165.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 213,
+      "pace_per_100m": null,
+      "rpe_garmin": 2.0,
+      "feel_garmin": 2.5
+    },
     {
       "date": "2026-08-22",
       "activity_id": 24073798687,
@@ -983,6 +1012,10 @@
     {
       "date": "2026-08-23",
       "bpm": 43
+    },
+    {
+      "date": "2026-08-24",
+      "bpm": 48
     }
   ],
   "weights": [
@@ -992,12 +1025,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-07-25",
-      "total_h": 2.92,
-      "hrv": 70,
-      "rhr": 46
-    },
     {
       "date": "2026-07-26",
       "total_h": 8.81,
@@ -1199,6 +1226,13 @@
       "score": 66,
       "hrv": 87,
       "rhr": 40
+    },
+    {
+      "date": "2026-08-24",
+      "total_h": 4.12,
+      "score": 54,
+      "hrv": 87,
+      "rhr": 42
     }
   ],
   "swim_pace": [

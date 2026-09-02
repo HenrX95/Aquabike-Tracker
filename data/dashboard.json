@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-01T23:17:27+00:00",
+  "generated_at": "2026-09-02T23:18:19+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 235,
+    "days_to_go": 234,
     "weeks_to_go": 33,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 43,
-    "sleep_h_7d": 5.2,
-    "readiness": 84,
+    "rhr_bpm": 48,
+    "sleep_h_7d": 6.4,
+    "readiness": 82,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -76,13 +76,13 @@
   "flags": [
     {
       "level": "amber",
-      "metric": "RPE",
-      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
+      "metric": "Schwimmfrequenz",
+      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
     },
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 6.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -137,16 +137,29 @@
       "srpe_load": 120,
       "rpe_covered": 1,
       "rpe_missing": 2
+    },
+    {
+      "week": 5,
+      "phase": "1 – Grundlage",
+      "recovery_week": false,
+      "swims": 1,
+      "bikes": 0,
+      "gyms": 0,
+      "bike_hours": 0.0,
+      "swim_meters": 190,
+      "srpe_load": 24,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 4,
-      "sessions_week": 0,
+      "sessions_total": 5,
+      "sessions_week": 1,
       "hours_total": 1.5,
-      "km_total": 4.0,
+      "km_total": 4.2,
       "target_per_week": 2,
       "longest_km": 1.5,
       "longest_min": 38.1
@@ -241,6 +254,10 @@
       {
         "week": 4,
         "load": 120
+      },
+      {
+        "week": 5,
+        "load": 24
       }
     ]
   },
@@ -248,7 +265,7 @@
     "ftp": {
       "current": 250,
       "target": 300,
-      "due_now": 255,
+      "due_now": 256,
       "gap": 50,
       "on_track": false
     },
@@ -259,6 +276,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-09-01",
+      "activity_id": 24203545682,
+      "name": "Atlantic City Freiwasserschwimmen",
+      "sport": "swim",
+      "type_raw": "open_water_swimming",
+      "duration_min": 4.8,
+      "distance_km": 0.19,
+      "avg_hr": 130.0,
+      "max_hr": 144.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 155,
+      "rpe_garmin": 5.0,
+      "feel_garmin": 2.5
+    },
     {
       "date": "2026-08-29",
       "activity_id": 24161369428,
@@ -1044,6 +1078,10 @@
     {
       "date": "2026-09-01",
       "bpm": 43
+    },
+    {
+      "date": "2026-09-02",
+      "bpm": 48
     }
   ],
   "weights": [
@@ -1053,13 +1091,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-08-03",
-      "total_h": 0.22,
-      "score": 76,
-      "hrv": 58,
-      "rhr": 46
-    },
     {
       "date": "2026-08-04",
       "total_h": 0.13,
@@ -1258,8 +1289,15 @@
     },
     {
       "date": "2026-09-01",
+      "total_h": 7.32,
+      "score": 86,
+      "hrv": 75,
+      "rhr": 42
+    },
+    {
+      "date": "2026-09-02",
       "total_h": 0.0,
-      "score": 86
+      "score": 78
     }
   ],
   "swim_pace": [
@@ -1290,6 +1328,10 @@
     {
       "week": 3,
       "median_pace_s": 108
+    },
+    {
+      "week": 5,
+      "median_pace_s": 155
     }
   ]
 }

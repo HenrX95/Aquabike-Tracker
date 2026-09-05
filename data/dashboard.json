@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-04T23:02:43+00:00",
+  "generated_at": "2026-09-05T22:53:09+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 232,
+    "days_to_go": 231,
     "weeks_to_go": 33,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,8 +67,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 49,
-    "sleep_h_7d": 4.3,
-    "readiness": 45,
+    "sleep_h_7d": 5.7,
+    "readiness": 83,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -87,7 +87,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 4.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -241,7 +241,7 @@
     "swim_longest_km": 1.85,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 12.3,
-    "walkrun_total_km": 53.9,
+    "walkrun_total_km": 48.9,
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
@@ -891,28 +891,9 @@
       "pace_per_100m": 149,
       "rpe_garmin": 4.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-06-06",
-      "activity_id": 23146648586,
-      "name": "München Laufen",
-      "sport": "run",
-      "type_raw": "running",
-      "duration_min": 31.8,
-      "distance_km": 5.02,
-      "avg_hr": 155.0,
-      "max_hr": 167.0,
-      "avg_power": 348.0,
-      "norm_power": 360.0,
-      "elevation_m": 9,
-      "pace_per_100m": null
     }
   ],
   "rhr": [
-    {
-      "date": "2026-06-06",
-      "bpm": 46
-    },
     {
       "date": "2026-06-10",
       "bpm": 53
@@ -1122,13 +1103,6 @@
   ],
   "sleep": [
     {
-      "date": "2026-08-06",
-      "total_h": 7.05,
-      "score": 61,
-      "hrv": 82,
-      "rhr": 43
-    },
-    {
       "date": "2026-08-07",
       "total_h": 0.23,
       "score": 84,
@@ -1326,8 +1300,17 @@
     },
     {
       "date": "2026-09-04",
-      "total_h": 0.02,
-      "score": 37
+      "total_h": 0.48,
+      "score": 37,
+      "hrv": 51,
+      "rhr": 56
+    },
+    {
+      "date": "2026-09-05",
+      "total_h": 9.47,
+      "score": 90,
+      "hrv": 73,
+      "rhr": 46
     }
   ],
   "swim_pace": [

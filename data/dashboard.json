@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-09-17T23:33:04+00:00",
+  "generated_at": "2026-09-18T23:17:03+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 219,
+    "days_to_go": 218,
     "weeks_to_go": 31,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,32 +67,22 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 54,
-    "sleep_h_7d": 5.4,
-    "readiness": 79,
+    "sleep_h_7d": 5.3,
+    "readiness": 82,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
   },
   "flags": [
     {
-      "level": "red",
-      "metric": "sRPE-Last",
-      "text": "Wochenlast +177% (Grenze 15%). Naechste Qualitaetseinheit zuruecknehmen."
-    },
-    {
       "level": "amber",
       "metric": "Schwimmfrequenz",
-      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
-      "metric": "RPE",
-      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
+      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
     },
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -178,13 +168,13 @@
       "week": 7,
       "phase": "1 – Grundlage",
       "recovery_week": false,
-      "swims": 0,
+      "swims": 1,
       "bikes": 0,
       "gyms": 0,
       "bike_hours": 0.0,
-      "swim_meters": 0,
-      "srpe_load": 0,
-      "rpe_covered": 0,
+      "swim_meters": 1430,
+      "srpe_load": 136,
+      "rpe_covered": 1,
       "rpe_missing": 1
     }
   ],
@@ -192,10 +182,10 @@
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 5,
-      "sessions_week": 0,
-      "hours_total": 1.5,
-      "km_total": 4.2,
+      "sessions_total": 6,
+      "sessions_week": 1,
+      "hours_total": 2.1,
+      "km_total": 5.6,
       "target_per_week": 2,
       "longest_km": 1.5,
       "longest_min": 38.1
@@ -294,6 +284,10 @@
       {
         "week": 5,
         "load": 208
+      },
+      {
+        "week": 7,
+        "load": 136
       }
     ]
   },
@@ -312,6 +306,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-09-17",
+      "activity_id": 24403547751,
+      "name": "Schwimmbad",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 34.0,
+      "distance_km": 1.43,
+      "avg_hr": 137.0,
+      "max_hr": 159.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 143,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 2.5
+    },
     {
       "date": "2026-09-15",
       "activity_id": 24366258616,
@@ -867,30 +878,9 @@
       "pace_per_100m": 132,
       "rpe_garmin": 4.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-06-19",
-      "activity_id": 23308772063,
-      "name": "München (Gemfr. Gebiet) Radfahren",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 71.5,
-      "distance_km": 32.92,
-      "avg_hr": 147.0,
-      "max_hr": 183.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 185,
-      "pace_per_100m": null,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-06-19",
-      "bpm": 45
-    },
     {
       "date": "2026-06-20",
       "bpm": 47
@@ -1092,13 +1082,6 @@
   ],
   "sleep": [
     {
-      "date": "2026-08-18",
-      "total_h": 6.58,
-      "score": 80,
-      "hrv": 111,
-      "rhr": 42
-    },
-    {
       "date": "2026-08-19",
       "total_h": 0.26,
       "score": 83,
@@ -1296,10 +1279,17 @@
     },
     {
       "date": "2026-09-17",
-      "total_h": 8.09,
+      "total_h": 0.13,
       "score": 79,
       "hrv": 77,
       "rhr": 47
+    },
+    {
+      "date": "2026-09-18",
+      "total_h": 7.97,
+      "score": 74,
+      "hrv": 84,
+      "rhr": 43
     }
   ],
   "swim_pace": [
@@ -1330,6 +1320,10 @@
     {
       "week": 5,
       "median_pace_s": 155
+    },
+    {
+      "week": 7,
+      "median_pace_s": 143
     }
   ]
 }

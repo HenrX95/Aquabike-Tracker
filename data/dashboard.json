@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-19T23:01:27+00:00",
+  "generated_at": "2026-09-20T23:14:22+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 217,
-    "weeks_to_go": 31,
+    "days_to_go": 216,
+    "weeks_to_go": 30,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
@@ -67,8 +67,8 @@
   "current": {
     "weight_kg": 90.0,
     "rhr_bpm": 54,
-    "sleep_h_7d": 4.7,
-    "readiness": 80,
+    "sleep_h_7d": 4.9,
+    "readiness": 91,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -82,7 +82,7 @@
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 4.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 4.9 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -861,30 +861,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 4.0,
       "feel_garmin": 7.5
-    },
-    {
-      "date": "2026-06-21",
-      "activity_id": 23328872574,
-      "name": "Wörthsee Freiwasserschwimmen",
-      "sport": "swim",
-      "type_raw": "open_water_swimming",
-      "duration_min": 40.6,
-      "distance_km": 1.85,
-      "avg_hr": 149.0,
-      "max_hr": 172.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 132,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-06-21",
-      "bpm": 46
-    },
     {
       "date": "2026-06-22",
       "bpm": 49
@@ -1077,13 +1056,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-08-20",
-      "total_h": 7.8,
-      "score": 77,
-      "hrv": 86,
-      "rhr": 41
-    },
     {
       "date": "2026-08-21",
       "total_h": 7.86,
@@ -1286,13 +1258,16 @@
       "score": 74,
       "hrv": 56,
       "rhr": 47
+    },
+    {
+      "date": "2026-09-20",
+      "total_h": 9.37,
+      "score": 84,
+      "hrv": 73,
+      "rhr": 44
     }
   ],
   "swim_pace": [
-    {
-      "week": -6,
-      "median_pace_s": 132
-    },
     {
       "week": -5,
       "median_pace_s": 94

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-22T00:05:18+00:00",
+  "generated_at": "2026-09-22T23:36:01+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
@@ -66,9 +66,9 @@
   },
   "current": {
     "weight_kg": 90.0,
-    "rhr_bpm": 54,
-    "sleep_h_7d": 5.2,
-    "readiness": 79,
+    "rhr_bpm": 63,
+    "sleep_h_7d": 5.4,
+    "readiness": 86,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
@@ -76,13 +76,13 @@
   "flags": [
     {
       "level": "amber",
-      "metric": "Schwimmfrequenz",
-      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
     },
     {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 5.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -176,6 +176,19 @@
       "srpe_load": 136,
       "rpe_covered": 1,
       "rpe_missing": 1
+    },
+    {
+      "week": 8,
+      "phase": "1 – Grundlage",
+      "recovery_week": true,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "bike_hours": 0.3,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -193,10 +206,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 7,
-      "sessions_week": 0,
-      "hours_total": 9.1,
-      "km_total": 255.4,
+      "sessions_total": 8,
+      "sessions_week": 1,
+      "hours_total": 9.4,
+      "km_total": 262.3,
       "target_per_week": 2,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -239,7 +252,7 @@
     "ftp_used": 250,
     "bike_zone_min": {
       "recovery": 0,
-      "endurance": 16,
+      "endurance": 31,
       "tempo": 60,
       "sweetspot": 0,
       "threshold": 0,
@@ -247,7 +260,7 @@
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 60,
-    "bike_sessions_analyzed": 2,
+    "bike_sessions_analyzed": 3,
     "race_power_w": [
       235,
       250
@@ -306,6 +319,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-09-22",
+      "activity_id": 24453640085,
+      "name": "Zwift - W1-6 Day 1",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 15.1,
+      "distance_km": 6.9,
+      "avg_hr": 126.0,
+      "max_hr": 160.0,
+      "avg_power": 153.0,
+      "norm_power": 182.7355300302543,
+      "elevation_m": 53,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-09-17",
       "activity_id": 24403547751,
@@ -1043,6 +1073,10 @@
     {
       "date": "2026-09-17",
       "bpm": 54
+    },
+    {
+      "date": "2026-09-22",
+      "bpm": 63
     }
   ],
   "weights": [
@@ -1052,13 +1086,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-08-22",
-      "total_h": 7.64,
-      "score": 84,
-      "hrv": 77,
-      "rhr": 41
-    },
     {
       "date": "2026-08-23",
       "total_h": 6.32,
@@ -1260,6 +1287,13 @@
       "total_h": 8.42,
       "score": 82,
       "hrv": 62,
+      "rhr": 45
+    },
+    {
+      "date": "2026-09-22",
+      "total_h": 7.92,
+      "score": 76,
+      "hrv": 68,
       "rhr": 45
     }
   ],

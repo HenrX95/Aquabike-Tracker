@@ -19,8 +19,13 @@ Nutzung:
     python3 garmin_workouts.py --weeks 1-2 --push       # zusätzlich direkt an die Uhr schicken
 
 Zugangsdaten über Umgebungsvariablen:
-    GARMIN_EMAIL, GARMIN_PASSWORD  (Login nur beim ersten Mal; danach Token-Cache)
-    GARMINTOKENS                   (optional, Pfad zum Token-Verzeichnis)
+    GARMIN_TOKENS                  (bevorzugt: base64-Token-String, dasselbe Secret wie beim Sync)
+    GARMIN_EMAIL, GARMIN_PASSWORD  (Rückfall: Passwort-Login)
+    GARMINTOKENS                   (optional, Pfad zum lokalen Token-Verzeichnis)
+
+v6 (27.09.2026): Wochenstruktur aus targets.json (kein Rad am Dienstagmorgen),
+Phase "Wiedereinstieg" W9-11 mit FTP-Rampentest und CSS-Test, Rennleistung relativ
+zur aktuellen FTP (IF 0,75-0,80), kein festes Geh-/Lauftraining mehr.
 """
 
 from __future__ import annotations
@@ -43,9 +48,10 @@ TOTAL_WEEKS = 38                   # Kampagnenlänge -> Woche 1 = Mo 03.08.2026
 PREFIX = "70.3"                    # Namenspräfix aller erzeugten Workouts
 
 FTP = 250                          # aktuelle FTP in Watt (wird aus manual.json überschrieben)
-FTP_TARGET = 300                   # Zielwert Renntag – nötig für 245 W bei IF 0.82
-RACE_POWER = (235, 250)            # ZIELGRÖSSE der Kampagne: Wattband über 90 km
-MAX_RACE_IF = 0.88                 # Warnschwelle: Rennleistung / aktuelle FTP
+FTP_TARGET = 280                   # Hauptziel Renntag (300 W = Stretch, siehe targets.json)
+RACE_IF = (0.75, 0.80)             # Rennleistung als Anteil der aktuellen FTP
+RACE_POWER = (188, 200)            # wird in load_ftp_css() aus FTP x RACE_IF berechnet
+MAX_RACE_IF = 0.82                 # Warnschwelle: Rennleistung / aktuelle FTP
 CSS = 120                          # aktuelle CSS in Sekunden pro 100 m (2:00)
 POOL_LENGTH_M = 25                 # Beckenlänge
 HR_MAX = 185                       # zur Ableitung der Geh-Herzfrequenzbänder
@@ -56,8 +62,11 @@ MANUAL_JSON = REPO / "data" / "manual.json"      # Ist-Werte (FTP, CSS)
 TARGETS_JSON = REPO / "targets.json"             # Zielwerte – zentrale Quelle
 STATE_DIR = REPO / "data"
 
-# Trainingswochentage (0 = Montag)
-DAY_REST, DAY_BIKE_Q, DAY_SWIM_1, DAY_BIKE_2, DAY_SWIM_2, DAY_LONG_BIKE, DAY_WALK = range(7)
+# Trainingswochentage (0 = Montag) – Standard, wird aus targets.json -> campaign.week_template überschrieben.
+# v6: Mo Rad-Qualität 1 (Zwift abends) · Di Schwimmen 1 + Kraft A · Mi Ruhe · Do Rad-Qualität 2
+#     · Fr Schwimmen 2 (CSS) · Sa lange Ausfahrt · So Kraft B (+ ab Build II Zusatz-Z2)
+DAY_BIKE_Q, DAY_SWIM_1, DAY_GYM_A, DAY_REST, DAY_BIKE_2, DAY_SWIM_2, DAY_LONG_BIKE, DAY_GYM_B, DAY_EXTRA_Z2 = (
+    0, 1, 1, 2, 3, 4, 5, 6, 6)
 
 STATE_FILE = Path(__file__).resolve().parent.parent / "data" / "garmin_workout_state.json"
 OUT_DIR = Path(__file__).resolve().parent.parent / "data" / "workouts_json"
@@ -65,6 +74,21 @@ OUT_DIR = Path(__file__).resolve().parent.parent / "data" / "workouts_json"
 # ----------------------------------------------------------------------------
 # 2. Garmin-Bausteine
 # ----------------------------------------------------------------------------
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import campaign as C  # noqa: E402  – Phasen, Entlastungswochen, Wochenschablone aus targets.json
+
+_wt = C.WEEK_TEMPLATE
+if _wt:
+    DAY_BIKE_Q = int(_wt.get("bike_quality_1", DAY_BIKE_Q))
+    DAY_SWIM_1 = int(_wt.get("swim_1", DAY_SWIM_1))
+    DAY_GYM_A = int(_wt.get("gym_a", DAY_GYM_A))
+    DAY_REST = int(_wt.get("rest", DAY_REST))
+    DAY_BIKE_2 = int(_wt.get("bike_quality_2", DAY_BIKE_2))
+    DAY_SWIM_2 = int(_wt.get("swim_2", DAY_SWIM_2))
+    DAY_LONG_BIKE = int(_wt.get("long_ride", DAY_LONG_BIKE))
+    DAY_GYM_B = int(_wt.get("gym_b", DAY_GYM_B))
+    DAY_EXTRA_Z2 = int(_wt.get("extra_z2", DAY_EXTRA_Z2))
 
 from garminconnect import Garmin  # noqa: E402
 from garminconnect.workout import (  # noqa: E402
@@ -349,10 +373,43 @@ def bike_race_sim() -> tuple[list, str]:
         step(o, "warmup", seconds=12 * 60, target="power", v1=watts(0.50), v2=watts(0.66)),
         step(o, "interval", seconds=150 * 60, target="power", v1=lo, v2=hi,
              note=f"GENERALPROBE 90 km @ {lo}-{hi} W – Renn-Setup, Renn-Verpflegung, "
-                  f"Aeroposition. Danach direkt 30 min gehen."),
+                  f"Aeroposition. Optional danach 10-20 min locker laufen/gehen."),
         step(o, "cooldown", seconds=10 * 60, target="power", v1=watts(0.40), v2=watts(0.55)),
     ]
-    return steps, f"Generalprobe 90 km @ {lo}-{hi} W + Brick-Gehen"
+    return steps, f"Generalprobe 90 km @ {lo}-{hi} W (optional kurzer Koppellauf)"
+
+
+def bike_tempo(reps: int, minutes: int) -> tuple[list, str]:
+    """Tempo + Trittfrequenz – moderater zweiter Reiz im Wiedereinstieg."""
+    o = Order()
+    steps = [step(o, "warmup", seconds=12 * 60, target="power", v1=watts(0.55), v2=watts(0.70))]
+    block = [
+        step(o, "interval", seconds=minutes * 60, target="power", v1=watts(0.80), v2=watts(0.87),
+             note=f"Tempo {watts(0.80)}-{watts(0.87)} W, TF 85-95"),
+        step(o, "recovery", seconds=4 * 60, target="power", v1=watts(0.45), v2=watts(0.60)),
+    ]
+    steps.append(create_repeat_group(reps, block, o.next()))
+    cad = [
+        step(o, "interval", seconds=5 * 60, target="power", v1=watts(0.60), v2=watts(0.72),
+             note="Trittfrequenz 100+ rpm, ruhiger Oberkörper"),
+        step(o, "recovery", seconds=2 * 60, target="power", v1=watts(0.45), v2=watts(0.60)),
+    ]
+    steps.append(create_repeat_group(3, cad, o.next()))
+    steps.append(step(o, "cooldown", seconds=8 * 60, target="power", v1=watts(0.40), v2=watts(0.55)))
+    return steps, f"Tempo {reps}x{minutes} min @ {watts(0.80)}-{watts(0.87)} W + 3x5 min Kadenz 100+"
+
+
+def bike_ramp_test() -> tuple[list, str]:
+    """Platzhalter im Kalender – der Test selbst läuft als Zwift-Workout 'Ramp Test'."""
+    o = Order()
+    steps = [
+        step(o, "warmup", seconds=5 * 60, target="none", note="Locker einrollen"),
+        step(o, "interval", target="none",
+             note="Zwift: Workout 'Ramp Test' starten und bis zum Abbruch fahren. Danach Runde drücken."),
+        step(o, "cooldown", seconds=10 * 60, target="none", note="Ausrollen"),
+    ]
+    return steps, ("FTP-RAMPENTEST in Zwift. Ergebnis in data/manual.json (ftp_w + ftp_tested) eintragen, "
+                   "dann Workouts ab nächster Woche neu hochladen.")
 
 
 def bike_opener() -> tuple[list, str]:
@@ -427,6 +484,18 @@ def swim_endurance(dist: int, race_pace_blocks: int = 0) -> tuple[list, str]:
     return steps, f"Ausdauer: {dist} m am Stück, ruhiges Tempo"
 
 
+def swim_css_test() -> tuple[list, str]:
+    o = Order()
+    steps = [
+        step(o, "warmup", meters=400, note="Einschwimmen locker + 4x50 Steigerung"),
+        step(o, "interval", meters=400, note="400 m ZEITTEST – maximal haltbar, gleichmäßig. Zeit notieren!"),
+        step(o, "rest", seconds=360, note="5-6 min locker/Pause"),
+        step(o, "interval", meters=200, note="200 m ZEITTEST – maximal haltbar. Zeit notieren!"),
+        step(o, "cooldown", meters=300, note="Ausschwimmen"),
+    ]
+    return steps, "CSS-TEST: CSS = (400-m-Zeit − 200-m-Zeit) ÷ 2 → in manual.json (css_s + css_tested)"
+
+
 def swim_race_sim() -> tuple[list, str]:
     o = Order()
     steps = [
@@ -474,6 +543,7 @@ GYM_A = [
     ("LUNGE", "WEIGHTED_STEP_UP", 3, 10, 75),
     ("CALF_RAISE", "STANDING_CALF_RAISE", 3, 15, 60),
     ("HIP_STABILITY", "LATERAL_WALKS_WITH_BAND_AT_ANKLES", 2, 15, 45),
+    ("DEADLIFT", "ROMANIAN_DEADLIFT", 3, 10, 90),
 ]
 
 GYM_B = [
@@ -482,33 +552,28 @@ GYM_B = [
     ("BENCH_PRESS", "DUMBBELL_BENCH_PRESS", 3, 10, 75),
     ("SHOULDER_PRESS", "DUMBBELL_SHOULDER_PRESS", 3, 8, 75),
     ("ROW", "FACE_PULL", 3, 15, 45),
-    ("DEADLIFT", "ROMANIAN_DEADLIFT", 3, 10, 90),
     ("PLANK", "SIDE_PLANK", 2, 1, 45),
 ]
 
 
-def gym(blocks: list[tuple[str, str, int, int, int]], label: str) -> tuple[list, str]:
+def gym(blocks: list[tuple[str, str, int, int, int]], label: str, max_sets: int | None = None) -> tuple[list, str]:
     steps: list[Any] = []
     order = 1
     for category, exercise, sets, reps, rest in blocks:
-        steps.append(create_strength_set(category, order, sets, reps, float(rest), exercise_name=exercise))
+        n = min(sets, max_sets) if max_sets else sets
+        steps.append(create_strength_set(category, order, n, reps, float(rest), exercise_name=exercise))
         order += 3
-    return steps, f"Kraft {label} – Gewichte 2-3 Wdh. in Reserve, nie durch Gelenkschmerz trainieren"
+    extra = " · Terminale Kniestreckung (Band) + Einbeinstand zusätzlich" if label.startswith("A") else " · Pallof Press + Dead Bug zusätzlich"
+    return steps, (f"Kraft {label} – {'2 Sätze, ' if max_sets == 2 else ''}"
+                   f"Gewichte 2-3 Wdh. in Reserve, nie durch Gelenkschmerz{extra}")
 
 
 # ----------------------------------------------------------------------------
 # 4. Kampagnenlogik: welche Einheit in welcher Woche
 # ----------------------------------------------------------------------------
 
-PHASES = [
-    (1, 8, "Grundlage"),
-    (9, 18, "Build I"),
-    (19, 28, "Build II"),
-    (29, 35, "Rennspezifisch"),
-    (36, 38, "Taper"),
-]
-
-RECOVERY_WEEKS = {4, 8, 12, 16, 20, 24, 28, 32}
+PHASES = [(ph["weeks"][0], ph["weeks"][1], ph["name"]) for ph in C.CAMPAIGN["phases"]]
+RECOVERY_WEEKS = set(C.RECOVERY_WEEKS)
 
 
 def phase_of(week: int) -> str:
@@ -518,6 +583,7 @@ def phase_of(week: int) -> str:
     return "Taper"
 
 
+TEST_WEEKS = {9, 18, 28, 35}  # FTP-Rampentest (Mo) + CSS-Test (Fr)
 RACE_SIM_WEEK = 33          # Generalprobe: 90 km durchgehend auf Rennleistung
 MULTI_SIM_WEEK = 35         # Rennsimulation aller drei Disziplinen (laut Plandokument)
 
@@ -526,11 +592,11 @@ def rp_minutes(week: int) -> int:
     """Minuten auf Rennleistung innerhalb der langen Ausfahrt – die Kernprogression.
 
     Die Zahl, die am Ende ueber 235-250 W ueber 90 km entscheidet:
-    von 25 min in Woche 9 auf 100 min in Woche 34.
+    v6: Start in Woche 12 mit 20 min, +3 min pro Woche, max. 100 min.
     """
-    if week < 9:
+    if week < 12:
         return 0
-    return int(min(25 + (week - 9) * 3, 100))
+    return int(min(20 + (week - 12) * 3, 100))
 
 
 def is_recovery(week: int) -> bool:
@@ -555,7 +621,6 @@ def build_race_week(week: int) -> list[Session]:
         s(DAY_SWIM_1, "swimming", "Schwimmen locker", swim_endurance(800)),
         s(DAY_BIKE_2, "cycling", "Rad Anrisse", bike_opener()),
         s(DAY_SWIM_2, "swimming", "Wasserfühlen kurz", swim_endurance(600)),
-        s(DAY_WALK, "walking", "Ausgehen locker", walk_endurance(20)),
     ]
 
 
@@ -570,6 +635,7 @@ def build_week(week: int) -> list[Session]:
         return build_race_week(week)
     p = phase_of(week)
     rec = is_recovery(week)
+    test = week in TEST_WEEKS
     r = 0.6 if rec else 1.0          # Umfangsfaktor in Entlastungswochen
     sessions: list[Session] = []
 
@@ -580,33 +646,45 @@ def build_week(week: int) -> list[Session]:
             sport=sport, steps=steps, description=desc, day=day, extra=extra or {},
         ))
 
-    # ---------------- Rad: Qualität 1 (Dienstag) ----------------
-    if p == "Grundlage":
+    # ---------------- Rad: Qualität 1 (Montag abends, Zwift) ----------------
+    if test and p != "Grundlage":
+        add(DAY_BIKE_Q, "cycling", "FTP-Rampentest", bike_ramp_test())
+    elif p == "Grundlage":
         reps = 2 if week < 5 else 3
         add(DAY_BIKE_Q, "cycling", "Rad Sweet Spot", bike_sweetspot(reps, int(15 * r) + (5 if week >= 4 and not rec else 0)))
+    elif p == "Wiedereinstieg":
+        add(DAY_BIKE_Q, "cycling", "Rad Sweet Spot", bike_sweetspot(2, 15 if week == 10 else 20))
     elif p == "Build I":
-        if week % 2:
-            add(DAY_BIKE_Q, "cycling", "Rad Schwelle", bike_threshold(3 if week < 14 else 2, 12 if week < 14 else 20))
+        if rec:
+            add(DAY_BIKE_Q, "cycling", "Rad Sweet Spot locker", bike_sweetspot(2, 12))
+        elif week % 2:
+            add(DAY_BIKE_Q, "cycling", "Rad Schwelle", bike_threshold(3 if week < 15 else 2, 12 if week < 15 else 20))
         else:
             add(DAY_BIKE_Q, "cycling", "Rad Over-Unders", bike_over_under(3, 3))
     elif p == "Build II":
-        if week % 2:
+        if rec:
+            add(DAY_BIKE_Q, "cycling", "Rad Sweet Spot locker", bike_sweetspot(2, 12))
+        elif week % 2:
             add(DAY_BIKE_Q, "cycling", "Rad VO2max 5x3", bike_vo2(5, 3, 1.14, 1.20))
         else:
             add(DAY_BIKE_Q, "cycling", "Rad VO2max 4x4", bike_vo2(4, 4, 1.08, 1.14))
     elif p == "Rennspezifisch":
-        add(DAY_BIKE_Q, "cycling", "Rad Schwelle 2x20", bike_threshold(2, 20, 0.95, 1.00))
+        add(DAY_BIKE_Q, "cycling", "Rad Schwelle 2x20", bike_threshold(2, r5(20 * r), 0.95, 1.00))
     else:  # Taper
         add(DAY_BIKE_Q, "cycling", "Rad Öffner", bike_opener())
 
-    # ---------------- Rad: Qualität 2 (Donnerstag) ----------------
+    # ---------------- Rad: Qualität 2 (Donnerstag abends, Zwift) ----------------
     if p == "Grundlage":
         add(DAY_BIKE_2, "cycling", "Rad Sweet Spot 2", bike_sweetspot(2, r5(15 * r), 0.88, 0.92))
+    elif p == "Wiedereinstieg":
+        add(DAY_BIKE_2, "cycling", "Rad Tempo + Kadenz", bike_tempo(3, 8 if week < 11 else 10))
     elif p == "Build I":
-        if week % 2:
-            add(DAY_BIKE_2, "cycling", "Rad Kraftausdauer", bike_muscular_endurance(3, r5(10 * r)))
+        if rec:
+            add(DAY_BIKE_2, "cycling", "Rad locker", bike_endurance(60))
+        elif week % 2:
+            add(DAY_BIKE_2, "cycling", "Rad Kraftausdauer", bike_muscular_endurance(3, 10))
         else:
-            add(DAY_BIKE_2, "cycling", "Rad Rennleistung", bike_race_power(2, r5(20 * r)))
+            add(DAY_BIKE_2, "cycling", "Rad Rennleistung", bike_race_power(2, 20))
     elif p == "Build II":
         add(DAY_BIKE_2, "cycling", "Rad Rennleistung", bike_race_power(2, r5(25 * r)))
     elif p == "Rennspezifisch":
@@ -617,69 +695,61 @@ def build_week(week: int) -> list[Session]:
     # ---------------- Rad: lange Ausfahrt (Samstag) ----------------
     long_minutes = {
         "Grundlage": 120 + (week // 3) * 10,
-        "Build I": 150 + (week - 9) * 5,
-        "Build II": 195,                      # Phase 3/4: Radumfang auf ~6 h/Woche – Bedingung für 300 W
+        "Wiedereinstieg": 120 + (week - 9) * 15,          # 120 → 135 → 150
+        "Build I": 150 + (week - 12) * 8,                  # 150 → 198
+        "Build II": 195,
         "Rennspezifisch": 210,
         "Taper": 90,
     }[p]
     long_minutes = int(long_minutes * r)
     if week == RACE_SIM_WEEK:
         add(DAY_LONG_BIKE, "cycling", "Generalprobe 90 km", bike_race_sim())
-    elif p == "Rennspezifisch":
+    elif p in ("Build I", "Build II", "Rennspezifisch") and not rec:
         add(DAY_LONG_BIKE, "cycling", "Lange Ausfahrt Rennleistung",
-            bike_long_race(long_minutes, r5(rp_minutes(week) * r)))
-    elif p == "Build II":
-        add(DAY_LONG_BIKE, "cycling", "Lange Ausfahrt Rennleistung",
-            bike_long_race(long_minutes, r5(rp_minutes(week) * r)))
-    elif p == "Build I":
-        add(DAY_LONG_BIKE, "cycling", "Lange Ausfahrt Rennleistung",
-            bike_long_race(long_minutes, r5(rp_minutes(week) * r)))
+            bike_long_race(long_minutes, r5(rp_minutes(week))))
     else:
         add(DAY_LONG_BIKE, "cycling", "Lange Ausfahrt",
-            bike_endurance(long_minutes, ss_blocks=1 if week >= 6 else 0, ss_minutes=20))
+            bike_endurance(long_minutes, ss_blocks=1 if (week >= 6 and not rec and p != "Taper") else 0,
+                           ss_minutes=15 if p == "Wiedereinstieg" else 20))
 
-    # ---------------- Schwimmen (Mittwoch / Freitag) ----------------
-    if p in ("Grundlage", "Build II"):
+    # ---------------- Zusatzvolumen ab Build II (Sonntag) ----------------
+    if p in ("Build II", "Rennspezifisch") and not rec:
+        add(DAY_EXTRA_Z2, "cycling", "Rad Zusatz Z2", bike_endurance(60))
+
+    # ---------------- Schwimmen 1 (Dienstag) ----------------
+    if p in ("Grundlage", "Wiedereinstieg", "Build II"):
         add(DAY_SWIM_1, "swimming", "Schwimmen Technik", swim_technique(), {"pool": True})
     elif p == "Rennspezifisch" and week >= 31:
         add(DAY_SWIM_1, "swimming", "Schwimmen Rennsimulation", swim_race_sim(), {"pool": True})
     else:
         add(DAY_SWIM_1, "swimming", "Schwimmen Ausdauer",
-            swim_endurance(1200 if p == "Build I" else 1900, race_pace_blocks=0 if p == "Build I" else 3),
+            swim_endurance(int((1500 if p == "Build I" else 1900) * r),
+                           race_pace_blocks=0 if p == "Build I" else 3),
             {"pool": True})
 
-    if p == "Grundlage":
+    # ---------------- Schwimmen 2 (Freitag) ----------------
+    if test and p != "Grundlage":
+        css_set = swim_css_test()
+    elif p in ("Grundlage", "Wiedereinstieg"):
         css_set = swim_css(10, 100, 20, offset=4)
     elif p == "Build I":
-        css_set = swim_css(12, 100, 15, offset=0)
+        css_set = swim_css(12 if not rec else 8, 100, 15, offset=0)
     elif p == "Build II":
-        css_set = swim_css(6, 200, 25, offset=0)
+        css_set = swim_css(6 if not rec else 4, 200, 25, offset=0)
     elif p == "Rennspezifisch":
         css_set = swim_css(4, 400, 45, offset=2)
     else:
         css_set = swim_css(6, 100, 25, offset=2)
-    add(DAY_SWIM_2, "swimming", "Schwimmen CSS", css_set, {"pool": True})
-
-    # ---------------- Gehen (Sonntag, ggf. Brick am Samstag) ----------------
-    walk_minutes = {
-        "Grundlage": 50 + week * 4,
-        "Build I": 80 + (week - 9) * 4,
-        "Build II": 120 + (week - 19) * 4,
-        "Rennspezifisch": 170,
-        "Taper": 60,
-    }[p]
-    walk_minutes = int(min(walk_minutes, 180) * r)
-    add(DAY_WALK, "walking", "Gehen lang", walk_endurance(walk_minutes))
-    if week >= 29 and not rec:
-        add(DAY_LONG_BIKE, "walking", "Brick Gehen", walk_brick(25))
-
-    # ---------------- Zusatzvolumen Phase 3/4 (Montag) ----------------
-    if p in ("Build II", "Rennspezifisch") and not rec:
-        add(DAY_REST, "cycling", "Rad Zusatz Z2", bike_endurance(60))
+    add(DAY_SWIM_2, "swimming", "Schwimmen CSS" if "TEST" not in css_set[1] else "Schwimmen CSS-Test",
+        css_set, {"pool": True})
 
     # ---------------- Kraft ----------------
-    add(DAY_BIKE_Q, "strength", "Kraft A Unterkörper", gym(GYM_A, "A – Unterkörper & Kniestabilität"))
-    add(DAY_WALK, "strength", "Kraft B Ganzkörper", gym(GYM_B, "B – Ganzkörper, Rumpf & Schwimmstütze"))
+    # A (Beine/Knie) am Dienstag: 48 h vor Qualität 2, nie am Tag davor.
+    # B (Oberkörper/Rumpf) am Sonntag: belastet die Beine nicht vor der Montags-Qualität.
+    if p != "Taper":
+        max_sets = 2 if (p == "Wiedereinstieg" or rec) else None
+        add(DAY_GYM_A, "strength", "Kraft A Unterkörper", gym(GYM_A, "A – Unterkörper & Kniestabilität", max_sets))
+        add(DAY_GYM_B, "strength", "Kraft B Oberkörper", gym(GYM_B, "B – Oberkörper, Rumpf & Schwimmstütze", max_sets))
 
     return sessions
 
@@ -723,6 +793,19 @@ def to_workout(s: Session):
 # ----------------------------------------------------------------------------
 
 def garmin_login() -> Garmin:
+    # 1. Bevorzugt: dasselbe base64-Token wie der nächtliche Sync (Secret GARMIN_TOKENS).
+    #    Kein Passwort-Login → kein 429-Risiko und keine MFA-Abfrage in GitHub Actions.
+    token_b64 = os.getenv("GARMIN_TOKENS")
+    if token_b64:
+        try:
+            import base64
+            client = Garmin()
+            client.login(base64.b64decode(token_b64).decode())
+            print("[auth] Login via GARMIN_TOKENS (wie beim Sync)")
+            return client
+        except Exception as exc:  # noqa: BLE001
+            print(f"[auth] GARMIN_TOKENS fehlgeschlagen ({exc}); versuche Token-Verzeichnis/Passwort …")
+
     tokenstore = os.getenv("GARMINTOKENS", "~/.garminconnect")
     email = os.getenv("GARMIN_EMAIL")
     password = os.getenv("GARMIN_PASSWORD")
@@ -742,7 +825,7 @@ def garmin_login() -> Garmin:
 
 def load_targets() -> None:
     """Zielwerte aus targets.json übernehmen (gemeinsame Quelle mit dem Dashboard)."""
-    global RACE_POWER, FTP_TARGET, MAX_RACE_IF, RACE_DATE, TOTAL_WEEKS, POOL_LENGTH_M
+    global RACE_IF, FTP_TARGET, MAX_RACE_IF, RACE_DATE, TOTAL_WEEKS, POOL_LENGTH_M
     if not TARGETS_JSON.exists():
         return
     try:
@@ -751,8 +834,9 @@ def load_targets() -> None:
         print(f"[cfg] targets.json nicht lesbar ({exc}) – Standardwerte aktiv")
         return
     bike = cfg.get("bike", {})
-    if isinstance(bike.get("race_power_w"), list) and len(bike["race_power_w"]) == 2:
-        RACE_POWER = (int(bike["race_power_w"][0]), int(bike["race_power_w"][1]))
+    if isinstance(bike.get("race_if"), list) and len(bike["race_if"]) == 2:
+        RACE_IF = (float(bike["race_if"][0]), float(bike["race_if"][1]))
+    POOL_LENGTH_M = int(cfg.get("swim", {}).get("pool_length_m", POOL_LENGTH_M))
     FTP_TARGET = int(bike.get("ftp_target_w", FTP_TARGET))
     MAX_RACE_IF = float(bike.get("max_race_if", MAX_RACE_IF))
     camp = cfg.get("campaign", {})
@@ -764,7 +848,7 @@ def load_targets() -> None:
 
 def load_ftp_css() -> None:
     """FTP/CSS aus manual.json des Trackers übernehmen, falls vorhanden."""
-    global FTP, CSS
+    global FTP, CSS, RACE_POWER
     data = None
     if MANUAL_JSON.exists():
         try:
@@ -778,15 +862,13 @@ def load_ftp_css() -> None:
             FTP = int(ftp)
         if isinstance(css, (int, float)) and 60 < css < 240:
             CSS = int(css)
+    RACE_POWER = (int(round(FTP * RACE_IF[0])), int(round(FTP * RACE_IF[1])))
     lo, hi = RACE_POWER
-    print(f"[cfg] FTP={FTP} W (Ziel {FTP_TARGET} W) · Rennleistung {lo}-{hi} W · CSS={fmt_pace(CSS)}/100 m")
-    print(f"[cfg] Rennleistung entspricht IF {lo / FTP:.2f}-{hi / FTP:.2f} der aktuellen FTP")
-    if hi / FTP > MAX_RACE_IF:
-        need = int(round(hi / 0.82))
-        print(f"[WARNUNG] {hi} W liegen bei {hi / FTP:.0%} der aktuellen FTP – ueber 90 km nicht haltbar.")
-        print(f"          Fuer IF 0.82 braucht es eine FTP von ~{need} W. "
-              f"Bis dahin sind die Rennleistungs-Blocks Zielarbeit, keine Wiederholungsvorgabe:")
-        print(f"          erst die Dauer aufbauen, dann das Wattband nach oben ziehen.")
+    print(f"[cfg] FTP={FTP} W (Ziel {FTP_TARGET} W) · Rennleistung {lo}-{hi} W "
+          f"(IF {RACE_IF[0]:.2f}-{RACE_IF[1]:.2f}) · CSS={fmt_pace(CSS)}/100 m")
+    if isinstance(data, dict) and not data.get("ftp_tested"):
+        print("[HINWEIS] FTP ist ein Schätzwert (ftp_tested = null). Nach dem Rampentest manual.json "
+              "aktualisieren und die folgenden Wochen neu hochladen.")
 
 
 # ----------------------------------------------------------------------------
@@ -824,7 +906,7 @@ def main() -> None:
             monday = week_monday(w)
             print(f"\n=== Woche {w:02d} ({phase_of(w)}{', Entlastung' if is_recovery(w) else ''}) "
                   f"ab {monday.isoformat()} ===")
-            for s in build_week(w):
+            for s in sorted(build_week(w), key=lambda x: x.day):
                 workout, _ = to_workout(s)
                 day = monday + timedelta(days=s.day)
                 print(f"  {day.strftime('%a %d.%m.')}  {s.sport:9s} {s.name:34s} "
@@ -859,7 +941,7 @@ def main() -> None:
     for w in weeks:
         monday = week_monday(w)
         print(f"\n=== Woche {w:02d} ({phase_of(w)}) ab {monday.isoformat()} ===")
-        for s in build_week(w):
+        for s in sorted(build_week(w), key=lambda x: x.day):
             workout, method = to_workout(s)
             if s.name in existing:
                 client.delete_workout(existing[s.name])
@@ -871,8 +953,11 @@ def main() -> None:
                 client.schedule_workout(wid, day.isoformat())
                 line += "  [Kalender]"
             if device_id:
-                client.push_workout_to_device(wid, device_id)
-                line += "  [Uhr]"
+                try:
+                    client.push_workout_to_device(wid, device_id)
+                    line += "  [Uhr]"
+                except Exception as exc:  # noqa: BLE001
+                    line += f"  [Uhr-Push fehlgeschlagen: {exc} – kommt beim nächsten Uhr-Sync über den Kalender]"
             print(line)
             state[s.name] = {"id": wid, "date": day.isoformat(), "sport": s.sport}
 

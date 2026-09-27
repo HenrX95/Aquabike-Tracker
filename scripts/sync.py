@@ -7,6 +7,9 @@ Zwift-Rides kommen automatisch mit, weil Zwift nach Garmin Connect pusht.
 Gewicht kommt ueber Withings → Garmin Connect mit.
 RPE kommt aus der Selbstbeurteilung der Uhr, Fallback ist manual.json.
 
+v6 (27.09.2026): RPE-Skalierung, Oura-Schlaf (Nickerchen), Ruhepuls-Quelle,
+Laeufe in Wochenlast, relative Rennleistung, Gewicht aus manual.json, Lauf-Leitplanken.
+
 Benoetigte Secrets (Environment):
   GARMIN_EMAIL, GARMIN_PASSWORD, OURA_TOKEN
 
@@ -32,7 +35,7 @@ import campaign as C
 
 PLAN_START = C.PLAN_START
 RACE_DATE = C.RACE_DATE
-RACE_POWER_LOW, RACE_POWER_HIGH = C.RACE_POWER
+RACE_POWER_LOW, RACE_POWER_HIGH = C.race_power()   # relativ zur aktuellen FTP (manual.json)
 LOOKBACK_DAYS = 90          # so viel Historie halten wir im JSON
 DATA = Path(__file__).resolve().parent.parent / "data"
 OUT = DATA / "dashboard.json"
@@ -55,7 +58,7 @@ FEEL_PATHS = [
 ]
 
 # Nur fuer diese Aktivitaeten lohnt der zusaetzliche Detail-Call
-RPE_SPORTS = {"swim", "bike", "gym"}
+RPE_SPORTS = {"swim", "bike", "gym", "run", "walk"}
 
 # Schwellen aus dem Trainingsplan (Abschnitt 11) – gepflegt in targets.json
 RHR_FLAG_DELTA = C.RHR_FLAG_DELTA
@@ -76,7 +79,7 @@ phase_for_week = C.phase_for_week
 is_recovery_week = C.is_recovery_week
 
 
-def normalize_rpe(raw):
+def normalize_rpe(raw, scale100: bool = False):
     """
     Garmin speichert die Selbstbeurteilung intern 0-100 (10 = RPE 1, 100 = RPE 10).
     Manche Endpunkte liefern aber schon 0-10. Beides sauber auf 1-10 bringen.
@@ -89,7 +92,7 @@ def normalize_rpe(raw):
         return None
     if v <= 0:
         return None
-    if v > 10:                    # 0-100er Skala
+    if scale100 or v > 10:        # 0-100er Skala (Garmin: 10 = RPE 1, 100 = RPE 10)
         v = v / 10
     return round(min(10, max(1, v)), 1)
 
@@ -138,8 +141,10 @@ def fetch_rpe(api, activities, cache: dict):
 
         ekey, eraw = pick(detail, EFFORT_PATHS)
         fkey, fraw = pick(detail, FEEL_PATHS)
-        rpe = normalize_rpe(eraw)
-        feel = normalize_rpe(fraw)
+        # directWorkoutRpe/-Feel liegen IMMER auf der 0-100er Skala. Frueher blieb
+        # der Rohwert 10 (= RPE 1) faelschlich als RPE 10 stehen.
+        rpe = normalize_rpe(eraw, scale100=bool(ekey and "directWorkout" in ekey))
+        feel = normalize_rpe(fraw, scale100=bool(fkey and "directWorkout" in fkey))
 
         if rpe and not field_used:
             field_used = ekey
@@ -346,24 +351,29 @@ def fetch_oura(start: date, end: date):
         return r.json().get("data", [])
 
     log("Oura: Schlaf + Readiness")
-    sleep = [
-        {
-            "date": s["day"],
-            "total_h": round((s.get("total_sleep_duration") or 0) / 3600, 2),
-            "score": (s.get("score") if "score" in s else None),
-            "hrv": s.get("average_hrv"),
-            "rhr": s.get("lowest_heart_rate"),
-        }
-        for s in get("daily_sleep") + get("sleep")
-        if s.get("day")
-    ]
-    # daily_sleep hat score, sleep hat Dauer — zusammenfuehren
+    # daily_sleep liefert den Score, sleep liefert die einzelnen Schlafperioden.
+    # Frueher hat ein Nickerchen (late_nap/rest) die Nacht ueberschrieben → 0,1-0,5 h.
+    # Jetzt: nur Hauptschlaf ("long_sleep", notfalls "sleep") zaehlt, Perioden je Tag summiert.
     merged = {}
-    for s in sleep:
-        m = merged.setdefault(s["date"], {"date": s["date"]})
-        for k, v in s.items():
-            if v is not None:
-                m[k] = v
+    for s in get("daily_sleep"):
+        if s.get("day"):
+            merged.setdefault(s["day"], {"date": s["day"]})["score"] = s.get("score")
+
+    main_types = {"long_sleep", "sleep"}
+    for s in get("sleep"):
+        day = s.get("day")
+        if not day or s.get("type") not in main_types:
+            continue
+        m = merged.setdefault(day, {"date": day})
+        dur_h = (s.get("total_sleep_duration") or 0) / 3600
+        m["total_h"] = round(m.get("total_h", 0) + dur_h, 2)
+        # HRV/Ruhepuls aus der laengsten Periode des Tages
+        if dur_h >= m.get("_longest_h", 0):
+            m["_longest_h"] = dur_h
+            m["hrv"] = s.get("average_hrv")
+            m["rhr"] = s.get("lowest_heart_rate")
+    for m in merged.values():
+        m.pop("_longest_h", None)
 
     readiness = [
         {"date": r["day"], "score": r.get("score")}
@@ -396,6 +406,9 @@ def build_weekly(activities, manual):
                 "swims": 0,
                 "bikes": 0,
                 "gyms": 0,
+                "runs": 0,
+                "run_km": 0.0,
+                "total_hours": 0.0,
                 "bike_hours": 0.0,
                 "swim_meters": 0,
                 "srpe_load": 0,
@@ -411,6 +424,10 @@ def build_weekly(activities, manual):
             wk["bike_hours"] += a["duration_min"] / 60
         elif a["sport"] == "gym":
             wk["gyms"] += 1
+        elif a["sport"] in ("run", "walk"):
+            wk["runs"] += 1
+            wk["run_km"] += a.get("distance_km") or 0
+        wk["total_hours"] += a["duration_min"] / 60
 
         # sRPE = RPE x Dauer (Foster).
         # Quelle 1: Selbstbeurteilung der Uhr. Quelle 2: manual.json.
@@ -423,11 +440,13 @@ def build_weekly(activities, manual):
 
     for wk in weeks.values():
         wk["bike_hours"] = round(wk["bike_hours"], 1)
+        wk["total_hours"] = round(wk["total_hours"], 1)
+        wk["run_km"] = round(wk["run_km"], 1)
 
     return [weeks[k] for k in sorted(weeks)]
 
 
-def build_flags(rhr, weekly, manual, sleep):
+def build_flags(rhr, weekly, manual, sleep, activities=None):
     """Ampeln aus Abschnitt 11 des Plans."""
     flags = []
 
@@ -448,7 +467,8 @@ def build_flags(rhr, weekly, manual, sleep):
 
     # (2) Ruhepuls
     if len(rhr) >= 14:
-        baseline = sum(r["bpm"] for r in rhr[-28:-3]) / len(rhr[-28:-3])
+        base_vals = sorted(r["bpm"] for r in rhr[-28:-3])
+        baseline = base_vals[len(base_vals) // 2]          # Median – robust gegen Ausreisser
         recent = rhr[-RHR_FLAG_DAYS:]
         if all(r["bpm"] >= baseline + RHR_FLAG_DELTA for r in recent):
             flags.append(
@@ -471,6 +491,42 @@ def build_flags(rhr, weekly, manual, sleep):
                     "text": f"Knieschmerz {worst['knee']}/10 am {worst['date']}. Gym-Last einen Schritt zurueck, bis 2 gruene Wochen.",
                 }
             )
+
+    # (3b) Lauf-Leitplanken — kein festes Lauftraining, aber jede Laufeinheit wird geprueft
+    today = date.today()
+    runs = [a for a in (activities or []) if a["sport"] in ("run", "walk") and a.get("distance_km")]
+    recent_runs = [a for a in runs if (today - date.fromisoformat(a["date"])).days <= 7]
+    older_runs = [a for a in runs if 7 < (today - date.fromisoformat(a["date"])).days <= 35]
+    for a in recent_runs:
+        if a["distance_km"] > C.RUN_MAX_KM:
+            flags.append({
+                "level": "amber", "metric": "Laufen",
+                "text": f"{a['distance_km']:.1f} km am {a['date']} – ueber der Leitplanke von {C.RUN_MAX_KM:.0f} km. "
+                        f"Knie-Wert in manual.json eintragen, naechster Lauf wieder kuerzer.",
+            })
+        if (a.get("avg_hr") or 0) > C.RUN_HR_CAP and a["duration_min"] > 45:
+            flags.append({
+                "level": "amber", "metric": "Laufen",
+                "text": f"Lauf am {a['date']} mit Ø {a['avg_hr']:.0f} bpm ueber {a['duration_min']:.0f} min – "
+                        f"locker heisst unter {C.RUN_HR_CAP} bpm.",
+            })
+    if recent_runs and older_runs:
+        prev_longest = max(a["distance_km"] for a in older_runs)
+        cur_longest = max(a["distance_km"] for a in recent_runs)
+        if prev_longest > 0 and cur_longest > prev_longest * (1 + C.RUN_MAX_INCREASE_PCT / 100) and cur_longest > 8:
+            flags.append({
+                "level": "amber", "metric": "Laufen",
+                "text": f"Laengster Lauf {cur_longest:.1f} km vs. {prev_longest:.1f} km in den 4 Wochen davor "
+                        f"(+{(cur_longest / prev_longest - 1) * 100:.0f}%, Grenze {C.RUN_MAX_INCREASE_PCT:.0f}%).",
+            })
+    if recent_runs:
+        knee_recent = [m for m in manual.get("daily", []) if m.get("knee") is not None
+                       and (today - date.fromisoformat(m["date"])).days <= 7]
+        if not knee_recent:
+            flags.append({
+                "level": "amber", "metric": "Knie",
+                "text": "Diese Woche gelaufen, aber kein Knie-Wert in manual.json. Ohne Wert ist die Knie-Ampel blind.",
+            })
 
     # (4) Schwimmfrequenz — der eigentliche Hebel
     if weekly:
@@ -603,7 +659,8 @@ def build_analysis(activities, weekly, manual):
     - Geh/Lauf-Aufbau gegen 21,1 km
     - Trainingslast-Trend (sRPE)
     """
-    ftp = manual.get("ftp_w") or 250
+    ftp = manual.get("ftp_w") or C.FTP_START
+    rp_low, rp_high = C.race_power(ftp)
 
     # --- Rad: Zeit-in-Zone ueber Normalized Power ---
     zone_min = {"recovery": 0, "endurance": 0, "tempo": 0, "sweetspot": 0, "threshold": 0, "vo2": 0}
@@ -636,7 +693,7 @@ def build_analysis(activities, weekly, manual):
     # mit eingebettetem Renntempo-Block – deshalb kann manual.json ueberschreiben.
     rp_sessions = [
         a for a in activities
-        if a["sport"] == "bike" and (a.get("norm_power") or 0) >= RACE_POWER_LOW
+        if a["sport"] == "bike" and (a.get("norm_power") or 0) >= rp_low
     ]
     rp_longest = max((a["duration_min"] for a in rp_sessions), default=0)
     rp_total = sum(a["duration_min"] for a in rp_sessions)
@@ -668,7 +725,7 @@ def build_analysis(activities, weekly, manual):
         "bike_quality_min": round(zone_min["sweetspot"] + zone_min["threshold"] + zone_min["vo2"]),
         "bike_quality_target_min": tiz_target,
         "bike_sessions_analyzed": bike_sessions,
-        "race_power_w": [RACE_POWER_LOW, RACE_POWER_HIGH],
+        "race_power_w": [rp_low, rp_high],
         "race_power_longest_min": round(rp_longest),
         "race_power_total_min": round(rp_total),
         "race_power_target_min": C.race_power_hold_target(cur_week),
@@ -769,13 +826,27 @@ def main():
         log(f"Oura fehlgeschlagen: {e}")
         sleep, readiness = [], []
 
-    # Gewicht: Garmin bevorzugt, sonst manuell
-    if not weights:
-        weights = [
-            {"date": m["date"], "kg": m["weight_kg"]}
-            for m in manual.get("daily", [])
-            if m.get("weight_kg")
-        ]
+    # Gewicht: Garmin (Withings) und manual.json zusammenfuehren; manuell gewinnt am selben Tag
+    by_date = {w["date"]: dict(w) for w in weights}
+    for m in manual.get("daily", []):
+        if m.get("weight_kg"):
+            e = by_date.setdefault(m["date"], {"date": m["date"]})
+            e["kg"] = m["weight_kg"]
+            if m.get("bodyfat_pct") is not None:
+                e["bodyfat_pct"] = m["bodyfat_pct"]
+            if m.get("waist_cm") is not None:
+                e["waist_cm"] = m["waist_cm"]
+    weights = sorted(by_date.values(), key=lambda w: w["date"])
+
+    # Ruhepuls: Oura (niedrigster Nachtpuls) ist verlaesslicher als Garmins Tageswert,
+    # der bei nicht getragener Uhr Ausreisser von 80-107 bpm liefert.
+    oura_rhr = [{"date": s["date"], "bpm": s["rhr"]} for s in sleep if s.get("rhr")]
+    if C.RECOVERY_CFG.get("rhr_source", "oura") == "oura" and len(oura_rhr) >= 10:
+        rhr = oura_rhr
+    elif rhr:
+        vals = sorted(r["bpm"] for r in rhr)
+        med = vals[len(vals) // 2]
+        rhr = [r for r in rhr if r["bpm"] <= med + 20]
 
     weekly = build_weekly(activities, manual)
     cur_week = plan_week(end)
@@ -807,6 +878,7 @@ def main():
         "targets": C.summary(),
         "current": {
             "weight_kg": weights[-1]["kg"] if weights else None,
+            "bodyfat_pct": next((w["bodyfat_pct"] for w in reversed(weights) if w.get("bodyfat_pct")), None),
             "rhr_bpm": rhr[-1]["bpm"] if rhr else None,
             "sleep_h_7d": (
                 round(
@@ -820,9 +892,9 @@ def main():
             "readiness": readiness[-1]["score"] if readiness else None,
             "ftp_w": manual.get("ftp_w"),
             "css_s": manual.get("css_s"),
-            "waist_cm": manual.get("waist_cm"),
+            "waist_cm": next((w["waist_cm"] for w in reversed(weights) if w.get("waist_cm")), manual.get("waist_cm")),
         },
-        "flags": build_flags(rhr, weekly, manual, sleep),
+        "flags": build_flags(rhr, weekly, manual, sleep, activities),
         "weekly": weekly,
         "by_sport": build_by_sport(activities),
         "analysis": build_analysis(activities, weekly, manual),

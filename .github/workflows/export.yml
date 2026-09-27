@@ -1,0 +1,31 @@
+name: Zwift- und FIT-Dateien exportieren
+
+# Manuell ausloesen: Actions-Tab -> "Zwift- und FIT-Dateien exportieren" -> Run workflow.
+# Ergebnis: ZIP-Download unten auf der Seite des Laufs (Abschnitt "Artifacts").
+# Radziele in % FTP → nach einem FTP-Test nicht noetig. Neu exportieren nach einem CSS-Test
+# (Schwimm-Paces) oder wenn sich der Plan in targets.json aendert.
+
+on:
+  workflow_dispatch:
+    inputs:
+      weeks:
+        description: "Kampagnenwochen, z. B. 9-38"
+        required: true
+        default: "9-38"
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: Dateien erzeugen
+        run: python scripts/export_files.py --weeks "${{ inputs.weeks }}" --out export
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Trainingsdateien_W${{ inputs.weeks }}
+          path: export/
+          retention-days: 30

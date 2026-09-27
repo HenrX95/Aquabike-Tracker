@@ -1,20 +1,30 @@
 name: Garmin-Workouts hochladen
 
 # Manuell ausloesen: Actions-Tab -> "Garmin-Workouts hochladen" -> Run workflow.
-# Wochen angeben, z. B. "1-8". Nach jedem FTP-Test manual.json aktualisieren
-# und die kommenden Wochen erneut hochladen – dann stimmen die Wattziele.
+# Wochen angeben, z. B. "9-16". Nach jedem FTP-/CSS-Test manual.json aktualisieren
+# und die kommenden Wochen erneut hochladen – dann stimmen Watt- und Pace-Ziele.
+# v6: nutzt dasselbe Token-Secret wie der Sync (GARMIN_TOKENS) → kein Passwort-Login,
+#     keine MFA-Abfrage, kein 429 von Garmin.
 
 on:
   workflow_dispatch:
     inputs:
       weeks:
-        description: "Kampagnenwochen, z. B. 1-8 oder 9,10"
+        description: "Kampagnenwochen, z. B. 9-16 oder 10,11"
         required: true
-        default: "1-8"
+        default: "9-16"
+      clean_first:
+        description: "Vorher ALLE alten '70.3'-Workouts in Garmin Connect loeschen"
+        type: boolean
+        default: false
+      push_to_watch:
+        description: "Zusaetzlich direkt an die Uhr senden"
+        type: boolean
+        default: true
       dry_run:
         description: "Nur anzeigen, nichts hochladen"
         type: boolean
-        default: true
+        default: false
 
 jobs:
   workouts:
@@ -25,14 +35,20 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install -r requirements.txt
-      - name: Workouts erzeugen
+      - name: Workouts erzeugen / hochladen
         env:
+          GARMIN_TOKENS: ${{ secrets.GARMIN_TOKENS }}
           GARMIN_EMAIL: ${{ secrets.GARMIN_EMAIL }}
           GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
           GARMINTOKENS: ${{ github.workspace }}/.garmintokens
         run: |
           if [ "${{ inputs.dry_run }}" = "true" ]; then
             python scripts/garmin_workouts.py --weeks "${{ inputs.weeks }}" --dry-run
-          else
-            python scripts/garmin_workouts.py --weeks "${{ inputs.weeks }}"
+            exit 0
           fi
+          if [ "${{ inputs.clean_first }}" = "true" ]; then
+            python scripts/garmin_workouts.py --clean
+          fi
+          PUSH=""
+          if [ "${{ inputs.push_to_watch }}" = "true" ]; then PUSH="--push"; fi
+          python scripts/garmin_workouts.py --weeks "${{ inputs.weeks }}" $PUSH

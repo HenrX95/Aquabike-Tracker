@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-26T23:36:12+00:00",
+  "generated_at": "2026-09-27T23:48:10+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 210,
-    "weeks_to_go": 30,
+    "days_to_go": 209,
+    "weeks_to_go": 29,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
@@ -21,23 +21,28 @@
       "gym": 2
     },
     "bike_hours_target": 4.5,
-    "ftp_waypoint_w": 258,
-    "weight_target_kg": 89.9,
+    "ftp_waypoint_w": 250,
+    "weight_target_kg": 87.5,
     "deficit_active": true
   },
   "targets": {
-    "version": 5,
+    "version": 6,
     "ftp_start_w": 250,
-    "ftp_race_w": 300,
-    "race_power_w": [
-      235,
-      250
+    "ftp_race_w": 280,
+    "ftp_stretch_w": 300,
+    "race_if": [
+      0.75,
+      0.8
     ],
-    "race_power_plan_w": 245,
+    "race_power_w": [
+      188,
+      200
+    ],
+    "race_power_plan_w": 194,
     "css_start_s": 120,
     "css_race_s": 110,
-    "weight_start_kg": 92.0,
-    "weight_target_kg": 84.0,
+    "weight_start_kg": 87.5,
+    "weight_target_kg": 83.5,
     "weight_race_day_kg": [
       83,
       85
@@ -45,39 +50,55 @@
     "deficit_ends_week": 29,
     "waist_target_cm": 94,
     "swims_per_week": 2,
-    "walk_longest_km": 18,
-    "walk_clearance_km": 12,
+    "run_max_km": 12.0,
+    "run_hr_cap_bpm": 150,
     "decoupling_target_pct": 5.0,
     "tiz_target_min": {
       "grundlage": 60,
-      "build_i": 90,
-      "build_ii": 110,
-      "rennspezifisch": 120,
+      "wiedereinstieg": 40,
+      "build_i": 80,
+      "build_ii": 100,
+      "rennspezifisch": 110,
       "taper": 45
     },
     "aero_cda_target": 0.3,
-    "aero_speed_at_245w": {
-      "cda_0_26": 38.1,
-      "cda_0_30": 36.5,
-      "cda_0_34": 35.1,
-      "cda_0_40": 33.4
-    },
-    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Das Ziel steht im Plan, das Pacing kommt aus der Messung."
+    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Obergrenze IF 0,80."
   },
   "current": {
-    "weight_kg": null,
-    "rhr_bpm": 46,
-    "sleep_h_7d": 4.9,
-    "readiness": 86,
+    "weight_kg": 87.5,
+    "bodyfat_pct": 20,
+    "rhr_bpm": 43,
+    "sleep_h_7d": 7.3,
+    "readiness": 80,
     "ftp_w": 250,
     "css_s": 120,
     "waist_cm": null
   },
   "flags": [
     {
+      "level": "red",
+      "metric": "sRPE-Last",
+      "text": "Wochenlast +130% (Grenze 15%). Naechste Qualitaetseinheit zuruecknehmen."
+    },
+    {
+      "level": "amber",
+      "metric": "Laufen",
+      "text": "16.0 km am 2026-09-26 – ueber der Leitplanke von 12 km. Knie-Wert in manual.json eintragen, naechster Lauf wieder kuerzer."
+    },
+    {
+      "level": "amber",
+      "metric": "Laufen",
+      "text": "Lauf am 2026-09-26 mit Ø 161 bpm ueber 109 min – locker heisst unter 150 bpm."
+    },
+    {
+      "level": "amber",
+      "metric": "Laufen",
+      "text": "Laengster Lauf 16.0 km vs. 7.2 km in den 4 Wochen davor (+121%, Grenze 10%)."
+    },
+    {
       "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 4.9 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 7.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -88,9 +109,12 @@
       "swims": 2,
       "bikes": 3,
       "gyms": 1,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 6.4,
       "bike_hours": 5.2,
       "swim_meters": 1100,
-      "srpe_load": 1700,
+      "srpe_load": 1227,
       "rpe_covered": 6,
       "rpe_missing": 0
     },
@@ -101,11 +125,14 @@
       "swims": 1,
       "bikes": 2,
       "gyms": 0,
+      "runs": 1,
+      "run_km": 9.3,
+      "total_hours": 3.6,
       "bike_hours": 1.4,
       "swim_meters": 1500,
-      "srpe_load": 312,
-      "rpe_covered": 2,
-      "rpe_missing": 3
+      "srpe_load": 574,
+      "rpe_covered": 3,
+      "rpe_missing": 2
     },
     {
       "week": 3,
@@ -114,11 +141,14 @@
       "swims": 1,
       "bikes": 0,
       "gyms": 0,
+      "runs": 1,
+      "run_km": 5.0,
+      "total_hours": 0.9,
       "bike_hours": 0.0,
       "swim_meters": 1400,
-      "srpe_load": 75,
-      "rpe_covered": 1,
-      "rpe_missing": 1
+      "srpe_load": 193,
+      "rpe_covered": 2,
+      "rpe_missing": 0
     },
     {
       "week": 4,
@@ -127,11 +157,14 @@
       "swims": 0,
       "bikes": 1,
       "gyms": 0,
+      "runs": 2,
+      "run_km": 10.4,
+      "total_hours": 2.1,
       "bike_hours": 1.0,
       "swim_meters": 0,
-      "srpe_load": 120,
-      "rpe_covered": 1,
-      "rpe_missing": 2
+      "srpe_load": 322,
+      "rpe_covered": 3,
+      "rpe_missing": 0
     },
     {
       "week": 5,
@@ -140,6 +173,9 @@
       "swims": 1,
       "bikes": 1,
       "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 1.6,
       "bike_hours": 1.5,
       "swim_meters": 190,
       "srpe_load": 208,
@@ -153,11 +189,14 @@
       "swims": 0,
       "bikes": 0,
       "gyms": 0,
+      "runs": 1,
+      "run_km": 5.6,
+      "total_hours": 0.6,
       "bike_hours": 0.0,
       "swim_meters": 0,
-      "srpe_load": 0,
-      "rpe_covered": 0,
-      "rpe_missing": 1
+      "srpe_load": 108,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     },
     {
       "week": 7,
@@ -166,11 +205,14 @@
       "swims": 1,
       "bikes": 0,
       "gyms": 0,
+      "runs": 1,
+      "run_km": 6.1,
+      "total_hours": 1.2,
       "bike_hours": 0.0,
       "swim_meters": 1430,
-      "srpe_load": 136,
-      "rpe_covered": 1,
-      "rpe_missing": 1
+      "srpe_load": 248,
+      "rpe_covered": 2,
+      "rpe_missing": 0
     },
     {
       "week": 8,
@@ -179,11 +221,14 @@
       "swims": 1,
       "bikes": 2,
       "gyms": 0,
+      "runs": 1,
+      "run_km": 16.0,
+      "total_hours": 3.8,
       "bike_hours": 1.6,
       "swim_meters": 850,
-      "srpe_load": 440,
-      "rpe_covered": 2,
-      "rpe_missing": 2
+      "srpe_load": 984,
+      "rpe_covered": 3,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -257,12 +302,12 @@
     "bike_quality_target_min": 60,
     "bike_sessions_analyzed": 3,
     "race_power_w": [
-      235,
-      250
+      188,
+      200
     ],
-    "race_power_longest_min": 0,
-    "race_power_total_min": 0,
-    "race_power_target_min": 45,
+    "race_power_longest_min": 60,
+    "race_power_total_min": 60,
+    "race_power_target_min": 0,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
     "decoupling_pct": null,
@@ -274,37 +319,37 @@
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
-        "week": 2,
-        "load": 312
-      },
-      {
         "week": 3,
-        "load": 75
+        "load": 193
       },
       {
         "week": 4,
-        "load": 120
+        "load": 322
       },
       {
         "week": 5,
         "load": 208
       },
       {
+        "week": 6,
+        "load": 108
+      },
+      {
         "week": 7,
-        "load": 136
+        "load": 248
       },
       {
         "week": 8,
-        "load": 440
+        "load": 984
       }
     ]
   },
   "forecast": {
     "ftp": {
       "current": 250,
-      "target": 300,
-      "due_now": 260,
-      "gap": 50,
+      "target": 280,
+      "due_now": 256,
+      "gap": 30,
       "on_track": false
     },
     "css": {
@@ -344,7 +389,9 @@
       "avg_power": 309.0,
       "norm_power": 317.0,
       "elevation_m": 49,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 5.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-09-25",
@@ -410,7 +457,9 @@
       "avg_power": 339.0,
       "norm_power": 347.0,
       "elevation_m": 29,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-09-07",
@@ -425,7 +474,9 @@
       "avg_power": 329.0,
       "norm_power": 333.0,
       "elevation_m": 5,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-09-04",
@@ -474,7 +525,9 @@
       "avg_power": 330.0,
       "norm_power": 341.0,
       "elevation_m": 36,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-08-26",
@@ -489,7 +542,9 @@
       "avg_power": 327.0,
       "norm_power": 335.0,
       "elevation_m": 17,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 1,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-08-24",
@@ -521,7 +576,9 @@
       "avg_power": 363.0,
       "norm_power": 392.0,
       "elevation_m": 8,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 7.5
     },
     {
       "date": "2026-08-19",
@@ -587,7 +644,9 @@
       "avg_power": 301.0,
       "norm_power": 321.0,
       "elevation_m": 31,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-08-11",
@@ -669,7 +728,7 @@
       "norm_power": null,
       "elevation_m": 128,
       "pace_per_100m": null,
-      "rpe_garmin": 10,
+      "rpe_garmin": 1,
       "feel_garmin": 5.0
     },
     {
@@ -736,7 +795,9 @@
       "avg_power": 319.0,
       "norm_power": 344.0,
       "elevation_m": 33,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 5.0
     },
     {
       "date": "2026-07-27",
@@ -752,7 +813,7 @@
       "norm_power": null,
       "elevation_m": 329,
       "pace_per_100m": null,
-      "rpe_garmin": 10,
+      "rpe_garmin": 1,
       "feel_garmin": 7.5
     },
     {
@@ -802,7 +863,9 @@
       "avg_power": 209.0,
       "norm_power": 259.0,
       "elevation_m": 50,
-      "pace_per_100m": null
+      "pace_per_100m": null,
+      "rpe_garmin": 4.0,
+      "feel_garmin": 2.5
     },
     {
       "date": "2026-07-19",
@@ -835,7 +898,7 @@
       "norm_power": null,
       "elevation_m": 347,
       "pace_per_100m": null,
-      "rpe_garmin": 10,
+      "rpe_garmin": 1,
       "feel_garmin": 5.0
     },
     {
@@ -871,414 +934,465 @@
       "pace_per_100m": 126,
       "rpe_garmin": 3.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-06-28",
-      "activity_id": 23410290788,
-      "name": "Walchsee Multisport",
-      "sport": "other",
-      "type_raw": "multi_sport",
-      "duration_min": 212.8,
-      "distance_km": 80.52,
-      "avg_hr": null,
-      "max_hr": 205.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 1091,
-      "pace_per_100m": null
     }
   ],
   "rhr": [
     {
-      "date": "2026-06-28",
-      "bpm": 52
-    },
-    {
-      "date": "2026-07-15",
-      "bpm": 51
-    },
-    {
-      "date": "2026-07-16",
-      "bpm": 49
-    },
-    {
-      "date": "2026-07-17",
-      "bpm": 51
-    },
-    {
-      "date": "2026-07-18",
+      "date": "2026-07-29",
       "bpm": 43
     },
     {
-      "date": "2026-07-19",
-      "bpm": 53
-    },
-    {
-      "date": "2026-07-20",
-      "bpm": 53
-    },
-    {
-      "date": "2026-07-22",
-      "bpm": 54
-    },
-    {
-      "date": "2026-07-27",
-      "bpm": 107
+      "date": "2026-07-30",
+      "bpm": 49
     },
     {
       "date": "2026-07-31",
-      "bpm": 52
+      "bpm": 50
     },
     {
-      "date": "2026-08-02",
-      "bpm": 94
-    },
-    {
-      "date": "2026-08-03",
-      "bpm": 93
-    },
-    {
-      "date": "2026-08-05",
-      "bpm": 89
-    },
-    {
-      "date": "2026-08-07",
-      "bpm": 49
-    },
-    {
-      "date": "2026-08-08",
-      "bpm": 79
-    },
-    {
-      "date": "2026-08-09",
-      "bpm": 83
-    },
-    {
-      "date": "2026-08-10",
-      "bpm": 78
-    },
-    {
-      "date": "2026-08-11",
-      "bpm": 94
-    },
-    {
-      "date": "2026-08-13",
-      "bpm": 52
-    },
-    {
-      "date": "2026-08-14",
-      "bpm": 85
-    },
-    {
-      "date": "2026-08-19",
-      "bpm": 49
-    },
-    {
-      "date": "2026-08-20",
+      "date": "2026-08-01",
       "bpm": 44
     },
     {
-      "date": "2026-08-21",
+      "date": "2026-08-02",
+      "bpm": 49
+    },
+    {
+      "date": "2026-08-03",
+      "bpm": 46
+    },
+    {
+      "date": "2026-08-04",
+      "bpm": 46
+    },
+    {
+      "date": "2026-08-05",
+      "bpm": 44
+    },
+    {
+      "date": "2026-08-06",
       "bpm": 43
     },
     {
-      "date": "2026-08-22",
+      "date": "2026-08-07",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-08",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-09",
+      "bpm": 48
+    },
+    {
+      "date": "2026-08-10",
+      "bpm": 45
+    },
+    {
+      "date": "2026-08-11",
+      "bpm": 44
+    },
+    {
+      "date": "2026-08-12",
+      "bpm": 46
+    },
+    {
+      "date": "2026-08-13",
+      "bpm": 45
+    },
+    {
+      "date": "2026-08-14",
       "bpm": 42
     },
     {
-      "date": "2026-08-23",
+      "date": "2026-08-15",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-16",
+      "bpm": 47
+    },
+    {
+      "date": "2026-08-17",
       "bpm": 43
     },
     {
+      "date": "2026-08-18",
+      "bpm": 42
+    },
+    {
+      "date": "2026-08-19",
+      "bpm": 46
+    },
+    {
+      "date": "2026-08-20",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-21",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-22",
+      "bpm": 41
+    },
+    {
+      "date": "2026-08-23",
+      "bpm": 40
+    },
+    {
       "date": "2026-08-24",
+      "bpm": 42
+    },
+    {
+      "date": "2026-08-25",
       "bpm": 48
     },
     {
       "date": "2026-08-26",
-      "bpm": 48
+      "bpm": 47
     },
     {
       "date": "2026-08-27",
-      "bpm": 44
-    },
-    {
-      "date": "2026-08-28",
-      "bpm": 45
-    },
-    {
-      "date": "2026-08-29",
-      "bpm": 46
-    },
-    {
-      "date": "2026-08-30",
       "bpm": 42
     },
     {
+      "date": "2026-08-28",
+      "bpm": 44
+    },
+    {
+      "date": "2026-08-29",
+      "bpm": 45
+    },
+    {
+      "date": "2026-08-30",
+      "bpm": 44
+    },
+    {
       "date": "2026-08-31",
-      "bpm": 43
+      "bpm": 42
     },
     {
       "date": "2026-09-01",
-      "bpm": 43
+      "bpm": 42
     },
     {
       "date": "2026-09-02",
-      "bpm": 48
+      "bpm": 41
     },
     {
       "date": "2026-09-03",
-      "bpm": 46
+      "bpm": 43
     },
     {
       "date": "2026-09-04",
-      "bpm": 49
+      "bpm": 56
+    },
+    {
+      "date": "2026-09-05",
+      "bpm": 46
+    },
+    {
+      "date": "2026-09-06",
+      "bpm": 48
     },
     {
       "date": "2026-09-07",
-      "bpm": 51
+      "bpm": 49
+    },
+    {
+      "date": "2026-09-08",
+      "bpm": 43
+    },
+    {
+      "date": "2026-09-09",
+      "bpm": 44
+    },
+    {
+      "date": "2026-09-10",
+      "bpm": 43
     },
     {
       "date": "2026-09-11",
-      "bpm": 52
+      "bpm": 43
     },
     {
       "date": "2026-09-12",
-      "bpm": 46
+      "bpm": 43
+    },
+    {
+      "date": "2026-09-13",
+      "bpm": 45
+    },
+    {
+      "date": "2026-09-14",
+      "bpm": 43
     },
     {
       "date": "2026-09-15",
-      "bpm": 53
+      "bpm": 41
     },
     {
       "date": "2026-09-17",
-      "bpm": 54
+      "bpm": 47
+    },
+    {
+      "date": "2026-09-18",
+      "bpm": 43
+    },
+    {
+      "date": "2026-09-19",
+      "bpm": 47
+    },
+    {
+      "date": "2026-09-20",
+      "bpm": 44
+    },
+    {
+      "date": "2026-09-21",
+      "bpm": 45
     },
     {
       "date": "2026-09-22",
-      "bpm": 63
+      "bpm": 45
+    },
+    {
+      "date": "2026-09-23",
+      "bpm": 64
     },
     {
       "date": "2026-09-24",
-      "bpm": 55
+      "bpm": 47
     },
     {
       "date": "2026-09-25",
-      "bpm": 50
+      "bpm": 44
     },
     {
       "date": "2026-09-26",
-      "bpm": 46
-    }
-  ],
-  "weights": [],
-  "sleep": [
-    {
-      "date": "2026-08-27",
-      "total_h": 8.02,
-      "score": 85,
-      "hrv": 80,
-      "rhr": 42
+      "bpm": 43
     },
     {
+      "date": "2026-09-27",
+      "bpm": 43
+    }
+  ],
+  "weights": [
+    {
+      "date": "2026-09-27",
+      "kg": 87.5,
+      "bodyfat_pct": 20
+    }
+  ],
+  "sleep": [
+    {
       "date": "2026-08-28",
-      "total_h": 7.34,
       "score": 74,
+      "total_h": 7.51,
       "hrv": 73,
       "rhr": 44
     },
     {
       "date": "2026-08-29",
-      "total_h": 0.26,
       "score": 67,
-      "hrv": 58,
-      "rhr": 57
+      "total_h": 6.55,
+      "hrv": 73,
+      "rhr": 45
     },
     {
       "date": "2026-08-30",
-      "total_h": 7.05,
       "score": 71,
+      "total_h": 7.05,
       "hrv": 78,
       "rhr": 44
     },
     {
       "date": "2026-08-31",
-      "total_h": 8.31,
       "score": 85,
+      "total_h": 8.31,
       "hrv": 96,
       "rhr": 42
     },
     {
       "date": "2026-09-01",
-      "total_h": 7.32,
       "score": 86,
+      "total_h": 7.32,
       "hrv": 75,
       "rhr": 42
     },
     {
       "date": "2026-09-02",
-      "total_h": 0.45,
       "score": 78,
+      "total_h": 7.71,
       "hrv": 66,
       "rhr": 41
     },
     {
       "date": "2026-09-03",
-      "total_h": 6.75,
       "score": 70,
+      "total_h": 6.75,
       "hrv": 62,
       "rhr": 43
     },
     {
       "date": "2026-09-04",
-      "total_h": 0.48,
       "score": 37,
-      "hrv": 51,
+      "total_h": 3.38,
+      "hrv": 54,
       "rhr": 56
     },
     {
       "date": "2026-09-05",
-      "total_h": 0.13,
       "score": 90,
+      "total_h": 9.6,
       "hrv": 73,
       "rhr": 46
     },
     {
       "date": "2026-09-06",
-      "total_h": 7.46,
       "score": 76,
+      "total_h": 7.46,
       "hrv": 63,
       "rhr": 48
     },
     {
       "date": "2026-09-07",
-      "total_h": 0.33,
       "score": 79,
+      "total_h": 9.15,
       "hrv": 48,
       "rhr": 49
     },
     {
       "date": "2026-09-08",
-      "total_h": 7.25,
       "score": 74,
+      "total_h": 7.25,
       "hrv": 77,
       "rhr": 43
     },
     {
       "date": "2026-09-09",
-      "total_h": 0.31,
       "score": 73,
-      "hrv": 71,
-      "rhr": 51
+      "total_h": 8.48,
+      "hrv": 66,
+      "rhr": 44
     },
     {
       "date": "2026-09-10",
-      "total_h": 0.27,
       "score": 66,
+      "total_h": 7.2,
       "hrv": 67,
-      "rhr": 56
+      "rhr": 43
     },
     {
       "date": "2026-09-11",
-      "total_h": 8.18,
       "score": 78,
+      "total_h": 8.18,
       "hrv": 64,
       "rhr": 43
     },
     {
       "date": "2026-09-12",
-      "total_h": 7.44,
       "score": 83,
+      "total_h": 7.44,
       "hrv": 82,
       "rhr": 43
     },
     {
       "date": "2026-09-13",
-      "total_h": 6.66,
       "score": 58,
+      "total_h": 6.66,
       "hrv": 64,
       "rhr": 45
     },
     {
       "date": "2026-09-14",
-      "total_h": 6.74,
       "score": 71,
+      "total_h": 6.74,
       "hrv": 74,
       "rhr": 43
     },
     {
       "date": "2026-09-15",
-      "total_h": 0.29,
       "score": 82,
+      "total_h": 9.52,
       "hrv": 79,
       "rhr": 41
     },
     {
       "date": "2026-09-17",
-      "total_h": 0.13,
       "score": 79,
+      "total_h": 8.46,
       "hrv": 77,
       "rhr": 47
     },
     {
       "date": "2026-09-18",
-      "total_h": 0.14,
       "score": 74,
-      "hrv": 66,
-      "rhr": 59
+      "total_h": 8.67,
+      "hrv": 84,
+      "rhr": 43
     },
     {
       "date": "2026-09-19",
-      "total_h": 11.25,
       "score": 74,
+      "total_h": 11.25,
       "hrv": 56,
       "rhr": 47
     },
     {
       "date": "2026-09-20",
-      "total_h": 9.37,
       "score": 84,
+      "total_h": 9.37,
       "hrv": 73,
       "rhr": 44
     },
     {
       "date": "2026-09-21",
-      "total_h": 8.42,
       "score": 82,
+      "total_h": 8.42,
       "hrv": 62,
       "rhr": 45
     },
     {
       "date": "2026-09-22",
-      "total_h": 0.17,
       "score": 76,
+      "total_h": 8.09,
       "hrv": 68,
       "rhr": 45
     },
     {
       "date": "2026-09-23",
-      "total_h": 0.14,
+      "total_h": 0.9,
       "hrv": 33,
       "rhr": 64
     },
     {
       "date": "2026-09-24",
-      "total_h": 7.16,
       "score": 60,
+      "total_h": 7.16,
       "hrv": 70,
       "rhr": 47
     },
     {
       "date": "2026-09-25",
-      "total_h": 0.18,
       "score": 82,
+      "total_h": 8.58,
       "hrv": 78,
-      "rhr": 59
+      "rhr": 44
     },
     {
       "date": "2026-09-26",
-      "total_h": 8.7,
       "score": 75,
+      "total_h": 9.47,
       "hrv": 69,
+      "rhr": 43
+    },
+    {
+      "date": "2026-09-27",
+      "score": 71,
+      "total_h": 8.76,
+      "hrv": 62,
       "rhr": 43
     }
   ],

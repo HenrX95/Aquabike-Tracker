@@ -5,94 +5,100 @@ und ein Generator, der den Trainingsplan als strukturierte Workouts auf die Fore
 Zwift-Rides kommen über Garmin mit rein (Zwift pusht automatisch dorthin).
 
 **Ziel:** IRONMAN 70.3 Venice-Jesolo, 24.04.2027 · 38 Wochen ab 03.08.2026
-**Radziel:** 90 km konstant bei 235–250 W (FTP-Ziel 300 W)
+**Radziel:** 90 km bei IF 0,75–0,80 der Renntags-FTP · FTP-Hauptziel 280 W (Stretch 300 W)
+**Stand:** targets.json v6 (27.09.2026) – Reset nach Bilanz W1–8, Phase „Wiedereinstieg“ W9–11
 
 ## Die eine Regel
 
 Alle Zielwerte stehen in **`targets.json`** — und nur dort. `scripts/campaign.py` liest die Datei
-und versorgt Sync, Dashboard und Workout-Generator. Wenn sich ein Ziel ändert, ändert es sich
-an genau einer Stelle. Keine Zahl gehört hartkodiert in ein Skript.
+und versorgt Sync, Dashboard und Workout-Generator. Das gilt seit v6 auch für Phasen,
+Entlastungswochen und die Wochenschablone (welcher Wochentag welche Einheit).
+
+## Standardwoche (v6)
+
+| Tag | Einheit |
+|---|---|
+| Mo | Rad-Qualität 1 – Zwift, abends |
+| Di | Schwimmen 1 (Technik/Ausdauer) + Kraft A (Beine/Knie) |
+| Mi | Ruhetag + Mobility · Mittwochs-Vorkochen |
+| Do | Rad-Qualität 2 – Zwift, abends |
+| Fr | Schwimmen 2 – CSS |
+| Sa | Lange Ausfahrt |
+| So | Kraft B (Oberkörper/Rumpf) · ab Build II + 60 min Z2 · Sonntags-Vorkochen |
+
+**Minimum-Woche (~5 h):** 2× Schwimmen, Rad-Qualität 1, lange Ausfahrt, Kraft A. Alles andere ist Bonus.
+**Laufen:** kein festes Training. Läufe werden erfasst und gegen Leitplanken geprüft
+(≤ 12 km, Ø-Puls ≤ 150 bei > 45 min, längster Lauf max. +10 %, Knie-Wert eintragen).
 
 ## Was automatisch läuft — und was nicht
 
 **Ohne dich:** GitHub Actions holt jede Nacht um 23:15 (München) Garmin- und Oura-Daten,
 rechnet Wochenlast und Ampeln, schreibt `data/dashboard.json` und baut `docs/index.html` neu.
 
-**Nicht ohne dich:** Claude. Kein Gedächtnis zwischen Chats, kein Timer. Ich kann
-`dashboard.json` in jedem Chat lesen — aber nur, wenn du einen Chat öffnest.
-Das Dashboard ersetzt die tägliche Information. Ich ersetze die wöchentliche Entscheidung.
+**Nicht ohne dich:** Tests eintragen, Knie-Wert, Workouts nach FTP-Test neu hochladen,
+Sonntags-Review im Claude-Projekt „Triathlon“ (Prompts in `PROMPTS.md`).
 
 ## Dateien
 
 ```
-targets.json                ALLE Zielwerte — die einzige Quelle
-scripts/campaign.py         liest targets.json, leitet Phase/Soll/Wegmarken ab
+targets.json                ALLE Zielwerte + Phasen + Wochenschablone — die einzige Quelle
+scripts/campaign.py         liest targets.json, leitet Phase/Soll/Wegmarken/Rennleistung ab
 scripts/sync.py             Garmin + Oura → dashboard.json, Ampel-Logik
 scripts/build_dashboard.py  dashboard.json → docs/index.html
 scripts/template.html       Dashboard-Layout
 scripts/garmin_workouts.py  Trainingsplan → strukturierte Garmin-Workouts + Kalender
-data/manual.json            deine Eingaben (Tests, Knie, Aero-Minuten, Decoupling)
-data/dashboard.json         wird generiert — das lese ich
+data/manual.json            deine Eingaben (Tests, Knie, Gewicht, Aero-Minuten, Decoupling)
+data/dashboard.json         wird generiert
 docs/index.html             wird generiert — das schaust du an
 ```
 
-## Täglicher Ablauf
+## In `data/manual.json` eintragen
 
-**Auf der Uhr:** Selbstbeurteilung nach jeder Einheit (liefert RPE für die Lastampel).
-
-**In `data/manual.json`**, wenn es etwas zu tragen gibt:
-
-- `ftp_w` / `css_s` — nach jedem Test
-- `race_power_hold_min` — längster durchgehender Block ≥ 235 W nach der langen Ausfahrt
-- `aero_minutes_week` — Minuten in Aeroposition (kommt aus keiner API)
-- `decoupling_pct` — Pw:HR-Drift der letzten langen Ausfahrt
-- `daily[].knee` — schlimmster Knieschmerz des Tages, 0–10
-
-**Morgens:** Dashboard öffnen. Ampeln stehen ganz oben.
-**Sonntags:** Chat öffnen, Prompt aus `PROMPTS.md`.
+- `ftp_w` + `ftp_tested` — nach jedem Rampentest (W9, W18, W28, W35)
+- `css_s` + `css_tested` — nach jedem CSS-Test (gleiche Wochen, freitags)
+- `daily[]` — pro Tag nur, was du hast: `knee` (0–10), `weight_kg`, `bodyfat_pct`, `waist_cm`
+- `race_power_hold_min`, `aero_minutes_week`, `decoupling_pct` — nach der langen Ausfahrt
 
 ## Workouts auf die Uhr
 
+Actions-Tab → **Garmin-Workouts hochladen** → *Run workflow* → Wochen z. B. `9-16`.
+Nutzt das Secret `GARMIN_TOKENS` (dasselbe wie der Sync). Immer ca. 8 Wochen im Voraus,
+nach jedem FTP-/CSS-Test die kommenden Wochen erneut hochladen (gleichnamige Workouts werden ersetzt).
+
+Lokal:
 ```bash
 pip install -r requirements.txt
-export GARMIN_EMAIL="…" GARMIN_PASSWORD="…"
-
-python3 scripts/garmin_workouts.py --dry-run --weeks 1-8   # anzeigen
-python3 scripts/garmin_workouts.py --weeks 1-8             # hochladen + einplanen
-python3 scripts/garmin_workouts.py --clean                 # alle "70.3 …" löschen
+export GARMIN_TOKENS="…"     # oder GARMIN_EMAIL / GARMIN_PASSWORD
+python3 scripts/garmin_workouts.py --dry-run --weeks 9-16   # anzeigen
+python3 scripts/garmin_workouts.py --weeks 9-16 --push      # hochladen + Kalender + Uhr
+python3 scripts/garmin_workouts.py --clean                  # alle "70.3 …" löschen
 ```
-
-Alternativ über Actions-Tab → *Garmin-Workouts hochladen* → Run workflow.
-
-Immer nur die aktuelle Phase hochladen. Nach jedem FTP-Test `manual.json` aktualisieren und
-die kommenden Wochen neu erzeugen — sonst zeigt die Uhr Wattziele einer veralteten FTP.
-
-## Setup (einmalig)
-
-1. **Secrets** — Repo → Settings → Secrets and variables → Actions:
-   `GARMIN_EMAIL`, `GARMIN_PASSWORD`, `GARMIN_TOKENS` (base64-Tarball des Token-Caches), `OURA_TOKEN`
-2. **Workflow aktivieren** — Actions-Tab → einmal *Run workflow*
-3. **Pages** — Settings → Pages → Source `main` / Ordner `/docs`
-4. **Raw-URL** für Chats notieren:
-   `https://raw.githubusercontent.com/HenrX95/Aquabike-Tracker/main/data/dashboard.json`
 
 ## Ampeln
 
 | Signal | Regel | Konsequenz |
 |---|---|---|
-| sRPE-Last | > +15 % zur Vorwoche | Qualitätseinheit zurücknehmen |
-| Ruhepuls | 3 Tage +5 bpm über Baseline | Nächste Einheit → Zone 2 |
+| sRPE-Last | > +15 % zur Vorwoche (inkl. Läufe) | Qualitätseinheit zurücknehmen |
+| Ruhepuls (Oura) | 3 Tage +5 bpm über Median-Baseline | Nächste Einheit → Zone 2 |
 | HRV | 3 Tage unter 85 % der Baseline | Qualität reduzieren, Schlaf schützen |
-| Knie | > 3/10 oder morgens noch da | Gym- und Gehlast zurück bis 2 grüne Wochen |
-| Schwimmen | < 2 Einheiten/Woche | Konstanz ist der Hebel, nicht Umfang |
-| Schlaf | Ø < 7,5 h | Im Defizit doppelt relevant |
+| Knie | > 3/10 oder morgens noch da | Gym-Last zurück bis 2 grüne Wochen |
+| Laufen | > 12 km · Ø > 150 bpm über 45 min · +10 % längster Lauf · kein Knie-Wert | Nächster Lauf kürzer/lockerer |
+| Schwimmen | < 2 Einheiten/Woche | Konstanz ist der Hebel |
+| Schlaf | Ø < 7,5 h (nur Hauptschlaf) | Im Defizit doppelt relevant |
+
+## Änderungen v6 (27.09.2026)
+
+- RPE: Garmin-Rohwert 10 wurde als RPE 10 statt RPE 1 gelesen → behoben, betroffene Cache-Einträge gelöscht
+- Schlaf: Oura-Nickerchen überschrieben die Nacht (0,1–0,5 h) → nur Hauptschlaf zählt
+- Ruhepuls: Quelle jetzt Oura (niedrigster Nachtpuls), Baseline als Median
+- Läufe/Gehen zählen jetzt in Wochenlast, Wochenstunden und Leitplanken
+- Rennleistung relativ zur aktuellen FTP statt fix 235–250 W
+- Gewicht/Körperfett/Taille aus `manual.json` werden mit Garmin-Werten zusammengeführt
+- Workout-Workflow nutzt `GARMIN_TOKENS`, optionales Aufräumen und Push an die Uhr
 
 ## Bekannte Schwächen
 
 - **`garminconnect` ist inoffiziell.** Garmin kann die API ändern; dann bricht der Sync.
-- **Rennleistungs-Block ist eine Näherung.** Ohne Power-Stream sieht der Sync nur die NP je
-  Einheit, nicht Blöcke innerhalb einer Ausfahrt. Deshalb überschreibt `race_power_hold_min`
-  aus `manual.json` den berechneten Wert.
+- **Kein Leistungsmesser am Outdoor-Rad.** Qualität deshalb auf Zwift; draußen nur Puls.
+- **Rennleistungs-Block ist eine Näherung** (nur NP je Einheit) → `race_power_hold_min` manuell.
 - **Aero-Minuten und Decoupling** liefert keine API — beides manuell.
-- **Der Repo-Name sagt noch „Aquabike".** Umbenennen geht in Settings; GitHub legt eine
-  Weiterleitung an, dann müssen nur die Raw-URLs in `PROMPTS.md` nachgezogen werden.

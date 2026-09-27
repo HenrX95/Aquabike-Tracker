@@ -1,52 +1,71 @@
 {
-  "_comment": "Zentrale Zielwerte der IRONMAN-70.3-Kampagne. Gelesen von garmin_workouts.py und build_dashboard.py. Aenderungen NUR hier vornehmen.",
-  "version": 5,
-  "changed": "2026-08-05: Radziel von '35 km/h Schnitt' auf 'konstant 235-250 W' umgestellt. FTP-Ziel von 280-290 W auf 300 W angehoben. Wochenstruktur auf 38 Wochen ab 03.08.2026 korrigiert. Gewichtsstrategie: Defizit endet W29.",
-  "athlete": {"age": 31, "weight_start_kg": 92, "height_note": "Alter 31 – volle Adaptationsfaehigkeit, stuetzt das +20%-FTP-Ziel."},
+  "_comment": "Zentrale Zielwerte der IRONMAN-70.3-Kampagne. Gelesen von campaign.py, sync.py, build_dashboard.py und garmin_workouts.py. Aenderungen NUR hier vornehmen.",
+  "version": 6,
+  "changed": "2026-09-27: Reset nach Bilanz W1-8 (Ist 2,5 h/Woche statt ~8 h). Neue Phase 'Wiedereinstieg' W9-11. Rennleistung relativ zur getesteten FTP (IF 0,75-0,80) statt fix 235-250 W. FTP-Hauptziel 280 W, 300 W als Stretch. Neue Wochenstruktur ohne Rad am Dienstagmorgen. Kein festes Lauf-/Gehtraining, stattdessen Lauf-Leitplanken. Gewicht 87,5 kg / 20 % KFA am 27.09. als neuer Ankerpunkt, Ziel W28 83,5 kg (~0,2 kg/Woche).",
+  "athlete": {"age": 31, "weight_start_kg": 92, "hr_max_assumed": 185},
 
   "campaign": {
     "race": "IRONMAN 70.3 Venice-Jesolo",
     "race_date": "2027-04-24",
     "week_1_monday": "2026-08-03",
     "total_weeks": 38,
-    "recovery_weeks": [4, 8, 12, 16, 20, 24, 28, 32],
+    "recovery_weeks": [4, 8, 16, 20, 24, 28, 32],
     "phases": [
       {"name": "Grundlage",      "weeks": [1, 8],   "bike_hours": 4.5},
-      {"name": "Build I",        "weeks": [9, 18],  "bike_hours": 5.0},
+      {"name": "Wiedereinstieg", "weeks": [9, 11],  "bike_hours": 4.0},
+      {"name": "Build I",        "weeks": [12, 18], "bike_hours": 5.0},
       {"name": "Build II",       "weeks": [19, 28], "bike_hours": 6.0},
       {"name": "Rennspezifisch", "weeks": [29, 35], "bike_hours": 6.0},
       {"name": "Taper",          "weeks": [36, 38], "bike_hours": 3.0}
-    ]
+    ],
+    "week_template": {
+      "_comment": "0 = Montag. Kein Rad am Dienstagmorgen. Kraft A (Beine) mit 48 h Abstand vor Rad-Qualitaet 2.",
+      "bike_quality_1": 0,
+      "swim_1": 1,
+      "gym_a": 1,
+      "rest": 2,
+      "bike_quality_2": 3,
+      "swim_2": 4,
+      "long_ride": 5,
+      "gym_b": 6,
+      "extra_z2": 6
+    },
+    "minimum_week": "2x Schwimmen, 1x Rad-Qualitaet (Zwift), 1x lange Ausfahrt, 1x Kraft A = ca. 5 h. Alles darueber ist Bonus."
   },
 
   "bike": {
-    "primary_goal": "90 km konstant bei 235-250 W normalisierter Leistung",
-    "race_power_w": [235, 250],
-    "plan_target_w": 245,
-    "target_if": [0.78, 0.84],
-    "max_race_if": 0.88,
+    "primary_goal": "90 km konstant bei IF 0,75-0,80 der am Renntag aktuellen FTP",
+    "race_if": [0.75, 0.80],
+    "max_race_if": 0.82,
     "ftp_start_w": 250,
-    "ftp_target_w": 300,
-    "ftp_waypoints": {"w1": 250, "w8": 258, "w14": 268, "w20": 278, "w28": 288, "w35": 300},
+    "ftp_start_note": "Schaetzwert von vor Juli, nie getestet. Rampentest Mo 28.09.2026 (W9).",
+    "ftp_target_w": 280,
+    "ftp_stretch_w": 300,
+    "ftp_waypoints": {"w9": 250, "w18": 262, "w28": 273, "w35": 280},
     "race_power_hold_minutes": {
-      "_comment": "Laengster durchgehender Block auf >=235 W. Leitkennzahl der Kampagne.",
-      "w14": 45, "w20": 60, "w24": 75, "w28": 90, "w31": 120, "w33": 150
+      "_comment": "Laengster durchgehender Block auf >= Untergrenze Rennleistung (0,75 x aktuelle FTP). Leitkennzahl der Kampagne.",
+      "w14": 30, "w18": 45, "w22": 60, "w26": 75, "w29": 90, "w31": 120, "w33": 150
     },
     "weekly_minutes_in_zone_88_105_pct": {
-      "grundlage": 60, "build_i": 90, "build_ii": 110, "rennspezifisch": 120, "taper": 45
+      "grundlage": 60, "wiedereinstieg": 40, "build_i": 80, "build_ii": 100, "rennspezifisch": 110, "taper": 45
     },
     "decoupling_target_pct": 5.0,
-    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Das Ziel steht im Plan, das Pacing kommt aus der Messung."
+    "pacing_rule": "Renn-NP = hoechste Leistung, die in W30-W35 zweimal ueber 45 min mit Decoupling < 5% gehalten wurde, minus 5 W. Obergrenze IF 0,80.",
+    "power_meter_outdoor": false,
+    "quality_indoor_only": true,
+    "reference_events": [
+      {"date": "2026-06-28", "name": "Aquabike Walchsee", "duration_min": 213, "distance_km": 80.5, "elevation_m": 1091}
+    ]
   },
 
   "aero": {
-    "_comment": "Nicht Teil des Ziels, aber der Umrechnungsfaktor von Watt in Zeit.",
+    "_comment": "Aufsatzlenker nur am Outdoor-Rad montiert (Stand 27.09.2026).",
+    "clip_ons_outdoor": true,
+    "clip_ons_indoor": false,
     "cda_target": 0.30,
-    "speed_at_245w": {"cda_0_26": 38.1, "cda_0_30": 36.5, "cda_0_34": 35.1, "cda_0_40": 33.4},
-    "bike_split_at_245w_min": {"cda_0_26": 142, "cda_0_30": 148, "cda_0_34": 154, "cda_0_40": 162},
     "milestones": {
-      "w14": "Aufsatzlenker montiert und eingestellt",
-      "w19": "erste 2x20 min Rennleistung komplett in Aeroposition",
+      "w14": "Aufsatzlenker montiert und eingestellt (erledigt, Outdoor-Rad)",
+      "w19": "Lange Ausfahrt im Winter mit dem Outdoor-Rad auf der Rolle, Rennleistungs-Blocks in Aeroposition",
       "w24": "60 min am Stueck in Aero ohne Leistungsverlust",
       "w28": "Aero-30-min-Test: reale Renn-Wattzahl in Position",
       "w33": "Generalprobe 90 km durchgehend in Aeroposition"
@@ -55,53 +74,65 @@
 
   "swim": {
     "css_start_sec_per_100m": 120,
+    "css_start_note": "Platzhalter, nie getestet. CSS-Test Fr 02.10.2026 (W9).",
     "css_target_sec_per_100m": 110,
     "race_distance_m": 1900,
     "race_pace_sec_per_100m": 115,
-    "sessions_per_week": 2
+    "sessions_per_week": 2,
+    "optional_third_session": true,
+    "pool_length_m": 25
   },
 
-  "walk": {
-    "_comment": "Primaeres Verletzungsrisiko der Kampagne.",
-    "longest_session_km_target": 18,
-    "clearance_required_above_km": 12,
+  "run": {
+    "_comment": "Kein festes Lauftraining (Entscheidung Henrik, 27.09.2026). Laeufe werden erfasst und gegen Leitplanken geprueft.",
+    "structured_training": false,
+    "max_session_km": 12,
+    "easy_hr_cap_bpm": 150,
+    "max_longest_increase_pct": 10,
     "knee_pain_amber_score": 3,
-    "brick_from_week": 29
+    "race_strategy": "Lauf-Geh-Strategie am Renntag, Pacing nach Puls"
   },
 
   "body": {
     "weight_start_kg": 92,
-    "weight_target_w28_kg": 84,
+    "checkpoint": {"date": "2026-09-27", "week": 8, "weight_kg": 87.5, "bodyfat_pct": 20},
+    "lean_mass_kg": 70.0,
+    "weight_target_w28_kg": 83.5,
     "weight_race_day_kg": [83, 85],
-    "deficit_kcal_per_day": 300,
+    "deficit_kcal_per_day": 250,
     "deficit_ends_week": 29,
-    "expected_loss_kg_per_week": 0.3,
-    "_note": "Bewusst langsamer als der Vorplan (war 0,4-0,5 kg/Woche). 92 -> 84 kg ueber 28 Wochen reicht fuer 'unter 85 kg' und schont die Adaptation. Ab W29 Erhaltung: der FTP-Block braucht Energie, nicht Defizit."
+    "expected_loss_kg_per_week": 0.2,
+    "protein_g_per_day": [165, 185],
+    "_note": "Bereits 2,4 kg vor dem v5-Zeitplan. Langsamer weiter (~0,2 kg/Woche), damit die steigende Trainingslast genug Energie bekommt. Ab W29 Erhaltung."
   },
 
   "recovery": {
     "hrv_amber_pct_of_baseline": 85,
     "hrv_amber_consecutive_days": 3,
     "rhr_amber_bpm_above_baseline": 5,
+    "rhr_amber_consecutive_days": 3,
+    "rhr_source": "oura",
     "srpe_max_weekly_increase_pct": 15,
     "sleep_hours_min": 7.5
   },
 
   "dashboard_kpis": [
-    {"id": "ftp",             "label": "FTP (W)",                        "target": 300,   "source": "manual.json", "primary": true},
-    {"id": "race_power_hold", "label": "Laengster Block >=235 W (min)",  "target": 150,   "source": "garmin",      "primary": true},
-    {"id": "tiz_88_105",      "label": "Min/Woche bei 88-105% FTP",      "target": 110,   "source": "garmin"},
-    {"id": "decoupling",      "label": "Pw:HR-Drift lange Ausfahrt (%)", "target": 5.0,   "source": "garmin", "lower_is_better": true},
-    {"id": "aero_minutes",    "label": "Min/Woche in Aeroposition",      "target": 90,    "source": "manual.json"},
-    {"id": "css",             "label": "Schwimm-CSS (s/100 m)",          "target": 110,   "source": "manual.json", "lower_is_better": true},
-    {"id": "swims_per_week",  "label": "Schwimmeinheiten/Woche",         "target": 2.0,   "source": "garmin"},
-    {"id": "walk_longest",    "label": "Laengste Geheinheit (km)",       "target": 18,    "source": "garmin"},
-    {"id": "hrv_flag",        "label": "HRV-Fruehwarnung",               "target": "gruen", "source": "oura"},
-    {"id": "weight",          "label": "Gewicht (kg)",                   "target": 84,    "source": "garmin", "lower_is_better": true}
+    {"id": "ftp",             "label": "FTP (W)",                            "target": 280,   "source": "manual.json", "primary": true},
+    {"id": "race_power_hold", "label": "Laengster Block >= 0,75 x FTP (min)", "target": 150,   "source": "garmin",      "primary": true},
+    {"id": "tiz_88_105",      "label": "Min/Woche bei 88-105% FTP",          "target": 100,   "source": "garmin"},
+    {"id": "decoupling",      "label": "Pw:HR-Drift lange Ausfahrt (%)",     "target": 5.0,   "source": "manual.json", "lower_is_better": true},
+    {"id": "aero_minutes",    "label": "Min/Woche in Aeroposition",          "target": 90,    "source": "manual.json"},
+    {"id": "css",             "label": "Schwimm-CSS (s/100 m)",              "target": 110,   "source": "manual.json", "lower_is_better": true},
+    {"id": "swims_per_week",  "label": "Schwimmeinheiten/Woche",             "target": 2.0,   "source": "garmin"},
+    {"id": "run_guardrails",  "label": "Lauf-Leitplanken (km, Puls, Knie)",  "target": "gruen", "source": "garmin"},
+    {"id": "hrv_flag",        "label": "HRV-Fruehwarnung",                   "target": "gruen", "source": "oura"},
+    {"id": "weight",          "label": "Gewicht (kg)",                       "target": 83.5,  "source": "garmin/manual.json", "lower_is_better": true}
   ],
 
   "retired_kpis": [
-    {"id": "avg_speed_kmh", "was_target": 35,  "reason": "Ergebnisgroesse, nicht steuerbar. Ersetzt durch race_power_hold. Weiterhin Anzeige, nicht Ziel."},
-    {"id": "w_per_kg",      "was_target": 3.4, "reason": "Auf flachem Kurs zweitrangig. Absolute FTP zaehlt. (300 W bei 84 kg = 3,57 W/kg.)"}
+    {"id": "avg_speed_kmh", "was_target": 35,  "reason": "Ergebnisgroesse, nicht steuerbar."},
+    {"id": "w_per_kg",      "was_target": 3.4, "reason": "Auf flachem Kurs zweitrangig. Absolute FTP zaehlt."},
+    {"id": "walk_longest",  "was_target": 18,  "reason": "Kein festes Geh-/Lauftraining mehr (27.09.2026). Ersetzt durch run_guardrails."},
+    {"id": "race_power_fixed_235_250", "was_target": "235-250 W", "reason": "IF 0,84 bei FTP 280 zu hoch vor 21,1 km. Ersetzt durch race_if."}
   ]
 }

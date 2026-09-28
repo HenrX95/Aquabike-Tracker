@@ -2,8 +2,8 @@
   "_hinweis": "Nur was keine API liefert. RPE kommt von der Uhr (Selbstbeurteilung), Gewicht ueber Withings->Garmin ODER hier in daily[].weight_kg. Manuelle Werte gewinnen am selben Tag.",
 
   "_tests": "ftp_w/css_s erst nach einem ECHTEN Test aendern und das Testdatum setzen. Solange *_tested null ist, sind es Schaetzwerte.",
-  "ftp_w": 250,
-  "ftp_tested": null,
+  "ftp_w": 252,
+  "ftp_tested": 252,
   "css_s": 120,
   "css_tested": null,
   "waist_cm": null,

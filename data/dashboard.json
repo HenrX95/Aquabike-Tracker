@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-09-27T23:48:10+00:00",
+  "generated_at": "2026-09-29T00:58:19+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 209,
+    "days_to_go": 207,
     "weeks_to_go": 29,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 8,
-    "phase": "1 – Grundlage",
-    "recovery_week": true,
+    "current_week": 9,
+    "phase": "2 – Wiedereinstieg",
+    "recovery_week": false,
     "weeks_total": 38,
     "sport_targets": {
       "swim": 2,
-      "bike": 2,
+      "bike": 3,
       "gym": 2
     },
-    "bike_hours_target": 4.5,
+    "bike_hours_target": 4.0,
     "ftp_waypoint_w": 250,
-    "weight_target_kg": 87.5,
+    "weight_target_kg": 87.3,
     "deficit_active": true
   },
   "targets": {
@@ -35,10 +35,10 @@
       0.8
     ],
     "race_power_w": [
-      188,
-      200
+      189,
+      202
     ],
-    "race_power_plan_w": 194,
+    "race_power_plan_w": 196,
     "css_start_s": 120,
     "css_race_s": 110,
     "weight_start_kg": 87.5,
@@ -67,10 +67,10 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 43,
-    "sleep_h_7d": 7.3,
-    "readiness": 80,
-    "ftp_w": 250,
+    "rhr_bpm": 46,
+    "sleep_h_7d": 7.2,
+    "readiness": 86,
+    "ftp_w": 252,
     "css_s": 120,
     "waist_cm": null
   },
@@ -97,8 +97,18 @@
     },
     {
       "level": "amber",
+      "metric": "Schwimmfrequenz",
+      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
+    },
+    {
+      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 7.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 7.2 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -229,6 +239,22 @@
       "srpe_load": 984,
       "rpe_covered": 3,
       "rpe_missing": 1
+    },
+    {
+      "week": 9,
+      "phase": "2 – Wiedereinstieg",
+      "recovery_week": false,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 0.5,
+      "bike_hours": 0.5,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -236,7 +262,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 7,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 2.5,
       "km_total": 6.5,
       "target_per_week": 2,
@@ -246,11 +272,11 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 9,
-      "sessions_week": 2,
-      "hours_total": 10.7,
-      "km_total": 301.5,
-      "target_per_week": 2,
+      "sessions_total": 10,
+      "sessions_week": 1,
+      "hours_total": 11.2,
+      "km_total": 314.9,
+      "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
     },
@@ -269,7 +295,7 @@
       "sport": "run",
       "label": "Laufen",
       "sessions_total": 7,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 5.7,
       "km_total": 52.4,
       "target_per_week": null,
@@ -289,24 +315,24 @@
     }
   ],
   "analysis": {
-    "ftp_used": 250,
+    "ftp_used": 252,
     "bike_zone_min": {
       "recovery": 0,
       "endurance": 31,
-      "tempo": 60,
+      "tempo": 88,
       "sweetspot": 0,
       "threshold": 0,
       "vo2": 0
     },
     "bike_quality_min": 0,
-    "bike_quality_target_min": 60,
-    "bike_sessions_analyzed": 3,
+    "bike_quality_target_min": 40,
+    "bike_sessions_analyzed": 4,
     "race_power_w": [
-      188,
-      200
+      189,
+      202
     ],
     "race_power_longest_min": 60,
-    "race_power_total_min": 60,
+    "race_power_total_min": 88,
     "race_power_target_min": 0,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
@@ -346,10 +372,10 @@
   },
   "forecast": {
     "ftp": {
-      "current": 250,
+      "current": 252,
       "target": 280,
       "due_now": 256,
-      "gap": 30,
+      "gap": 28,
       "on_track": false
     },
     "css": {
@@ -359,6 +385,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-09-28",
+      "activity_id": 24530414019,
+      "name": "Zwift - FTP Ramp Test",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 28.1,
+      "distance_km": 13.43,
+      "avg_hr": 131.0,
+      "max_hr": 174.0,
+      "avg_power": 135.0,
+      "norm_power": 203.26964432838116,
+      "elevation_m": 65,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-09-26",
       "activity_id": 24505527497,
@@ -938,10 +981,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-07-29",
-      "bpm": 43
-    },
-    {
       "date": "2026-07-30",
       "bpm": 49
     },
@@ -1176,6 +1215,10 @@
     {
       "date": "2026-09-27",
       "bpm": 43
+    },
+    {
+      "date": "2026-09-28",
+      "bpm": 46
     }
   ],
   "weights": [
@@ -1186,13 +1229,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-08-28",
-      "score": 74,
-      "total_h": 7.51,
-      "hrv": 73,
-      "rhr": 44
-    },
     {
       "date": "2026-08-29",
       "score": 67,
@@ -1391,9 +1427,16 @@
     {
       "date": "2026-09-27",
       "score": 71,
-      "total_h": 8.76,
+      "total_h": 8.86,
       "hrv": 62,
       "rhr": 43
+    },
+    {
+      "date": "2026-09-28",
+      "score": 81,
+      "total_h": 7.49,
+      "hrv": 60,
+      "rhr": 46
     }
   ],
   "swim_pace": [

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-01T00:32:29+00:00",
+  "generated_at": "2026-10-02T00:45:48+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 205,
+    "days_to_go": 204,
     "weeks_to_go": 29,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 44,
-    "sleep_h_7d": 7.9,
-    "readiness": 83,
+    "rhr_bpm": 46,
+    "sleep_h_7d": 6.7,
+    "readiness": 82,
     "ftp_w": 252,
     "css_s": 120,
     "waist_cm": null
@@ -94,6 +94,16 @@
       "level": "amber",
       "metric": "Schwimmfrequenz",
       "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
+    },
+    {
+      "level": "amber",
+      "metric": "Schlaf",
+      "text": "Schnitt 6.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -230,16 +240,16 @@
       "phase": "2 – Wiedereinstieg",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 1,
+      "bikes": 2,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 1.0,
-      "bike_hours": 0.5,
+      "total_hours": 2.3,
+      "bike_hours": 1.8,
       "swim_meters": 1800,
       "srpe_load": 94,
       "rpe_covered": 1,
-      "rpe_missing": 1
+      "rpe_missing": 2
     }
   ],
   "by_sport": [
@@ -257,10 +267,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 10,
-      "sessions_week": 1,
-      "hours_total": 11.2,
-      "km_total": 314.9,
+      "sessions_total": 11,
+      "sessions_week": 2,
+      "hours_total": 12.5,
+      "km_total": 351.2,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -303,7 +313,7 @@
     "ftp_used": 252,
     "bike_zone_min": {
       "recovery": 0,
-      "endurance": 31,
+      "endurance": 109,
       "tempo": 88,
       "sweetspot": 0,
       "threshold": 0,
@@ -311,7 +321,7 @@
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 40,
-    "bike_sessions_analyzed": 4,
+    "bike_sessions_analyzed": 5,
     "race_power_w": [
       189,
       202
@@ -370,6 +380,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-01",
+      "activity_id": 24571108955,
+      "name": "Zwift - 70.3 W09 Do 01.10. Tempo   Kadenz",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 77.6,
+      "distance_km": 36.24,
+      "avg_hr": 110.0,
+      "max_hr": 128.0,
+      "avg_power": 162.0,
+      "norm_power": 173.95008455111278,
+      "elevation_m": 397,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-09-29",
       "activity_id": 24543722141,
@@ -983,10 +1010,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-08-01",
-      "bpm": 44
-    },
-    {
       "date": "2026-08-02",
       "bpm": 49
     },
@@ -1221,6 +1244,10 @@
     {
       "date": "2026-09-30",
       "bpm": 44
+    },
+    {
+      "date": "2026-10-01",
+      "bpm": 46
     }
   ],
   "weights": [
@@ -1231,20 +1258,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-08-31",
-      "score": 85,
-      "total_h": 8.31,
-      "hrv": 96,
-      "rhr": 42
-    },
-    {
-      "date": "2026-09-01",
-      "score": 86,
-      "total_h": 7.32,
-      "hrv": 75,
-      "rhr": 42
-    },
     {
       "date": "2026-09-02",
       "score": 78,
@@ -1439,6 +1452,19 @@
       "total_h": 7.46,
       "hrv": 84,
       "rhr": 44
+    },
+    {
+      "date": "2026-10-01",
+      "score": 78,
+      "total_h": 6.88,
+      "hrv": 70,
+      "rhr": 46
+    },
+    {
+      "date": "2026-10-02",
+      "total_h": 0.03,
+      "hrv": null,
+      "rhr": null
     }
   ],
   "swim_pace": [

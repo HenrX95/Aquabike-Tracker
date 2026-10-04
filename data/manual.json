@@ -3,7 +3,7 @@
 
   "_tests": "ftp_w/css_s erst nach einem ECHTEN Test aendern und das Testdatum setzen. Solange *_tested null ist, sind es Schaetzwerte.",
   "ftp_w": 252,
-  "ftp_tested": 252,
+  "ftp_tested": "2026-09-28",
   "css_s": 115,
   "css_tested": "2026-10-02",
   "waist_cm": null,

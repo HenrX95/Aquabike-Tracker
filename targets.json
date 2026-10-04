@@ -1,7 +1,7 @@
 {
   "_comment": "Zentrale Zielwerte der IRONMAN-70.3-Kampagne. Gelesen von campaign.py, sync.py, build_dashboard.py und garmin_workouts.py. Aenderungen NUR hier vornehmen.",
-  "version": 6,
-  "changed": "2026-09-27: Reset nach Bilanz W1-8 (Ist 2,5 h/Woche statt ~8 h). Neue Phase 'Wiedereinstieg' W9-11. Rennleistung relativ zur getesteten FTP (IF 0,75-0,80) statt fix 235-250 W. FTP-Hauptziel 280 W, 300 W als Stretch. Neue Wochenstruktur ohne Rad am Dienstagmorgen. Kein festes Lauf-/Gehtraining, stattdessen Lauf-Leitplanken. Gewicht 87,5 kg / 20 % KFA am 27.09. als neuer Ankerpunkt, Ziel W28 83,5 kg (~0,2 kg/Woche).",
+  "version": 7,
+  "changed": "2026-10-04: CSS-Test W9 = 1:55/100 m (115 s) statt Schaetzwert 2:00. CSS-Ziel 110 -> 108 s, Renntempo 115 -> 113 s, CSS-Wegmarken ergaenzt (W18 112, W28 110, W35 108). | 2026-09-27: Reset nach Bilanz W1-8 (Ist 2,5 h/Woche statt ~8 h). Neue Phase 'Wiedereinstieg' W9-11. Rennleistung relativ zur getesteten FTP (IF 0,75-0,80) statt fix 235-250 W. FTP-Hauptziel 280 W, 300 W als Stretch. Neue Wochenstruktur ohne Rad am Dienstagmorgen. Kein festes Lauf-/Gehtraining, stattdessen Lauf-Leitplanken. Gewicht 87,5 kg / 20 % KFA am 27.09. als neuer Ankerpunkt, Ziel W28 83,5 kg (~0,2 kg/Woche).",
   "athlete": {"age": 31, "weight_start_kg": 92, "hr_max_assumed": 185},
 
   "campaign": {
@@ -73,11 +73,12 @@
   },
 
   "swim": {
-    "css_start_sec_per_100m": 120,
-    "css_start_note": "Platzhalter, nie getestet. CSS-Test Fr 02.10.2026 (W9).",
-    "css_target_sec_per_100m": 110,
+    "css_start_sec_per_100m": 115,
+    "css_start_note": "Getestet in W9 (CSS-Test 400/200 m): 1:55/100 m.",
+    "css_target_sec_per_100m": 108,
+    "css_waypoints": {"w9": 115, "w18": 112, "w28": 110, "w35": 108},
     "race_distance_m": 1900,
-    "race_pace_sec_per_100m": 115,
+    "race_pace_sec_per_100m": 113,
     "sessions_per_week": 2,
     "optional_third_session": true,
     "pool_length_m": 25
@@ -122,7 +123,7 @@
     {"id": "tiz_88_105",      "label": "Min/Woche bei 88-105% FTP",          "target": 100,   "source": "garmin"},
     {"id": "decoupling",      "label": "Pw:HR-Drift lange Ausfahrt (%)",     "target": 5.0,   "source": "manual.json", "lower_is_better": true},
     {"id": "aero_minutes",    "label": "Min/Woche in Aeroposition",          "target": 90,    "source": "manual.json"},
-    {"id": "css",             "label": "Schwimm-CSS (s/100 m)",              "target": 110,   "source": "manual.json", "lower_is_better": true},
+    {"id": "css",             "label": "Schwimm-CSS (s/100 m)",              "target": 108,   "source": "manual.json", "lower_is_better": true},
     {"id": "swims_per_week",  "label": "Schwimmeinheiten/Woche",             "target": 2.0,   "source": "garmin"},
     {"id": "run_guardrails",  "label": "Lauf-Leitplanken (km, Puls, Knie)",  "target": "gruen", "source": "garmin"},
     {"id": "hrv_flag",        "label": "HRV-Fruehwarnung",                   "target": "gruen", "source": "oura"},

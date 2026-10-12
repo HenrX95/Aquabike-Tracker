@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-11T00:14:09+00:00",
+  "generated_at": "2026-10-12T00:31:07+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 195,
+    "days_to_go": 194,
     "weeks_to_go": 27,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 10,
+    "current_week": 11,
     "phase": "2 – Wiedereinstieg",
     "recovery_week": false,
     "weeks_total": 38,
@@ -22,7 +22,7 @@
     },
     "bike_hours_target": 4.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 87.1,
+    "weight_target_kg": 86.9,
     "deficit_active": true
   },
   "targets": {
@@ -67,14 +67,19 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 42,
-    "sleep_h_7d": 7.7,
-    "readiness": 89,
+    "rhr_bpm": 56,
+    "sleep_h_7d": 6.6,
+    "readiness": 78,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
   },
   "flags": [
+    {
+      "level": "amber",
+      "metric": "Knie",
+      "text": "Diese Woche gelaufen, aber kein Knie-Wert in manual.json. Ohne Wert ist die Knie-Ampel blind."
+    },
     {
       "level": "amber",
       "metric": "Schwimmfrequenz",
@@ -83,7 +88,12 @@
     {
       "level": "amber",
       "metric": "RPE",
-      "text": "3 von 4 Einheiten ohne Bewertung. Lastzahl untertreibt."
+      "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
+    },
+    {
+      "level": "amber",
+      "metric": "Schlaf",
+      "text": "Schnitt 6.6 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -238,13 +248,13 @@
       "swims": 1,
       "bikes": 3,
       "gyms": 0,
-      "runs": 0,
-      "run_km": 0.0,
-      "total_hours": 3.9,
+      "runs": 1,
+      "run_km": 6.5,
+      "total_hours": 4.6,
       "bike_hours": 3.7,
       "swim_meters": 600,
-      "srpe_load": 58,
-      "rpe_covered": 1,
+      "srpe_load": 179,
+      "rpe_covered": 2,
       "rpe_missing": 3
     }
   ],
@@ -253,7 +263,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 10,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 3.7,
       "km_total": 9.7,
       "target_per_week": 2,
@@ -264,7 +274,7 @@
       "sport": "bike",
       "label": "Rad",
       "sessions_total": 14,
-      "sessions_week": 3,
+      "sessions_week": 0,
       "hours_total": 16.1,
       "km_total": 462.3,
       "target_per_week": 3,
@@ -285,10 +295,10 @@
     {
       "sport": "run",
       "label": "Laufen",
-      "sessions_total": 7,
+      "sessions_total": 8,
       "sessions_week": 0,
-      "hours_total": 5.7,
-      "km_total": 52.4,
+      "hours_total": 6.4,
+      "km_total": 58.9,
       "target_per_week": null,
       "longest_km": 16.0,
       "longest_min": 108.8
@@ -332,7 +342,7 @@
     "swim_longest_km": 1.85,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 16.0,
-    "walkrun_total_km": 70.8,
+    "walkrun_total_km": 77.3,
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
@@ -357,7 +367,7 @@
       },
       {
         "week": 10,
-        "load": 58
+        "load": 179
       }
     ]
   },
@@ -376,6 +386,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-11",
+      "activity_id": 24683672934,
+      "name": "Mühldorf a. Inn Laufen",
+      "sport": "run",
+      "type_raw": "running",
+      "duration_min": 40.5,
+      "distance_km": 6.54,
+      "avg_hr": 145.0,
+      "max_hr": 158.0,
+      "avg_power": 349.0,
+      "norm_power": 353.0,
+      "elevation_m": 8,
+      "pace_per_100m": null,
+      "rpe_garmin": 3.0,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-10-10",
       "activity_id": 24671660648,
@@ -1036,34 +1063,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 4.0,
       "feel_garmin": 2.5
-    },
-    {
-      "date": "2026-07-19",
-      "activity_id": 23653126550,
-      "name": "Swim 3",
-      "sport": "swim",
-      "type_raw": "lap_swimming",
-      "duration_min": 30.3,
-      "distance_km": 1.45,
-      "avg_hr": 147.0,
-      "max_hr": 163.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 126,
-      "rpe_garmin": 3.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-11",
-      "bpm": 44
-    },
-    {
-      "date": "2026-08-12",
-      "bpm": 46
-    },
     {
       "date": "2026-08-13",
       "bpm": 45
@@ -1295,6 +1297,14 @@
     {
       "date": "2026-10-10",
       "bpm": 42
+    },
+    {
+      "date": "2026-10-11",
+      "bpm": 42
+    },
+    {
+      "date": "2026-10-12",
+      "bpm": 56
     }
   ],
   "weights": [
@@ -1305,20 +1315,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-09-10",
-      "score": 66,
-      "total_h": 7.2,
-      "hrv": 67,
-      "rhr": 43
-    },
-    {
-      "date": "2026-09-11",
-      "score": 78,
-      "total_h": 8.18,
-      "hrv": 64,
-      "rhr": 43
-    },
     {
       "date": "2026-09-12",
       "score": 83,
@@ -1512,6 +1508,19 @@
       "total_h": 8.69,
       "hrv": 73,
       "rhr": 42
+    },
+    {
+      "date": "2026-10-11",
+      "score": 82,
+      "total_h": 8.59,
+      "hrv": 66,
+      "rhr": 42
+    },
+    {
+      "date": "2026-10-12",
+      "total_h": 0.13,
+      "hrv": null,
+      "rhr": 56
     }
   ],
   "swim_pace": [

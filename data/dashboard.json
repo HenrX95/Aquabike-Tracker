@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-14T00:16:59+00:00",
+  "generated_at": "2026-10-14T23:54:26+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 46,
-    "sleep_h_7d": 7.0,
-    "readiness": 82,
+    "rhr_bpm": 42,
+    "sleep_h_7d": 8.2,
+    "readiness": 83,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -84,16 +84,6 @@
       "level": "amber",
       "metric": "Schwimmfrequenz",
       "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
-      "metric": "RPE",
-      "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
-    },
-    {
-      "level": "amber",
-      "metric": "Schlaf",
-      "text": "Schnitt 7.0 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -256,19 +246,35 @@
       "srpe_load": 179,
       "rpe_covered": 2,
       "rpe_missing": 3
+    },
+    {
+      "week": 11,
+      "phase": "2 – Wiedereinstieg",
+      "recovery_week": false,
+      "swims": 1,
+      "bikes": 0,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 0.7,
+      "bike_hours": 0.0,
+      "swim_meters": 1650,
+      "srpe_load": 87,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 10,
-      "sessions_week": 0,
-      "hours_total": 3.7,
-      "km_total": 9.7,
+      "sessions_total": 11,
+      "sessions_week": 1,
+      "hours_total": 4.4,
+      "km_total": 11.3,
       "target_per_week": 2,
       "longest_km": 1.8,
-      "longest_min": 38.1
+      "longest_min": 43.8
     },
     {
       "sport": "bike",
@@ -346,10 +352,6 @@
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
-        "week": 5,
-        "load": 208
-      },
-      {
         "week": 6,
         "load": 108
       },
@@ -368,6 +370,10 @@
       {
         "week": 10,
         "load": 179
+      },
+      {
+        "week": 11,
+        "load": 87
       }
     ]
   },
@@ -386,6 +392,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-14",
+      "activity_id": 24723488908,
+      "name": "70.3 W11 Schwimmen Technik",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 43.8,
+      "distance_km": 1.65,
+      "avg_hr": 134.0,
+      "max_hr": 178.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 159,
+      "rpe_garmin": 2.0,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-10-11",
       "activity_id": 24683672934,
@@ -1046,30 +1069,9 @@
       "pace_per_100m": null,
       "rpe_garmin": null,
       "feel_garmin": null
-    },
-    {
-      "date": "2026-07-20",
-      "activity_id": 23668868477,
-      "name": "München Laufen",
-      "sport": "run",
-      "type_raw": "running",
-      "duration_min": 109.3,
-      "distance_km": 12.27,
-      "avg_hr": 120.0,
-      "max_hr": 160.0,
-      "avg_power": 209.0,
-      "norm_power": 259.0,
-      "elevation_m": 50,
-      "pace_per_100m": null,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 2.5
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-14",
-      "bpm": 42
-    },
     {
       "date": "2026-08-15",
       "bpm": 41
@@ -1305,6 +1307,10 @@
     {
       "date": "2026-10-13",
       "bpm": 46
+    },
+    {
+      "date": "2026-10-14",
+      "bpm": 42
     }
   ],
   "weights": [
@@ -1518,9 +1524,10 @@
     },
     {
       "date": "2026-10-14",
-      "total_h": 0.18,
-      "hrv": null,
-      "rhr": null
+      "score": 75,
+      "total_h": 8.13,
+      "hrv": 78,
+      "rhr": 42
     }
   ],
   "swim_pace": [
@@ -1559,6 +1566,10 @@
     {
       "week": 10,
       "median_pace_s": 147
+    },
+    {
+      "week": 11,
+      "median_pace_s": 159
     }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-20T00:18:36+00:00",
+  "generated_at": "2026-10-20T23:51:18+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 61,
-    "sleep_h_7d": 6.9,
-    "readiness": 75,
+    "rhr_bpm": 41,
+    "sleep_h_7d": 8.0,
+    "readiness": 92,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -82,8 +82,13 @@
     },
     {
       "level": "amber",
-      "metric": "Schlaf",
-      "text": "Schnitt 6.9 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "metric": "Schwimmfrequenz",
+      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
     }
   ],
   "weekly": [
@@ -262,6 +267,22 @@
       "srpe_load": 392,
       "rpe_covered": 2,
       "rpe_missing": 1
+    },
+    {
+      "week": 12,
+      "phase": "3 – Build I",
+      "recovery_week": false,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 0.5,
+      "bike_hours": 0.5,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -279,10 +300,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 15,
-      "sessions_week": 0,
-      "hours_total": 17.5,
-      "km_total": 506.4,
+      "sessions_total": 16,
+      "sessions_week": 1,
+      "hours_total": 18.1,
+      "km_total": 513.8,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -326,20 +347,20 @@
     "bike_zone_min": {
       "recovery": 0,
       "endurance": 270,
-      "tempo": 170,
+      "tempo": 202,
       "sweetspot": 0,
       "threshold": 0,
       "vo2": 0
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 8,
+    "bike_sessions_analyzed": 9,
     "race_power_w": [
       189,
       202
     ],
     "race_power_longest_min": 76,
-    "race_power_total_min": 170,
+    "race_power_total_min": 202,
     "race_power_target_min": 30,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
@@ -392,6 +413,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-20",
+      "activity_id": 24793827224,
+      "name": "Zwift - 70.3 W12 Mo 19.10. Over-Unders 3x3",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 32.4,
+      "distance_km": 7.46,
+      "avg_hr": 0.0,
+      "max_hr": 0.0,
+      "avg_power": 184.0,
+      "norm_power": 204.11537348743207,
+      "elevation_m": 321,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-10-18",
       "activity_id": 24767295756,
@@ -1052,23 +1090,6 @@
       "pace_per_100m": null,
       "rpe_garmin": 4.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-07-27",
-      "activity_id": 23753635536,
-      "name": "München Radfahren",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 130.2,
-      "distance_km": 49.5,
-      "avg_hr": 123.0,
-      "max_hr": 164.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 329,
-      "pace_per_100m": null,
-      "rpe_garmin": 1,
-      "feel_garmin": 7.5
     }
   ],
   "rhr": [
@@ -1310,7 +1331,7 @@
     },
     {
       "date": "2026-10-20",
-      "bpm": 61
+      "bpm": 41
     }
   ],
   "weights": [
@@ -1524,9 +1545,10 @@
     },
     {
       "date": "2026-10-20",
-      "total_h": 0.65,
-      "hrv": 35,
-      "rhr": 61
+      "score": 82,
+      "total_h": 8.14,
+      "hrv": 75,
+      "rhr": 41
     }
   ],
   "swim_pace": [

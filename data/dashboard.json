@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-10-18T23:09:04+00:00",
+  "generated_at": "2026-10-20T00:18:36+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 188,
+    "days_to_go": 186,
     "weeks_to_go": 26,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 11,
-    "phase": "2 – Wiedereinstieg",
+    "current_week": 12,
+    "phase": "3 – Build I",
     "recovery_week": false,
     "weeks_total": 38,
     "sport_targets": {
@@ -20,9 +20,9 @@
       "bike": 3,
       "gym": 2
     },
-    "bike_hours_target": 4.0,
+    "bike_hours_target": 5.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 86.9,
+    "weight_target_kg": 86.7,
     "deficit_active": true
   },
   "targets": {
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 44,
-    "sleep_h_7d": 8.1,
-    "readiness": 88,
+    "rhr_bpm": 61,
+    "sleep_h_7d": 6.9,
+    "readiness": 75,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -82,8 +82,8 @@
     },
     {
       "level": "amber",
-      "metric": "Knie",
-      "text": "Diese Woche gelaufen, aber kein Knie-Wert in manual.json. Ohne Wert ist die Knie-Ampel blind."
+      "metric": "Schlaf",
+      "text": "Schnitt 6.9 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -269,7 +269,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 12,
-      "sessions_week": 2,
+      "sessions_week": 0,
       "hours_total": 5.4,
       "km_total": 12.7,
       "target_per_week": 2,
@@ -280,7 +280,7 @@
       "sport": "bike",
       "label": "Rad",
       "sessions_total": 15,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 17.5,
       "km_total": 506.4,
       "target_per_week": 3,
@@ -326,21 +326,21 @@
     "bike_zone_min": {
       "recovery": 0,
       "endurance": 270,
-      "tempo": 230,
+      "tempo": 170,
       "sweetspot": 0,
       "threshold": 0,
       "vo2": 0
     },
     "bike_quality_min": 0,
-    "bike_quality_target_min": 40,
-    "bike_sessions_analyzed": 9,
+    "bike_quality_target_min": 80,
+    "bike_sessions_analyzed": 8,
     "race_power_w": [
       189,
       202
     ],
     "race_power_longest_min": 76,
-    "race_power_total_min": 230,
-    "race_power_target_min": 0,
+    "race_power_total_min": 170,
+    "race_power_target_min": 30,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
     "decoupling_pct": null,
@@ -348,7 +348,7 @@
     "swim_longest_km": 1.8,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 16.0,
-    "walkrun_total_km": 77.3,
+    "walkrun_total_km": 65.0,
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
@@ -1073,14 +1073,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-08-19",
-      "bpm": 46
-    },
-    {
-      "date": "2026-08-20",
-      "bpm": 41
-    },
-    {
       "date": "2026-08-21",
       "bpm": 41
     },
@@ -1311,6 +1303,14 @@
     {
       "date": "2026-10-18",
       "bpm": 44
+    },
+    {
+      "date": "2026-10-19",
+      "bpm": 46
+    },
+    {
+      "date": "2026-10-20",
+      "bpm": 61
     }
   ],
   "weights": [
@@ -1321,20 +1321,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-09-19",
-      "score": 74,
-      "total_h": 11.25,
-      "hrv": 56,
-      "rhr": 47
-    },
-    {
-      "date": "2026-09-20",
-      "score": 84,
-      "total_h": 9.37,
-      "hrv": 73,
-      "rhr": 44
-    },
     {
       "date": "2026-09-21",
       "score": 82,
@@ -1525,9 +1511,22 @@
     {
       "date": "2026-10-18",
       "score": 82,
-      "total_h": 9.06,
+      "total_h": 9.18,
       "hrv": 62,
       "rhr": 44
+    },
+    {
+      "date": "2026-10-19",
+      "score": 65,
+      "total_h": 7.07,
+      "hrv": 58,
+      "rhr": 46
+    },
+    {
+      "date": "2026-10-20",
+      "total_h": 0.65,
+      "hrv": 35,
+      "rhr": 61
     }
   ],
   "swim_pace": [

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-20T23:51:18+00:00",
+  "generated_at": "2026-10-22T00:00:10+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 186,
+    "days_to_go": 185,
     "weeks_to_go": 26,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -68,27 +68,17 @@
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
     "rhr_bpm": 41,
-    "sleep_h_7d": 8.0,
-    "readiness": 92,
+    "sleep_h_7d": 8.2,
+    "readiness": 91,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
   },
   "flags": [
     {
-      "level": "red",
-      "metric": "sRPE-Last",
-      "text": "Wochenlast +119% (Grenze 15%). Naechste Qualitaetseinheit zuruecknehmen."
-    },
-    {
       "level": "amber",
       "metric": "Schwimmfrequenz",
-      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
-      "metric": "RPE",
-      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
+      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
     }
   ],
   "weekly": [
@@ -272,16 +262,16 @@
       "week": 12,
       "phase": "3 – Build I",
       "recovery_week": false,
-      "swims": 0,
+      "swims": 1,
       "bikes": 1,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 0.5,
+      "total_hours": 1.2,
       "bike_hours": 0.5,
-      "swim_meters": 0,
-      "srpe_load": 0,
-      "rpe_covered": 0,
+      "swim_meters": 1930,
+      "srpe_load": 74,
+      "rpe_covered": 1,
       "rpe_missing": 1
     }
   ],
@@ -289,12 +279,12 @@
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 12,
-      "sessions_week": 0,
-      "hours_total": 5.4,
-      "km_total": 12.7,
+      "sessions_total": 13,
+      "sessions_week": 1,
+      "hours_total": 6.0,
+      "km_total": 14.6,
       "target_per_week": 2,
-      "longest_km": 1.8,
+      "longest_km": 1.9,
       "longest_min": 61.1
     },
     {
@@ -366,16 +356,12 @@
     "aero_minutes_week": null,
     "decoupling_pct": null,
     "decoupling_target_pct": 5.0,
-    "swim_longest_km": 1.8,
+    "swim_longest_km": 1.93,
     "swim_race_km": 1.9,
     "walkrun_longest_km": 16.0,
     "walkrun_total_km": 65.0,
     "walkrun_race_km": 21.1,
     "load_trend": [
-      {
-        "week": 6,
-        "load": 108
-      },
       {
         "week": 7,
         "load": 248
@@ -395,6 +381,10 @@
       {
         "week": 11,
         "load": 392
+      },
+      {
+        "week": 12,
+        "load": 74
       }
     ]
   },
@@ -413,6 +403,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-21",
+      "activity_id": 24804773419,
+      "name": "70.3 W12 Schwimmen Ausdauer",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 37.0,
+      "distance_km": 1.93,
+      "avg_hr": 124.0,
+      "max_hr": 159.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 115,
+      "rpe_garmin": 2.0,
+      "feel_garmin": 5.0
+    },
     {
       "date": "2026-10-20",
       "activity_id": 24793827224,
@@ -1073,30 +1080,9 @@
       "pace_per_100m": 92,
       "rpe_garmin": 2.0,
       "feel_garmin": 7.5
-    },
-    {
-      "date": "2026-08-02",
-      "activity_id": 23820270727,
-      "name": "München Laufen",
-      "sport": "run",
-      "type_raw": "running",
-      "duration_min": 40.5,
-      "distance_km": 6.08,
-      "avg_hr": 148.0,
-      "max_hr": 168.0,
-      "avg_power": 319.0,
-      "norm_power": 344.0,
-      "elevation_m": 33,
-      "pace_per_100m": null,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-21",
-      "bpm": 41
-    },
     {
       "date": "2026-08-22",
       "bpm": 41
@@ -1332,6 +1318,10 @@
     {
       "date": "2026-10-20",
       "bpm": 41
+    },
+    {
+      "date": "2026-10-21",
+      "bpm": 41
     }
   ],
   "weights": [
@@ -1342,13 +1332,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-09-21",
-      "score": 82,
-      "total_h": 8.42,
-      "hrv": 62,
-      "rhr": 45
-    },
     {
       "date": "2026-09-22",
       "score": 76,
@@ -1546,8 +1529,15 @@
     {
       "date": "2026-10-20",
       "score": 82,
-      "total_h": 8.14,
+      "total_h": 8.54,
       "hrv": 75,
+      "rhr": 41
+    },
+    {
+      "date": "2026-10-21",
+      "score": 86,
+      "total_h": 8.78,
+      "hrv": 80,
       "rhr": 41
     }
   ],
@@ -1587,6 +1577,10 @@
     {
       "week": 11,
       "median_pace_s": 262
+    },
+    {
+      "week": 12,
+      "median_pace_s": 115
     }
   ]
 }

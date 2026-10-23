@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-22T23:58:42+00:00",
+  "generated_at": "2026-10-23T23:51:13+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 184,
+    "days_to_go": 183,
     "weeks_to_go": 26,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 42,
-    "sleep_h_7d": 8.0,
-    "readiness": 84,
+    "rhr_bpm": 44,
+    "sleep_h_7d": 8.1,
+    "readiness": 81,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -79,6 +79,11 @@
       "level": "amber",
       "metric": "Schwimmfrequenz",
       "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
     }
   ],
   "weekly": [
@@ -263,16 +268,16 @@
       "phase": "3 – Build I",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 1,
+      "bikes": 2,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 1.2,
-      "bike_hours": 0.5,
+      "total_hours": 2.4,
+      "bike_hours": 1.8,
       "swim_meters": 1930,
       "srpe_load": 74,
       "rpe_covered": 1,
-      "rpe_missing": 1
+      "rpe_missing": 2
     }
   ],
   "by_sport": [
@@ -290,10 +295,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 16,
-      "sessions_week": 1,
-      "hours_total": 18.1,
-      "km_total": 513.8,
+      "sessions_total": 17,
+      "sessions_week": 2,
+      "hours_total": 19.3,
+      "km_total": 524.0,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -336,7 +341,7 @@
     "ftp_used": 252,
     "bike_zone_min": {
       "recovery": 0,
-      "endurance": 270,
+      "endurance": 345,
       "tempo": 202,
       "sweetspot": 0,
       "threshold": 0,
@@ -344,7 +349,7 @@
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 9,
+    "bike_sessions_analyzed": 10,
     "race_power_w": [
       189,
       202
@@ -403,6 +408,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-23",
+      "activity_id": 24823343980,
+      "name": "Zwift - 70.3 W12 Do 22.10. Rennleistung 2x20",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 75.2,
+      "distance_km": 10.22,
+      "avg_hr": 0.0,
+      "max_hr": 0.0,
+      "avg_power": 172.0,
+      "norm_power": 178.23036215618396,
+      "elevation_m": 793,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-10-21",
       "activity_id": 24804773419,
@@ -1063,30 +1085,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 5.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-03",
-      "activity_id": 23864102594,
-      "name": "Schwimmbad",
-      "sport": "swim",
-      "type_raw": "lap_swimming",
-      "duration_min": 6.9,
-      "distance_km": 0.45,
-      "avg_hr": 132.0,
-      "max_hr": 159.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": 92,
-      "rpe_garmin": 2.0,
-      "feel_garmin": 7.5
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-23",
-      "bpm": 40
-    },
     {
       "date": "2026-08-24",
       "bpm": 42
@@ -1322,6 +1323,10 @@
     {
       "date": "2026-10-22",
       "bpm": 42
+    },
+    {
+      "date": "2026-10-23",
+      "bpm": 44
     }
   ],
   "weights": [
@@ -1332,12 +1337,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-09-23",
-      "total_h": 0.9,
-      "hrv": 33,
-      "rhr": 64
-    },
     {
       "date": "2026-09-24",
       "score": 60,
@@ -1536,9 +1535,16 @@
     {
       "date": "2026-10-22",
       "score": 76,
-      "total_h": 7.0,
+      "total_h": 7.21,
       "hrv": 77,
       "rhr": 42
+    },
+    {
+      "date": "2026-10-23",
+      "score": 63,
+      "total_h": 6.74,
+      "hrv": 73,
+      "rhr": 44
     }
   ],
   "swim_pace": [

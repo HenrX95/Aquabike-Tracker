@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-10-23T23:51:13+00:00",
+  "generated_at": "2026-10-24T23:10:18+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 183,
+    "days_to_go": 182,
     "weeks_to_go": 26,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,23 +67,18 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 44,
+    "rhr_bpm": 47,
     "sleep_h_7d": 8.1,
-    "readiness": 81,
+    "readiness": 85,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
   },
   "flags": [
     {
-      "level": "amber",
-      "metric": "Schwimmfrequenz",
-      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
-      "metric": "RPE",
-      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
+      "level": "green",
+      "metric": "Alles",
+      "text": "Keine Warnungen. Plan laeuft."
     }
   ],
   "weekly": [
@@ -267,16 +262,16 @@
       "week": 12,
       "phase": "3 – Build I",
       "recovery_week": false,
-      "swims": 1,
+      "swims": 2,
       "bikes": 2,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 2.4,
+      "total_hours": 2.7,
       "bike_hours": 1.8,
-      "swim_meters": 1930,
-      "srpe_load": 74,
-      "rpe_covered": 1,
+      "swim_meters": 2730,
+      "srpe_load": 162,
+      "rpe_covered": 2,
       "rpe_missing": 2
     }
   ],
@@ -284,10 +279,10 @@
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 13,
-      "sessions_week": 1,
-      "hours_total": 6.0,
-      "km_total": 14.6,
+      "sessions_total": 14,
+      "sessions_week": 2,
+      "hours_total": 6.3,
+      "km_total": 15.4,
       "target_per_week": 2,
       "longest_km": 1.9,
       "longest_min": 61.1
@@ -389,7 +384,7 @@
       },
       {
         "week": 12,
-        "load": 74
+        "load": 162
       }
     ]
   },
@@ -408,6 +403,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-24",
+      "activity_id": 24834700565,
+      "name": "70.3 W12 Schwimmen CSS",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 17.7,
+      "distance_km": 0.8,
+      "avg_hr": 139.0,
+      "max_hr": 176.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 132,
+      "rpe_garmin": 5.0,
+      "feel_garmin": 2.5
+    },
     {
       "date": "2026-10-23",
       "activity_id": 24823343980,
@@ -1068,30 +1080,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 3.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-05",
-      "activity_id": 23866283507,
-      "name": "München - 70.3 W01 Rad Sweet Spot 2",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 86.5,
-      "distance_km": 40.64,
-      "avg_hr": 142.0,
-      "max_hr": 208.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 229,
-      "pace_per_100m": null,
-      "rpe_garmin": 5.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-24",
-      "bpm": 42
-    },
     {
       "date": "2026-08-25",
       "bpm": 48
@@ -1327,6 +1318,10 @@
     {
       "date": "2026-10-23",
       "bpm": 44
+    },
+    {
+      "date": "2026-10-24",
+      "bpm": 47
     }
   ],
   "weights": [
@@ -1337,13 +1332,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-09-24",
-      "score": 60,
-      "total_h": 7.16,
-      "hrv": 70,
-      "rhr": 47
-    },
     {
       "date": "2026-09-25",
       "score": 82,
@@ -1542,9 +1530,16 @@
     {
       "date": "2026-10-23",
       "score": 63,
-      "total_h": 6.74,
+      "total_h": 6.98,
       "hrv": 73,
       "rhr": 44
+    },
+    {
+      "date": "2026-10-24",
+      "score": 87,
+      "total_h": 8.82,
+      "hrv": 65,
+      "rhr": 47
     }
   ],
   "swim_pace": [
@@ -1586,7 +1581,7 @@
     },
     {
       "week": 12,
-      "median_pace_s": 115
+      "median_pace_s": 132
     }
   ]
 }

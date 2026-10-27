@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-10-25T23:14:24+00:00",
+  "generated_at": "2026-10-27T00:24:23+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 181,
+    "days_to_go": 179,
     "weeks_to_go": 25,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 12,
+    "current_week": 13,
     "phase": "3 – Build I",
     "recovery_week": false,
     "weeks_total": 38,
@@ -22,7 +22,7 @@
     },
     "bike_hours_target": 5.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 86.7,
+    "weight_target_kg": 86.5,
     "deficit_active": true
   },
   "targets": {
@@ -68,17 +68,27 @@
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
     "rhr_bpm": 42,
-    "sleep_h_7d": 8.0,
-    "readiness": 81,
+    "sleep_h_7d": 7.1,
+    "readiness": 70,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
   },
   "flags": [
     {
-      "level": "green",
-      "metric": "Alles",
-      "text": "Keine Warnungen. Plan laeuft."
+      "level": "amber",
+      "metric": "Schwimmfrequenz",
+      "text": "Nur 0 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+    },
+    {
+      "level": "amber",
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
+    },
+    {
+      "level": "amber",
+      "metric": "Schlaf",
+      "text": "Schnitt 7.1 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -273,6 +283,22 @@
       "srpe_load": 162,
       "rpe_covered": 2,
       "rpe_missing": 2
+    },
+    {
+      "week": 13,
+      "phase": "3 – Build I",
+      "recovery_week": false,
+      "swims": 0,
+      "bikes": 1,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 1.0,
+      "bike_hours": 1.0,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -280,7 +306,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 14,
-      "sessions_week": 2,
+      "sessions_week": 0,
       "hours_total": 6.3,
       "km_total": 15.4,
       "target_per_week": 2,
@@ -290,10 +316,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 17,
-      "sessions_week": 2,
-      "hours_total": 19.3,
-      "km_total": 524.0,
+      "sessions_total": 18,
+      "sessions_week": 1,
+      "hours_total": 20.3,
+      "km_total": 541.3,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -337,20 +363,20 @@
     "bike_zone_min": {
       "recovery": 0,
       "endurance": 345,
-      "tempo": 202,
+      "tempo": 262,
       "sweetspot": 0,
       "threshold": 0,
       "vo2": 0
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 10,
+    "bike_sessions_analyzed": 11,
     "race_power_w": [
       189,
       202
     ],
     "race_power_longest_min": 76,
-    "race_power_total_min": 202,
+    "race_power_total_min": 262,
     "race_power_target_min": 30,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
@@ -392,7 +418,7 @@
     "ftp": {
       "current": 252,
       "target": 280,
-      "due_now": 259,
+      "due_now": 260,
       "gap": 28,
       "on_track": false
     },
@@ -403,6 +429,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-10-26",
+      "activity_id": 24859613712,
+      "name": "Zwift - 70.3 W13 Mo 26.10. Schwelle 3x12",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 59.3,
+      "distance_km": 17.21,
+      "avg_hr": 0.0,
+      "max_hr": 0.0,
+      "avg_power": 181.0,
+      "norm_power": 203.13430723548188,
+      "elevation_m": 525,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-10-24",
       "activity_id": 24834700565,
@@ -1063,23 +1106,6 @@
       "pace_per_100m": null,
       "rpe_garmin": 1,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-08",
-      "activity_id": 23898426387,
-      "name": "München - 70.3 W01 Lange Ausfahrt",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 174.8,
-      "distance_km": 84.44,
-      "avg_hr": 143.0,
-      "max_hr": 168.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 702,
-      "pace_per_100m": null,
-      "rpe_garmin": 3.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
@@ -1333,13 +1359,6 @@
   ],
   "sleep": [
     {
-      "date": "2026-09-26",
-      "score": 75,
-      "total_h": 9.47,
-      "hrv": 69,
-      "rhr": 43
-    },
-    {
       "date": "2026-09-27",
       "score": 71,
       "total_h": 8.86,
@@ -1537,9 +1556,16 @@
     {
       "date": "2026-10-25",
       "score": 89,
-      "total_h": 8.67,
+      "total_h": 9.05,
       "hrv": 83,
       "rhr": 42
+    },
+    {
+      "date": "2026-10-26",
+      "score": 51,
+      "total_h": 0.17,
+      "hrv": null,
+      "rhr": null
     }
   ],
   "swim_pace": [

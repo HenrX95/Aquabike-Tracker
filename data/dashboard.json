@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-11-01T00:06:32+00:00",
+  "generated_at": "2026-11-02T00:40:32+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 174,
+    "days_to_go": 173,
     "weeks_to_go": 24,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 13,
+    "current_week": 14,
     "phase": "3 – Build I",
     "recovery_week": false,
     "weeks_total": 38,
@@ -22,7 +22,7 @@
     },
     "bike_hours_target": 5.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 86.5,
+    "weight_target_kg": 86.3,
     "deficit_active": true
   },
   "targets": {
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 45,
-    "sleep_h_7d": 5.7,
-    "readiness": 80,
+    "rhr_bpm": 53,
+    "sleep_h_7d": 6.7,
+    "readiness": 69,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -92,8 +92,13 @@
     },
     {
       "level": "amber",
+      "metric": "RPE",
+      "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
+    },
+    {
+      "level": "amber",
       "metric": "Schlaf",
-      "text": "Schnitt 5.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "text": "Schnitt 6.7 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -101,16 +106,16 @@
       "week": 1,
       "phase": "1 – Grundlage",
       "recovery_week": false,
-      "swims": 2,
+      "swims": 1,
       "bikes": 3,
       "gyms": 1,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 6.4,
+      "total_hours": 6.3,
       "bike_hours": 5.2,
-      "swim_meters": 1100,
-      "srpe_load": 1227,
-      "rpe_covered": 6,
+      "swim_meters": 650,
+      "srpe_load": 1214,
+      "rpe_covered": 5,
       "rpe_missing": 0
     },
     {
@@ -294,26 +299,26 @@
       "phase": "3 – Build I",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 2,
+      "bikes": 3,
       "gyms": 0,
       "runs": 1,
       "run_km": 5.7,
-      "total_hours": 3.5,
-      "bike_hours": 2.3,
+      "total_hours": 5.5,
+      "bike_hours": 4.3,
       "swim_meters": 1800,
       "srpe_load": 304,
       "rpe_covered": 2,
-      "rpe_missing": 2
+      "rpe_missing": 3
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 15,
-      "sessions_week": 1,
-      "hours_total": 7.0,
-      "km_total": 17.2,
+      "sessions_total": 14,
+      "sessions_week": 0,
+      "hours_total": 6.9,
+      "km_total": 16.8,
       "target_per_week": 2,
       "longest_km": 1.9,
       "longest_min": 61.1
@@ -321,10 +326,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 19,
-      "sessions_week": 2,
-      "hours_total": 21.6,
-      "km_total": 569.7,
+      "sessions_total": 20,
+      "sessions_week": 0,
+      "hours_total": 23.6,
+      "km_total": 615.7,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -344,7 +349,7 @@
       "sport": "run",
       "label": "Laufen",
       "sessions_total": 9,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 7.0,
       "km_total": 64.6,
       "target_per_week": null,
@@ -367,7 +372,7 @@
     "ftp_used": 252,
     "bike_zone_min": {
       "recovery": 0,
-      "endurance": 424,
+      "endurance": 544,
       "tempo": 262,
       "sweetspot": 0,
       "threshold": 0,
@@ -375,7 +380,7 @@
     },
     "bike_quality_min": 0,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 12,
+    "bike_sessions_analyzed": 13,
     "race_power_w": [
       189,
       202
@@ -434,6 +439,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-11-01",
+      "activity_id": 24928615682,
+      "name": "Zwift - 70.3 W13 Sa 31.10. Lange Ausfahrt 158 min (25 min Rennleistung)",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 120.9,
+      "distance_km": 45.99,
+      "avg_hr": 143.0,
+      "max_hr": 158.0,
+      "avg_power": 166.0,
+      "norm_power": 169.53083769791886,
+      "elevation_m": 951,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-10-31",
       "activity_id": 24915113524,
@@ -1096,28 +1118,9 @@
       "pace_per_100m": null,
       "rpe_garmin": null,
       "feel_garmin": null
-    },
-    {
-      "date": "2026-08-10",
-      "activity_id": 23925577711,
-      "name": "Pilates",
-      "sport": "mobility",
-      "type_raw": "pilates",
-      "duration_min": 30.0,
-      "distance_km": 0.0,
-      "avg_hr": 78.0,
-      "max_hr": 110.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 0,
-      "pace_per_100m": null
     }
   ],
   "rhr": [
-    {
-      "date": "2026-08-31",
-      "bpm": 42
-    },
     {
       "date": "2026-09-01",
       "bpm": 42
@@ -1353,6 +1356,10 @@
     {
       "date": "2026-10-31",
       "bpm": 45
+    },
+    {
+      "date": "2026-11-01",
+      "bpm": 53
     }
   ],
   "weights": [
@@ -1363,12 +1370,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-03",
-      "total_h": 0.28,
-      "hrv": null,
-      "rhr": 53
-    },
     {
       "date": "2026-10-04",
       "score": 69,
@@ -1567,7 +1568,14 @@
     },
     {
       "date": "2026-11-01",
-      "total_h": 0.19,
+      "score": 76,
+      "total_h": 6.66,
+      "hrv": 56,
+      "rhr": 53
+    },
+    {
+      "date": "2026-11-02",
+      "total_h": 0.17,
       "hrv": null,
       "rhr": null
     }

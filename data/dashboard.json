@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-03T02:53:48+00:00",
+  "generated_at": "2026-11-04T01:18:45+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 172,
+    "days_to_go": 171,
     "weeks_to_go": 24,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 47,
-    "sleep_h_7d": 7.7,
-    "readiness": 79,
+    "rhr_bpm": 45,
+    "sleep_h_7d": 6.4,
+    "readiness": 84,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -94,6 +94,11 @@
       "level": "amber",
       "metric": "RPE",
       "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
+    },
+    {
+      "level": "amber",
+      "metric": "Schlaf",
+      "text": "Schnitt 6.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -102,15 +107,15 @@
       "phase": "1 – Grundlage",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 3,
+      "bikes": 2,
       "gyms": 1,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 6.3,
-      "bike_hours": 5.2,
+      "total_hours": 4.8,
+      "bike_hours": 3.8,
       "swim_meters": 650,
-      "srpe_load": 1214,
-      "rpe_covered": 5,
+      "srpe_load": 782,
+      "rpe_covered": 4,
       "rpe_missing": 0
     },
     {
@@ -321,10 +326,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 20,
+      "sessions_total": 19,
       "sessions_week": 0,
-      "hours_total": 23.6,
-      "km_total": 615.7,
+      "hours_total": 22.2,
+      "km_total": 575.0,
       "target_per_week": 3,
       "longest_km": 84.4,
       "longest_min": 174.8
@@ -423,7 +428,7 @@
     "ftp": {
       "current": 252,
       "target": 280,
-      "due_now": 260,
+      "due_now": 261,
       "gap": 28,
       "on_track": false
     },
@@ -1117,10 +1122,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-09-02",
-      "bpm": 41
-    },
-    {
       "date": "2026-09-03",
       "bpm": 43
     },
@@ -1355,6 +1356,10 @@
     {
       "date": "2026-11-02",
       "bpm": 47
+    },
+    {
+      "date": "2026-11-03",
+      "bpm": 45
     }
   ],
   "weights": [
@@ -1365,20 +1370,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-04",
-      "score": 69,
-      "total_h": 8.23,
-      "hrv": 77,
-      "rhr": 45
-    },
-    {
-      "date": "2026-10-05",
-      "score": 82,
-      "total_h": 8.21,
-      "hrv": 78,
-      "rhr": 45
-    },
     {
       "date": "2026-10-06",
       "score": 70,
@@ -1574,6 +1565,19 @@
       "total_h": 7.39,
       "hrv": 66,
       "rhr": 47
+    },
+    {
+      "date": "2026-11-03",
+      "score": 80,
+      "total_h": 6.77,
+      "hrv": 75,
+      "rhr": 45
+    },
+    {
+      "date": "2026-11-04",
+      "total_h": 0.28,
+      "hrv": null,
+      "rhr": null
     }
   ],
   "swim_pace": [

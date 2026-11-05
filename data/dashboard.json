@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-04T01:18:45+00:00",
+  "generated_at": "2026-11-05T01:27:06+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 171,
+    "days_to_go": 170,
     "weeks_to_go": 24,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,19 +67,14 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 45,
+    "rhr_bpm": 44,
     "sleep_h_7d": 6.4,
-    "readiness": 84,
+    "readiness": 81,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
   },
   "flags": [
-    {
-      "level": "red",
-      "metric": "sRPE-Last",
-      "text": "Wochenlast +88% (Grenze 15%). Naechste Qualitaetseinheit zuruecknehmen."
-    },
     {
       "level": "amber",
       "metric": "Knie",
@@ -89,11 +84,6 @@
       "level": "amber",
       "metric": "Schwimmfrequenz",
       "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
-    },
-    {
-      "level": "amber",
-      "metric": "RPE",
-      "text": "3 von 5 Einheiten ohne Bewertung. Lastzahl untertreibt."
     },
     {
       "level": "amber",
@@ -309,16 +299,32 @@
       "srpe_load": 304,
       "rpe_covered": 2,
       "rpe_missing": 3
+    },
+    {
+      "week": 14,
+      "phase": "3 – Build I",
+      "recovery_week": false,
+      "swims": 1,
+      "bikes": 0,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 0.2,
+      "bike_hours": 0.0,
+      "swim_meters": 700,
+      "srpe_load": 14,
+      "rpe_covered": 1,
+      "rpe_missing": 0
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 14,
-      "sessions_week": 0,
-      "hours_total": 6.9,
-      "km_total": 16.8,
+      "sessions_total": 15,
+      "sessions_week": 1,
+      "hours_total": 7.2,
+      "km_total": 17.5,
       "target_per_week": 2,
       "longest_km": 1.9,
       "longest_min": 61.1
@@ -399,10 +405,6 @@
     "walkrun_race_km": 21.1,
     "load_trend": [
       {
-        "week": 8,
-        "load": 984
-      },
-      {
         "week": 9,
         "load": 282
       },
@@ -421,6 +423,10 @@
       {
         "week": 13,
         "load": 304
+      },
+      {
+        "week": 14,
+        "load": 14
       }
     ]
   },
@@ -439,6 +445,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-11-04",
+      "activity_id": 24965871150,
+      "name": "70.3 W14 Schwimmen Ausdauer",
+      "sport": "swim",
+      "type_raw": "lap_swimming",
+      "duration_min": 14.8,
+      "distance_km": 0.7,
+      "avg_hr": 101.0,
+      "max_hr": 119.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": 127,
+      "rpe_garmin": 1,
+      "feel_garmin": null
+    },
     {
       "date": "2026-11-01",
       "activity_id": 24928615682,
@@ -1101,30 +1124,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 4.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-11",
-      "activity_id": 23931284818,
-      "name": "Zwift - W1-6 Day 1",
-      "sport": "bike",
-      "type_raw": "virtual_ride",
-      "duration_min": 16.3,
-      "distance_km": 6.55,
-      "avg_hr": 120.0,
-      "max_hr": 151.0,
-      "avg_power": 143.0,
-      "norm_power": 179.84580683161937,
-      "elevation_m": 63,
-      "pace_per_100m": null,
-      "rpe_garmin": null,
-      "feel_garmin": null
     }
   ],
   "rhr": [
-    {
-      "date": "2026-09-03",
-      "bpm": 43
-    },
     {
       "date": "2026-09-04",
       "bpm": 56
@@ -1360,6 +1362,10 @@
     {
       "date": "2026-11-03",
       "bpm": 45
+    },
+    {
+      "date": "2026-11-04",
+      "bpm": 44
     }
   ],
   "weights": [
@@ -1370,13 +1376,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-06",
-      "score": 70,
-      "total_h": 5.69,
-      "hrv": 67,
-      "rhr": 43
-    },
     {
       "date": "2026-10-07",
       "score": 65,
@@ -1575,7 +1574,14 @@
     },
     {
       "date": "2026-11-04",
-      "total_h": 0.28,
+      "score": 72,
+      "total_h": 8.8,
+      "hrv": 81,
+      "rhr": 44
+    },
+    {
+      "date": "2026-11-05",
+      "total_h": 0.2,
       "hrv": null,
       "rhr": null
     }
@@ -1624,6 +1630,10 @@
     {
       "week": 13,
       "median_pace_s": 136
+    },
+    {
+      "week": 14,
+      "median_pace_s": 127
     }
   ]
 }

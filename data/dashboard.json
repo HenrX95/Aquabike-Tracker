@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-11-08T00:32:52+00:00",
+  "generated_at": "2026-11-09T00:50:32+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 167,
+    "days_to_go": 166,
     "weeks_to_go": 23,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 14,
+    "current_week": 15,
     "phase": "3 – Build I",
     "recovery_week": false,
     "weeks_total": 38,
@@ -22,7 +22,7 @@
     },
     "bike_hours_target": 5.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 86.3,
+    "weight_target_kg": 86.1,
     "deficit_active": true
   },
   "targets": {
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 42,
-    "sleep_h_7d": 7.1,
-    "readiness": 80,
+    "rhr_bpm": 48,
+    "sleep_h_7d": 8.2,
+    "readiness": 76,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -82,8 +82,8 @@
     },
     {
       "level": "amber",
-      "metric": "Schlaf",
-      "text": "Schnitt 7.1 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "metric": "RPE",
+      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
     }
   ],
   "weekly": [
@@ -96,12 +96,12 @@
       "gyms": 0,
       "runs": 1,
       "run_km": 9.3,
-      "total_hours": 3.6,
+      "total_hours": 3.1,
       "bike_hours": 1.4,
       "swim_meters": 1500,
       "srpe_load": 574,
       "rpe_covered": 3,
-      "rpe_missing": 2
+      "rpe_missing": 1
     },
     {
       "week": 3,
@@ -284,16 +284,16 @@
       "phase": "3 – Build I",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 1,
+      "bikes": 2,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 1.5,
-      "bike_hours": 1.3,
+      "total_hours": 2.4,
+      "bike_hours": 2.1,
       "swim_meters": 700,
       "srpe_load": 14,
       "rpe_covered": 1,
-      "rpe_missing": 1
+      "rpe_missing": 2
     }
   ],
   "by_sport": [
@@ -301,7 +301,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 14,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 6.9,
       "km_total": 16.9,
       "target_per_week": 2,
@@ -311,10 +311,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 18,
-      "sessions_week": 1,
-      "hours_total": 19.7,
-      "km_total": 506.0,
+      "sessions_total": 19,
+      "sessions_week": 0,
+      "hours_total": 20.5,
+      "km_total": 516.0,
       "target_per_week": 3,
       "longest_km": 46.0,
       "longest_min": 120.9
@@ -340,17 +340,6 @@
       "target_per_week": null,
       "longest_km": 16.0,
       "longest_min": 108.8
-    },
-    {
-      "sport": "mobility",
-      "label": "Mobility",
-      "sessions_total": 1,
-      "sessions_week": 0,
-      "hours_total": 0.5,
-      "km_total": 0.0,
-      "target_per_week": null,
-      "longest_km": 0.0,
-      "longest_min": 30.0
     }
   ],
   "analysis": {
@@ -359,20 +348,20 @@
       "recovery": 0,
       "endurance": 620,
       "tempo": 262,
-      "sweetspot": 0,
+      "sweetspot": 52,
       "threshold": 0,
       "vo2": 0
     },
-    "bike_quality_min": 0,
+    "bike_quality_min": 52,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 14,
+    "bike_sessions_analyzed": 15,
     "race_power_w": [
       189,
       202
     ],
     "race_power_longest_min": 76,
-    "race_power_total_min": 262,
-    "race_power_target_min": 30,
+    "race_power_total_min": 314,
+    "race_power_target_min": 45,
     "race_power_final_target_min": 150,
     "aero_minutes_week": null,
     "decoupling_pct": null,
@@ -424,6 +413,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-11-08",
+      "activity_id": 25013044312,
+      "name": "Zwift - Sa Calobra in Video",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 52.4,
+      "distance_km": 10.01,
+      "avg_hr": 158.0,
+      "max_hr": 175.0,
+      "avg_power": 213.0,
+      "norm_power": 221.92448588462133,
+      "elevation_m": 676,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-11-05",
       "activity_id": 24978328776,
@@ -1086,30 +1092,9 @@
       "pace_per_100m": 152,
       "rpe_garmin": 3.0,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-13",
-      "activity_id": 23965908581,
-      "name": "München - 70.3 W02 Rad Sweet Spot 2",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 66.1,
-      "distance_km": 31.23,
-      "avg_hr": 141.0,
-      "max_hr": 176.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 143,
-      "pace_per_100m": null,
-      "rpe_garmin": 3.0,
-      "feel_garmin": 5.0
     }
   ],
   "rhr": [
-    {
-      "date": "2026-09-07",
-      "bpm": 49
-    },
     {
       "date": "2026-09-08",
       "bpm": 43
@@ -1345,6 +1330,10 @@
     {
       "date": "2026-11-07",
       "bpm": 42
+    },
+    {
+      "date": "2026-11-08",
+      "bpm": 48
     }
   ],
   "weights": [
@@ -1560,9 +1549,10 @@
     },
     {
       "date": "2026-11-08",
-      "total_h": 0.23,
-      "hrv": null,
-      "rhr": null
+      "score": 73,
+      "total_h": 7.91,
+      "hrv": 48,
+      "rhr": 48
     }
   ],
   "swim_pace": [

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-12T02:14:34+00:00",
+  "generated_at": "2026-11-13T01:48:14+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 163,
+    "days_to_go": 162,
     "weeks_to_go": 23,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 44,
-    "sleep_h_7d": 6.4,
-    "readiness": 73,
+    "rhr_bpm": 51,
+    "sleep_h_7d": 7.5,
+    "readiness": 86,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -87,27 +87,11 @@
     },
     {
       "level": "amber",
-      "metric": "Schlaf",
-      "text": "Schnitt 6.4 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
+      "metric": "RPE",
+      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
     }
   ],
   "weekly": [
-    {
-      "week": 2,
-      "phase": "1 – Grundlage",
-      "recovery_week": false,
-      "swims": 1,
-      "bikes": 0,
-      "gyms": 0,
-      "runs": 0,
-      "run_km": 0.0,
-      "total_hours": 0.6,
-      "bike_hours": 0.0,
-      "swim_meters": 1500,
-      "srpe_load": 114,
-      "rpe_covered": 1,
-      "rpe_missing": 0
-    },
     {
       "week": 3,
       "phase": "1 – Grundlage",
@@ -305,26 +289,26 @@
       "phase": "3 – Build I",
       "recovery_week": false,
       "swims": 1,
-      "bikes": 1,
+      "bikes": 2,
       "gyms": 0,
       "runs": 0,
       "run_km": 0.0,
-      "total_hours": 1.0,
-      "bike_hours": 0.4,
+      "total_hours": 2.3,
+      "bike_hours": 1.7,
       "swim_meters": 1850,
       "srpe_load": 66,
       "rpe_covered": 1,
-      "rpe_missing": 1
+      "rpe_missing": 2
     }
   ],
   "by_sport": [
     {
       "sport": "swim",
       "label": "Schwimmen",
-      "sessions_total": 15,
+      "sessions_total": 14,
       "sessions_week": 1,
-      "hours_total": 7.4,
-      "km_total": 18.7,
+      "hours_total": 6.8,
+      "km_total": 17.2,
       "target_per_week": 2,
       "longest_km": 1.9,
       "longest_min": 61.1
@@ -332,10 +316,10 @@
     {
       "sport": "bike",
       "label": "Rad",
-      "sessions_total": 18,
-      "sessions_week": 1,
-      "hours_total": 19.6,
-      "km_total": 490.8,
+      "sessions_total": 19,
+      "sessions_week": 2,
+      "hours_total": 20.9,
+      "km_total": 528.3,
       "target_per_week": 3,
       "longest_km": 46.0,
       "longest_min": 120.9
@@ -367,7 +351,7 @@
     "ftp_used": 252,
     "bike_zone_min": {
       "recovery": 0,
-      "endurance": 604,
+      "endurance": 682,
       "tempo": 287,
       "sweetspot": 52,
       "threshold": 0,
@@ -375,7 +359,7 @@
     },
     "bike_quality_min": 52,
     "bike_quality_target_min": 80,
-    "bike_sessions_analyzed": 15,
+    "bike_sessions_analyzed": 16,
     "race_power_w": [
       189,
       202
@@ -423,7 +407,7 @@
     "ftp": {
       "current": 252,
       "target": 280,
-      "due_now": 261,
+      "due_now": 262,
       "gap": 28,
       "on_track": false
     },
@@ -434,6 +418,23 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-11-12",
+      "activity_id": 25058314952,
+      "name": "Zwift - 70.3 W15 Do 12.11. Kraftausdauer 3x10",
+      "sport": "bike",
+      "type_raw": "virtual_ride",
+      "duration_min": 78.4,
+      "distance_km": 37.53,
+      "avg_hr": 108.0,
+      "max_hr": 145.0,
+      "avg_power": 166.0,
+      "norm_power": 174.25523273819255,
+      "elevation_m": 465,
+      "pace_per_100m": null,
+      "rpe_garmin": null,
+      "feel_garmin": null
+    },
     {
       "date": "2026-11-10",
       "activity_id": 25034945519,
@@ -1096,34 +1097,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 2.0,
       "feel_garmin": 2.5
-    },
-    {
-      "date": "2026-08-22",
-      "activity_id": 24073798687,
-      "name": "Leipzig Laufen",
-      "sport": "run",
-      "type_raw": "running",
-      "duration_min": 29.7,
-      "distance_km": 4.97,
-      "avg_hr": 154.0,
-      "max_hr": 197.0,
-      "avg_power": 363.0,
-      "norm_power": 392.0,
-      "elevation_m": 8,
-      "pace_per_100m": null,
-      "rpe_garmin": 4.0,
-      "feel_garmin": 7.5
     }
   ],
   "rhr": [
-    {
-      "date": "2026-09-11",
-      "bpm": 43
-    },
-    {
-      "date": "2026-09-12",
-      "bpm": 43
-    },
     {
       "date": "2026-09-13",
       "bpm": 45
@@ -1355,6 +1331,14 @@
     {
       "date": "2026-11-11",
       "bpm": 44
+    },
+    {
+      "date": "2026-11-12",
+      "bpm": 46
+    },
+    {
+      "date": "2026-11-13",
+      "bpm": 51
     }
   ],
   "weights": [
@@ -1365,13 +1349,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-14",
-      "score": 75,
-      "total_h": 8.13,
-      "hrv": 78,
-      "rhr": 42
-    },
     {
       "date": "2026-10-15",
       "score": 74,
@@ -1570,16 +1547,19 @@
     },
     {
       "date": "2026-11-12",
-      "total_h": 0.47,
-      "hrv": null,
-      "rhr": null
+      "score": 82,
+      "total_h": 15.84,
+      "hrv": 66,
+      "rhr": 46
+    },
+    {
+      "date": "2026-11-13",
+      "total_h": 1.72,
+      "hrv": 71,
+      "rhr": 51
     }
   ],
   "swim_pace": [
-    {
-      "week": 2,
-      "median_pace_s": 152
-    },
     {
       "week": 3,
       "median_pace_s": 108

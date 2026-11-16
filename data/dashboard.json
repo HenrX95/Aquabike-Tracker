@@ -1,28 +1,28 @@
 {
-  "generated_at": "2026-11-15T01:00:38+00:00",
+  "generated_at": "2026-11-16T00:59:18+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 160,
+    "days_to_go": 159,
     "weeks_to_go": 22,
     "swim_km": 1.9,
     "bike_km": 90,
     "run_km": 21.1
   },
   "plan": {
-    "current_week": 15,
+    "current_week": 16,
     "phase": "3 – Build I",
-    "recovery_week": false,
+    "recovery_week": true,
     "weeks_total": 38,
     "sport_targets": {
       "swim": 2,
-      "bike": 3,
+      "bike": 2,
       "gym": 2
     },
     "bike_hours_target": 5.0,
     "ftp_waypoint_w": 262,
-    "weight_target_kg": 86.1,
+    "weight_target_kg": 85.9,
     "deficit_active": true
   },
   "targets": {
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 47,
+    "rhr_bpm": 46,
     "sleep_h_7d": 8.1,
-    "readiness": 42,
+    "readiness": 83,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -306,7 +306,7 @@
       "sport": "swim",
       "label": "Schwimmen",
       "sessions_total": 14,
-      "sessions_week": 1,
+      "sessions_week": 0,
       "hours_total": 6.8,
       "km_total": 17.2,
       "target_per_week": 2,
@@ -317,10 +317,10 @@
       "sport": "bike",
       "label": "Rad",
       "sessions_total": 19,
-      "sessions_week": 2,
+      "sessions_week": 0,
       "hours_total": 20.9,
       "km_total": 528.3,
-      "target_per_week": 3,
+      "target_per_week": 2,
       "longest_km": 46.0,
       "longest_min": 120.9
     },
@@ -1101,10 +1101,6 @@
   ],
   "rhr": [
     {
-      "date": "2026-09-14",
-      "bpm": 43
-    },
-    {
       "date": "2026-09-15",
       "bpm": 41
     },
@@ -1339,6 +1335,10 @@
     {
       "date": "2026-11-14",
       "bpm": 47
+    },
+    {
+      "date": "2026-11-15",
+      "bpm": 46
     }
   ],
   "weights": [
@@ -1349,13 +1349,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-16",
-      "score": 56,
-      "total_h": 6.29,
-      "hrv": 83,
-      "rhr": 42
-    },
     {
       "date": "2026-10-17",
       "score": 80,
@@ -1558,6 +1551,13 @@
       "total_h": 2.29,
       "hrv": 64,
       "rhr": 47
+    },
+    {
+      "date": "2026-11-15",
+      "score": 85,
+      "total_h": 8.21,
+      "hrv": 68,
+      "rhr": 46
     }
   ],
   "swim_pace": [

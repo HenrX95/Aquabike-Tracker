@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-11-18T02:52:52+00:00",
+  "generated_at": "2026-11-19T02:31:54+00:00",
   "athlete": "Henrik Hundesrügge",
   "race": {
     "name": "IRONMAN 70.3 Venice-Jesolo",
     "date": "2027-04-24",
-    "days_to_go": 157,
+    "days_to_go": 156,
     "weeks_to_go": 22,
     "swim_km": 1.9,
     "bike_km": 90,
@@ -67,9 +67,9 @@
   "current": {
     "weight_kg": 87.5,
     "bodyfat_pct": 20,
-    "rhr_bpm": 45,
-    "sleep_h_7d": 8.4,
-    "readiness": 67,
+    "rhr_bpm": 55,
+    "sleep_h_7d": 6.3,
+    "readiness": 66,
     "ftp_w": 252,
     "css_s": 115,
     "waist_cm": null
@@ -82,13 +82,13 @@
     },
     {
       "level": "amber",
-      "metric": "Schwimmfrequenz",
-      "text": "Nur 1 Schwimmeinheiten diese Woche (Ziel 2). Groesster Hebel im Plan."
+      "metric": "RPE",
+      "text": "1 Einheiten ohne Bewertung. sRPE-Last ist unvollstaendig — auf der Uhr bewerten oder in manual.json nachtragen."
     },
     {
       "level": "amber",
-      "metric": "RPE",
-      "text": "2 von 3 Einheiten ohne Bewertung. Lastzahl untertreibt."
+      "metric": "Schlaf",
+      "text": "Schnitt 6.3 h (Ziel 7.5 h). Im Defizit zaehlt das doppelt."
     }
   ],
   "weekly": [
@@ -299,6 +299,22 @@
       "srpe_load": 66,
       "rpe_covered": 1,
       "rpe_missing": 2
+    },
+    {
+      "week": 16,
+      "phase": "3 – Build I",
+      "recovery_week": true,
+      "swims": 0,
+      "bikes": 0,
+      "gyms": 0,
+      "runs": 0,
+      "run_km": 0.0,
+      "total_hours": 0.2,
+      "bike_hours": 0.0,
+      "swim_meters": 0,
+      "srpe_load": 0,
+      "rpe_covered": 0,
+      "rpe_missing": 1
     }
   ],
   "by_sport": [
@@ -345,6 +361,17 @@
       "target_per_week": null,
       "longest_km": 16.0,
       "longest_min": 108.8
+    },
+    {
+      "sport": "mobility",
+      "label": "Mobility",
+      "sessions_total": 1,
+      "sessions_week": 1,
+      "hours_total": 0.2,
+      "km_total": 0.0,
+      "target_per_week": null,
+      "longest_km": 0.0,
+      "longest_min": 9.4
     }
   ],
   "analysis": {
@@ -418,6 +445,21 @@
     }
   },
   "activities": [
+    {
+      "date": "2026-11-18",
+      "activity_id": 25125008019,
+      "name": "Pilates",
+      "sport": "mobility",
+      "type_raw": "pilates",
+      "duration_min": 9.4,
+      "distance_km": 0.0,
+      "avg_hr": 75.0,
+      "max_hr": 100.0,
+      "avg_power": null,
+      "norm_power": null,
+      "elevation_m": 0,
+      "pace_per_100m": null
+    },
     {
       "date": "2026-11-12",
       "activity_id": 25058314952,
@@ -1080,34 +1122,9 @@
       "pace_per_100m": null,
       "rpe_garmin": 1,
       "feel_garmin": 5.0
-    },
-    {
-      "date": "2026-08-24",
-      "activity_id": 24097885515,
-      "name": "München (Gemfr. Gebiet) Radfahren",
-      "sport": "bike",
-      "type_raw": "cycling",
-      "duration_min": 60.1,
-      "distance_km": 32.44,
-      "avg_hr": 150.0,
-      "max_hr": 165.0,
-      "avg_power": null,
-      "norm_power": null,
-      "elevation_m": 213,
-      "pace_per_100m": null,
-      "rpe_garmin": 2.0,
-      "feel_garmin": 2.5
     }
   ],
   "rhr": [
-    {
-      "date": "2026-09-18",
-      "bpm": 43
-    },
-    {
-      "date": "2026-09-19",
-      "bpm": 47
-    },
     {
       "date": "2026-09-20",
       "bpm": 44
@@ -1339,6 +1356,14 @@
     {
       "date": "2026-11-17",
       "bpm": 45
+    },
+    {
+      "date": "2026-11-18",
+      "bpm": 48
+    },
+    {
+      "date": "2026-11-19",
+      "bpm": 55
     }
   ],
   "weights": [
@@ -1349,20 +1374,6 @@
     }
   ],
   "sleep": [
-    {
-      "date": "2026-10-19",
-      "score": 65,
-      "total_h": 7.07,
-      "hrv": 58,
-      "rhr": 46
-    },
-    {
-      "date": "2026-10-20",
-      "score": 82,
-      "total_h": 8.54,
-      "hrv": 75,
-      "rhr": 41
-    },
     {
       "date": "2026-10-21",
       "score": 86,
@@ -1558,6 +1569,19 @@
       "total_h": 6.17,
       "hrv": 68,
       "rhr": 45
+    },
+    {
+      "date": "2026-11-18",
+      "score": 67,
+      "total_h": 6.78,
+      "hrv": 57,
+      "rhr": 48
+    },
+    {
+      "date": "2026-11-19",
+      "total_h": 1.94,
+      "hrv": 47,
+      "rhr": 55
     }
   ],
   "swim_pace": [
